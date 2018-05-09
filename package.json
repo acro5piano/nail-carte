@@ -11,6 +11,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "app": "^0.1.0",
     "axios": "^0.17.1",
     "material-ui": "v1.0.0-beta.43",
     "ramda": "^0.25.0",
@@ -18,7 +19,8 @@
     "react-dom": "^16.2.0",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "styled-components": "^2.4.0"
+    "styled-components": "^2.4.0",
+    "typeface-roboto": "^0.0.54"
   },
   "devDependencies": {
     "@material-ui/icons": "^1.0.0-beta.43",

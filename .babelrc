@@ -3,12 +3,5 @@
     "env",
     "react"
   ],
-  "plugins": [
-    ["module-resolver", {
-      "root": ["./"],
-      "alias": {
-        "app": "./src"
-      }
-    }]
-  ]
+  "plugins": []
 }
