@@ -17,19 +17,13 @@
     "typeRoots": [
     "node_modules/@types"
     ],
-    "lib": [      
+    "lib": [
       "dom",
       "es2015",
       "esnext.asynciterable"
     ],
     "baseUrl": "./src",
-    "paths": {
-      "utils": ["utils"],
-      "views": ["views"],
-      "components": ["components"],
-      "service": ["service"],
-      "stores": ["stores"]
-    }
+    "paths": {}
   },
   "parcelTsPluginOptions": {
     // If true type-checking is disabled
