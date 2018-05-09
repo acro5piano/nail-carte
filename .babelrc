@@ -4,12 +4,11 @@
     "react"
   ],
   "plugins": [
-    [
-      "import", {
-        "libraryName": "antd",
-        "libraryDirectory": "es",
-        "style": true
+    ["module-resolver", {
+      "root": ["./"],
+      "alias": {
+        "app": "./src"
       }
-    ]
+    }]
   ]
 }
