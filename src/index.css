@@ -1,7 +1,15 @@
 body {
-  background-color: #f9f9f9;
+  font-family: "Roboto", "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+  font-size: 12px;
+  line-height: 1.67;
+  background: #fafafa;
+  padding-top: 64px;
+  color: #666;
 }
 
-.AppBody {
-  padding-top: 80px;
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular');
 }

@@ -60,3 +60,4 @@ typings/
 .cache
 dist/*
 !dist/.gitkeep
+tags
