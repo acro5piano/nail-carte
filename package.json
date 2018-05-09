@@ -12,6 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.17.1",
+    "material-ui": "v1.0.0-beta.43",
     "ramda": "^0.25.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -20,6 +21,7 @@
     "styled-components": "^2.4.0"
   },
   "devDependencies": {
+    "@material-ui/icons": "^1.0.0-beta.43",
     "@types/node": "^8.5.2",
     "@types/react": "^16.0.31",
     "@types/react-dom": "^16.0.3",
