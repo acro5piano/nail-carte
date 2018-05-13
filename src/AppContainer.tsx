@@ -6,8 +6,8 @@ import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
 import { Context } from 'almin'
 import AppHeader from './components/AppHeader'
 import AppSidebar from './components/AppSidebar'
-import { AppSidebarState } from './store/AppSidebarState'
 import { OpenSidebarUseCase, CloseSidebarUseCase } from './use-case/ToggleAppSidebarUseCase'
+import { appStoreGroup } from './store/AppStoreGroup'
 
 const theme = createMuiTheme({
   palette: {
@@ -22,24 +22,18 @@ const theme = createMuiTheme({
   },
 })
 
-interface AppContext {
-  appSidebar: AppSidebarState
+interface AppContainerProps {
+  appContext: Context<typeof appStoreGroup.state>
 }
 
-interface AppProps {
-  appContext: Context<AppContext>
-}
+type AppState = typeof appStoreGroup.state
 
-interface AppState {
-  appSidebar: AppSidebarState
-}
-
-export class AppContainer extends React.Component<AppProps, AppState> {
+export class AppContainer extends React.Component<AppContainerProps, AppState> {
   unSubscribe: () => void
 
-  constructor(props) {
+  constructor(props: AppContainerProps) {
     super(props)
-    this.state = props.appContext.getState()
+    this.state = this.props.appContext.getState()
   }
 
   componentDidMount() {
@@ -57,7 +51,7 @@ export class AppContainer extends React.Component<AppProps, AppState> {
   }
 
   toggleSidebar = () => {
-    const useCase = this.state.appSidebar.isOpened ? new CloseSidebarUseCase() : new OpenSidebarUseCase()
+    const useCase = this.state.appSidebarState.isOpened ? new CloseSidebarUseCase() : new OpenSidebarUseCase()
     this.props.appContext.useCase(useCase).execute()
   }
 
@@ -77,7 +71,7 @@ export class AppContainer extends React.Component<AppProps, AppState> {
             </div>
 
             <AppSidebar
-              open={this.state.appSidebar.isOpened}
+              open={this.state.appSidebarState.isOpened}
               onClose={this.toggleSidebar}
             />
           </div>
