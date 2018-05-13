@@ -50,6 +50,12 @@ export default class App extends React.Component<AppProps, AppState> {
     this.unSubscribe = appContext.onChange(onChangeHandler)
   }
 
+  componentDidUnmount() {
+    if (typeof this.unSubscribe === 'function') {
+      this.unSubscribe()
+    }
+  }
+
   toggleSidebar = () => {
     const useCase = this.state.appSidebar.isOpened ? new CloseSidebarUseCase() : new OpenSidebarUseCase()
     this.props.appContext.useCase(useCase).execute()
