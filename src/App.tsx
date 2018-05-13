@@ -20,15 +20,15 @@ const theme = createMuiTheme({
 })
 
 interface AppState {
-  sidebarOpen: boolean
+  isSidebarOpened: boolean
 }
 
 export default class App extends React.Component<{}, AppState> {
   state = {
-    sidebarOpen: false,
+    isSidebarOpened: false,
   }
 
-  toggleSidebar = () => this.setState({ sidebarOpen: !this.state.sidebarOpen })
+  toggleSidebar = () => this.setState({ isSidebarOpened: !this.state.isSidebarOpened })
 
   render() {
     return (
@@ -46,7 +46,7 @@ export default class App extends React.Component<{}, AppState> {
             </div>
 
             <AppSidebar
-              open={this.state.sidebarOpen}
+              open={this.state.isSidebarOpened}
               onClose={this.toggleSidebar}
             />
           </div>
