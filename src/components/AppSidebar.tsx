@@ -1,11 +1,14 @@
 import * as React from 'react'
 import Drawer from 'material-ui/Drawer'
-// import List from 'material-ui/List'
-// import Divider from 'material-ui/Divider'
+import List from 'material-ui/List'
+import { withStyles } from 'material-ui/styles'
+import Divider from 'material-ui/Divider'
 
-const sideList = (
-  <div>
-    An Item
+const SideList = ({ classes }) => (
+  <div className={classes.list}>
+    <List>An Item</List>
+    <Divider />
+    <List>Another Item</List>
   </div>
 )
 
@@ -14,15 +17,24 @@ interface AppSidebarProps {
   onClose: () => void
 }
 
-const AppSidebar = ({ open, onClose }: AppSidebarProps) => (
+const AppSidebar = ({ classes, open, onClose }) => (
   <Drawer open={open} onClose={onClose}>
     <div
       tabIndex={0}
       role="button"
     >
-      {sideList}
+      <SideList classes={classes} />
     </div>
   </Drawer>
 )
 
-export default AppSidebar
+const styles = {
+  list: {
+    width: 250,
+  },
+  fullList: {
+    width: 'auto',
+  },
+}
+
+export default withStyles(styles)<AppSidebarProps>(AppSidebar)

@@ -6,13 +6,6 @@ import IconButton from 'material-ui/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import { withStyles } from 'material-ui/styles'
 
-const styles = {
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
-  },
-}
-
 interface AppHeaderProps {
   onClickMenu: () => void
 }
@@ -29,5 +22,12 @@ const AppHeader = ({ classes, onClickMenu }) => (
     </Toolbar>
   </AppBar>
 )
+
+const styles = {
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
+}
 
 export default withStyles(styles)<AppHeaderProps>(AppHeader)
