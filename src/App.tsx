@@ -1,10 +1,13 @@
 import * as React from 'react'
 import CssBaseline from 'material-ui/CssBaseline'
-import AppHeader from './components/AppHeader'
-import AppSidebar from './components/AppSidebar'
 import Button from 'material-ui/Button'
 import AddIcon from '@material-ui/icons/Add'
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
+import { Context } from 'almin'
+import AppHeader from './components/AppHeader'
+import AppSidebar from './components/AppSidebar'
+import { AppSidebarState } from './store/AppSidebarState'
+import { OpenSidebarUseCase, CloseSidebarUseCase } from './use-case/ToggleAppSidebarUseCase'
 
 const theme = createMuiTheme({
   palette: {
@@ -19,16 +22,38 @@ const theme = createMuiTheme({
   },
 })
 
-interface AppState {
-  isSidebarOpened: boolean
+interface AppContext {
+  appSidebar: AppSidebarState
 }
 
-export default class App extends React.Component<{}, AppState> {
-  state = {
-    isSidebarOpened: false,
+interface AppProps {
+  appContext: Context<AppContext>
+}
+
+interface AppState {
+  appSidebar: AppSidebarState
+}
+
+export default class App extends React.Component<AppProps, AppState> {
+  unSubscribe: () => void
+
+  constructor(props) {
+    super(props)
+    this.state = props.appContext.getState()
   }
 
-  toggleSidebar = () => this.setState({ isSidebarOpened: !this.state.isSidebarOpened })
+  componentDidMount() {
+    const { appContext } = this.props
+    const onChangeHandler = () => {
+      this.setState(appContext.getState())
+    }
+    this.unSubscribe = appContext.onChange(onChangeHandler)
+  }
+
+  toggleSidebar = () => {
+    const useCase = this.state.appSidebar.isOpened ? new CloseSidebarUseCase() : new OpenSidebarUseCase()
+    this.props.appContext.useCase(useCase).execute()
+  }
 
   render() {
     return (
@@ -46,7 +71,7 @@ export default class App extends React.Component<{}, AppState> {
             </div>
 
             <AppSidebar
-              open={this.state.isSidebarOpened}
+              open={this.state.appSidebar.isOpened}
               onClose={this.toggleSidebar}
             />
           </div>
