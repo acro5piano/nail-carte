@@ -3,9 +3,10 @@ import * as ReactDOM from 'react-dom'
 import 'typeface-roboto'
 import { Context, Dispatcher } from 'almin'
 import './index.css'
-import { AppContainer } from './AppContainer'
+import AppContainer from './components/AppContainer'
 import { appStoreGroup } from './store/AppStoreGroup'
 import { appContextLocator } from './AppContextLocator'
+import { AlminReactContainer } from 'almin-react-container'
 
 const dispatcher = new Dispatcher()
 
@@ -19,7 +20,9 @@ const appContext = new Context({
 
 appContextLocator.context = appContext
 
+const App = AlminReactContainer.create(AppContainer, appContext)
+
 ReactDOM.render(
-  <AppContainer appContext={appContext} />,
+  <App />,
   document.getElementById('root'),
 )
