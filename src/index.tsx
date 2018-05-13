@@ -4,7 +4,7 @@ import 'typeface-roboto'
 import { Context, Dispatcher, StoreGroup } from 'almin'
 
 import './index.css'
-import App from './App'
+import { AppContainer } from './AppContainer'
 import { AppSidebarStore } from './store/AppSidebarStore'
 
 const dispatcher = new Dispatcher()
@@ -21,6 +21,6 @@ const appContext = new Context({
 })
 
 ReactDOM.render(
-  <App appContext={appContext} />,
+  <AppContainer appContext={appContext} />,
   document.getElementById('root'),
 )

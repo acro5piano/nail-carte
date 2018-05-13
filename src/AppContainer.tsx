@@ -34,7 +34,7 @@ interface AppState {
   appSidebar: AppSidebarState
 }
 
-export default class App extends React.Component<AppProps, AppState> {
+export class AppContainer extends React.Component<AppProps, AppState> {
   unSubscribe: () => void
 
   constructor(props) {
@@ -50,7 +50,7 @@ export default class App extends React.Component<AppProps, AppState> {
     this.unSubscribe = appContext.onChange(onChangeHandler)
   }
 
-  componentDidUnmount() {
+  componentWillUnmount() {
     if (typeof this.unSubscribe === 'function') {
       this.unSubscribe()
     }

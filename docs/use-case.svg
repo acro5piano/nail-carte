@@ -1,0 +1,12 @@
+<svg width="426" height="210" version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" style="font-weight:bold; font-size:12pt; font-family:'Calibri', Helvetica, sans-serif;;stroke-width:3;stroke-linejoin:round;stroke-linecap:round"><rect x="25.5" y="25.5" height="160" width="376" style="stroke:#33322E;fill:#eee8d5;"></rect>
+<text x="179.5" y="59" style="">use-case</text>
+<path d="M25.5 80.5 L401.5 80.5" style="stroke:#33322E;fill:none;"></path>
+<path d="M150.5 133 L175.5 133 L200.5 133 L200.5 133 " style="stroke:#33322E;fill:none;"></path>
+<path d="M183.8 139.7 L192.2 133 L183.8 126.3 L200.5 133 Z" style="stroke:#33322E;fill:#33322E;"></path>
+<circle r="10" cx="100.5" cy="100.5" style="stroke:#33322E;fill:#fdf6e3;"></circle>
+<path d="M100.5 110.5 L100.5 130.5" style="stroke:#33322E;fill:none;"></path>
+<path d="M90.5 120.5 L110.5 120.5" style="stroke:#33322E;fill:none;"></path>
+<path d="M90.5 140.5 L100.5 130.5 L110.5 140.5" style="stroke:#33322E;fill:none;"></path>
+<text x="70.8" y="154" style="">AppUser</text>
+<ellipse cx="288.5" cy="133" rx="88" ry="27.5" style="stroke:#33322E;fill:#fdf6e3;"></ellipse>
+<text x="220.5" y="139" style="">ToggleAppSidebar</text></svg>
