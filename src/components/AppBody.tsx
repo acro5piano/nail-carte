@@ -1,6 +1,5 @@
 import * as React from 'react'
-import Button from 'material-ui/Button'
-import AddIcon from '@material-ui/icons/Add'
+import FloatingActionButton from './material-ui/Button/FloatingActionButton'
 import { withStyles } from 'material-ui/styles'
 // import { OpenSidebarUseCase } from '../use-case/ToggleAppSidebarUseCase'
 // import { appContextLocator } from '../AppContextLocator'
@@ -11,9 +10,7 @@ const notify = () => alert('hello')
 
 const AppBody = ({ classes }) => (
   <div className="AppBody">
-    <Button onClick={notify} variant="fab" color="primary">
-      <AddIcon />
-    </Button>
+    <FloatingActionButton onClick={notify} />
   </div>
 )
 
