@@ -31,10 +31,10 @@ const AppSidebar = ({ classes, open }) => (
   </Drawer>
 )
 
-const styles = {
+const styles = theme => ({
   list: {
     width: 250,
   },
-}
+})
 
 export default withStyles(styles)<AppSidebarProps>(AppSidebar)

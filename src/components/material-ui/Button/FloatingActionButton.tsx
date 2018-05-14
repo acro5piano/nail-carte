@@ -9,8 +9,8 @@ interface FloatingActionButtonProps {
   color?: PropTypes.Color
 }
 
-const FloatingActionButton: React.SFC<FloatingActionButtonProps> = ({ onClick, color }) => (
-  <Button onClick={onClick} variant="fab" color={color || 'primary'}>
+const FloatingActionButton: React.SFC<any> = ({ classes, onClick, color }) => (
+  <Button onClick={onClick} variant="fab" color={color} className={classes.button}>
     <AddIcon />
   </Button>
 )
@@ -20,10 +20,11 @@ FloatingActionButton.defaultProps = {
 }
 
 const styles = {
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
+  button: {
+    position: 'fixed',
+    bottom: 16,
+    right: 16,
   },
 }
 
-export default withStyles(styles)(FloatingActionButton)
+export default withStyles(styles)<FloatingActionButtonProps>(FloatingActionButton)
