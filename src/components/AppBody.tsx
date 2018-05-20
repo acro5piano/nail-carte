@@ -1,18 +1,27 @@
 import * as React from 'react'
 import FloatingActionButton from 'sarte/components/material-ui/Button/FloatingActionButton'
 import { withStyles } from 'material-ui/styles'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Customers from 'sarte/components/pages/Customers/Customers'
+import NotFound from 'sarte/components/pages/NotFound'
 
 interface AppBodyProps {}
 
 const notify = () => alert('hello')
 
-const AppBody = ({ classes }) => (
-  <div className="appBody">
-    <FloatingActionButton onClick={notify} />
-    <Customers />
-  </div>
-)
+const AppBody = ({ classes }) => {
+  return (
+    <div className="appBody">
+      <FloatingActionButton onClick={notify} />
+      <Router>
+        <div>
+          <Route exact path="/" component={NotFound}/>
+          <Route exact path="/customers" component={Customers}/>
+        </div>
+      </Router>
+    </div>
+  )
+}
 
 const styles = {
   root: {
