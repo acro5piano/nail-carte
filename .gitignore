@@ -60,5 +60,6 @@ typings/
 .cache
 dist/*
 !dist/.gitkeep
+!dist/_redirects
 tags
 db.json

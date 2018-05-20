@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { HashRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import CustomerList from 'sarte/components/Customer/CustomerList'
 import NewCustomer from 'sarte/components/Customer/CreateCustomer'
 import NotFound from 'sarte/components/NotFound'

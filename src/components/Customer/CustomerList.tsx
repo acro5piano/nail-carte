@@ -10,7 +10,7 @@ import { NEW_CUSTOMER_PATH } from 'sarte/Routes'
 
 interface CustomersProps {}
 
-const toNewCustomer = () => location.href = '/#/' + NEW_CUSTOMER_PATH
+const toNewCustomer = () => location.href = NEW_CUSTOMER_PATH
 
 // import Customer from '../entities/Customer'
 // const c = new Customer({name: 'KAZUYA'})

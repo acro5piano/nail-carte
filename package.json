@@ -5,7 +5,6 @@
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html",
-    "build:netlify": "bash deploy-netlify.sh",
     "mockserver": "json-server --watch db.json",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "tslint -p tsconfig.json -c tslint.json 'src/**/*.ts*'",

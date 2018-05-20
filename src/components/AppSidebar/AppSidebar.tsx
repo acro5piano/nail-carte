@@ -3,12 +3,13 @@ import Drawer from 'material-ui/Drawer'
 import { withStyles } from 'material-ui/styles'
 import Divider from 'material-ui/Divider'
 import SideListItem from './SideListItem'
+import { HOME_PATH, CUSTOMER_LIST_PATH } from 'sarte/Routes'
 
 const SideList = ({ classes, onSelect }) => (
   <div className={classes.list}>
-    <SideListItem title="ホーム" path="/#/" onSelect={onSelect} />
+    <SideListItem title="ホーム" path={HOME_PATH} onSelect={onSelect} />
     <Divider />
-    <SideListItem title="顧客一覧" path="/#/customers" onSelect={onSelect} />
+    <SideListItem title="顧客一覧" path={CUSTOMER_LIST_PATH} onSelect={onSelect} />
   </div>
 )
 
