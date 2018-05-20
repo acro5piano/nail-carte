@@ -12,31 +12,25 @@ Currently just prototype, will change how nailists work on the earth.
 
 JSX components.
 
-### /src/components/pages
+### /src/components/**/*Container.tsx
 
-Entry point of Router.
-Responsible for page elements.
-
-Rules:
-
-- Do not concern about app state.
-
-### /src/components/containers
-
-Connect app state to component.
+Responsible for Connecting React component to Redux state.
+They can be entry points of Router.
 
 Rules:
 
+- Do not write too much JSX.
 - Use Redux's `connect`.
 
-### /src/components/projects
+### /src/components/**/*.tsx
 
-Project specific presentational components.
+JSX container. Responsible for User Interface.
 
 Rules:
 
 - Keep reusablility.
 - Do not have state, just function (Stateless Functional Component).
+- Do not connect to Redux state.
 
 ### /src/components/material-ui
 
