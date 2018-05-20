@@ -1,16 +1,13 @@
 import * as React from 'react'
 import FloatingActionButton from 'sarte/components/material-ui/Button/FloatingActionButton'
-import { withStyles } from 'material-ui/styles'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import Customers from 'sarte/components/Customer/CustomerList'
-import NewCustomer from 'sarte/components/Customer/CreateCustomer'
+import Customers from 'sarte/components/customer/CustomerList'
+import NewCustomer from 'sarte/components/customer/CreateCustomer'
 import NotFound from 'sarte/components/NotFound'
-
-interface AppBodyProps {}
 
 const notify = () => alert('hello')
 
-const AppBody = ({ classes }) => {
+const Routes = () => {
   return (
     <div className="appBody">
       <FloatingActionButton onClick={notify} />
@@ -25,12 +22,4 @@ const AppBody = ({ classes }) => {
   )
 }
 
-const styles = {
-  root: {
-    marginTop: 24,
-    backgroundColor: '#fff',
-    padding: 12,
-  },
-}
-
-export default withStyles(styles)<AppBodyProps>(AppBody)
+export default Routes

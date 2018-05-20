@@ -1,9 +1,9 @@
 import * as React from 'react'
 import CssBaseline from 'material-ui/CssBaseline'
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
-import AppHeader from 'sarte/components/containers/AppHeaderContainer'
-import AppSidebar from 'sarte/components/containers/AppSidebarContainer'
-import AppBody from 'sarte/components/AppBody'
+import AppHeader from 'sarte/components/app-header/AppHeaderContainer'
+import AppSidebar from 'sarte/components/app-sidebar/AppSidebarContainer'
+import Routes from 'sarte/Routes'
 
 const theme = createMuiTheme({
   palette: {
@@ -26,7 +26,7 @@ export default class AppContainer extends React.Component<{}> {
         <MuiThemeProvider theme={theme}>
           <div>
             <AppHeader />
-            <AppBody />
+            <Routes />
             <AppSidebar />
           </div>
         </MuiThemeProvider>
