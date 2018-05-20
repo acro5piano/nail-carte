@@ -45,7 +45,7 @@ export default class AppContainer extends React.Component<{}, AppState> {
         <MuiThemeProvider theme={theme}>
           <div>
             <AppHeader onClickMenu={this.toggleSidebar} />
-            <Routes />
+            <Routes {...this.state} />
             <AppSidebar
               isOpened={this.state.isSidebarOpened}
               onCloseSidebar={this.toggleSidebar}
