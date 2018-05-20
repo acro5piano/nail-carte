@@ -4,6 +4,7 @@ import Divider from 'material-ui/Divider'
 import List, { ListItem, ListItemText } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
 import ImageIcon from '@material-ui/icons/Image'
+// import AppHeader from 'sarte/components/AppHeader'
 
 interface CustomersProps {}
 
