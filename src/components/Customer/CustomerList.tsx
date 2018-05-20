@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { withStyles } from 'material-ui/styles'
+import { Link } from 'react-router-dom'
 import Divider from 'material-ui/Divider'
 import FloatingActionButton from 'sarte/components/MaterialUi/Button/FloatingActionButton'
 import List, { ListItem, ListItemText } from 'material-ui/List'
@@ -10,14 +11,14 @@ import { NEW_CUSTOMER_PATH } from 'sarte/Routes'
 
 interface CustomersProps {}
 
-const toNewCustomer = () => location.href = NEW_CUSTOMER_PATH
-
 // import Customer from '../entities/Customer'
 // const c = new Customer({name: 'KAZUYA'})
 
 const CustomerList = ({ classes }) => (
   <div className={classes.root}>
-    <FloatingActionButton onClick={toNewCustomer} />
+    <Link to={NEW_CUSTOMER_PATH}>
+      <FloatingActionButton />
+    </Link>
     <List>
       <ListItem>
         <Avatar><ImageIcon /></Avatar>

@@ -4,7 +4,7 @@ import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
 import AppHeader from 'sarte/components/AppHeader'
 import AppSidebar from 'sarte/components/AppSidebar/AppSidebar'
 import Routes from 'sarte/Routes'
-import { CustomerApi } from 'sarte/services/api'
+// import { CustomerApi } from 'sarte/services/api'
 import Customer from 'sarte/entities/Customer'
 
 const theme = createMuiTheme({
@@ -31,10 +31,10 @@ export default class AppContainer extends React.Component<{}, AppState> {
     customers: [],
   }
 
-  async componentDidMount() {
-    const customers = await CustomerApi.list()
-    this.setState({ customers })
-  }
+  // async componentDidMount() {
+  //   const customers = await CustomerApi.list()
+  //   this.setState({ customers })
+  // }
 
   toggleSidebar = () => this.setState({ isSidebarOpened: !this.state.isSidebarOpened })
 

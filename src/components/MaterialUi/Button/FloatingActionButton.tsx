@@ -5,7 +5,7 @@ import AddIcon from '@material-ui/icons/Add'
 import { withStyles } from 'material-ui/styles'
 
 interface FloatingActionButtonProps {
-  onClick: () => void
+  onClick?: () => void
   color?: PropTypes.Color
 }
 
