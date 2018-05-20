@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { HashRouter as Router, Route } from 'react-router-dom'
 import FloatingActionButton from 'sarte/components/MaterialUi/Button/FloatingActionButton'
 import Customers from 'sarte/components/Customer/CustomerList'
 import NewCustomer from 'sarte/components/Customer/CreateCustomer'

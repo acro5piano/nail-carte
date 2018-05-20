@@ -1,10 +1,10 @@
 import * as React from 'react'
 import CssBaseline from 'material-ui/CssBaseline'
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
-import AppHeader from 'sarte/components/AppHeader/AppHeaderContainer'
-import AppSidebar from 'sarte/components/AppSidebar/AppSidebarContainer'
+import AppHeader from 'sarte/components/AppHeader'
+import AppSidebar from 'sarte/components/AppSidebar'
 import Routes from 'sarte/Routes'
-import { clientApi } from 'sarte/services/api'
+import { CustomerApi } from 'sarte/services/api'
 
 const theme = createMuiTheme({
   palette: {
@@ -20,8 +20,14 @@ const theme = createMuiTheme({
 })
 
 export default class AppContainer extends React.Component<{}> {
+  state = {
+    isSidebarOpened: false,
+  }
+
+  toggleSidebar = () => this.setState({ isSidebarOpened: !this.state.isSidebarOpened })
+
   componentDidMount() {
-    clientApi.list()
+    CustomerApi.list()
   }
 
   render() {
@@ -30,9 +36,12 @@ export default class AppContainer extends React.Component<{}> {
         <CssBaseline />
         <MuiThemeProvider theme={theme}>
           <div>
-            <AppHeader />
+            <AppHeader onClickMenu={this.toggleSidebar} />
             <Routes />
-            <AppSidebar />
+            <AppSidebar
+              isOpened={this.state.isSidebarOpened}
+              onCloseSidebar={this.toggleSidebar}
+            />
           </div>
         </MuiThemeProvider>
       </React.Fragment>

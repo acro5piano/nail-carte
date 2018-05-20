@@ -2,21 +2,8 @@ import * as React from 'react'
 import { withStyles } from 'material-ui/styles'
 // import AppHeader from 'sarte/components/AppHeader'
 // import Customer from '../entities/Customer'
-import { Field, reduxForm } from 'redux-form'
 
 interface CustomersProps {}
-
-const NewCustomerForm = ({ handleSubmit }) => (
-  <form onSubmit={handleSubmit}>
-    <label htmlFor="firstName">First Name</label>
-    <Field name="firstName" component="input" type="text" />
-    <button type="submit">Submit</button>
-  </form>
-)
-
-const createReduxForm = reduxForm({ form: 'NewCustomer' })
-
-const NewCustomerReduxForm = createReduxForm(NewCustomerForm)
 
 const handle = values => {
   console.log(values)
@@ -24,7 +11,11 @@ const handle = values => {
 
 const NewCustomer = ({ classes }) => (
   <div className={classes.root}>
-    <NewCustomerReduxForm onSubmit={handle} />
+    <form onSubmit={handle}>
+      <label htmlFor="firstName">First Name</label>
+      <input name="firstName" type="text" />
+      <button type="submit">Submit</button>
+    </form>
   </div>
 )
 
