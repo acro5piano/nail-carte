@@ -1,8 +1,8 @@
 import * as React from 'react'
-import FloatingActionButton from 'sarte/components/material-ui/Button/FloatingActionButton'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import Customers from 'sarte/components/customer/CustomerList'
-import NewCustomer from 'sarte/components/customer/CreateCustomer'
+import FloatingActionButton from 'sarte/components/MaterialUi/Button/FloatingActionButton'
+import Customers from 'sarte/components/Customer/CustomerList'
+import NewCustomer from 'sarte/components/Customer/CreateCustomer'
 import NotFound from 'sarte/components/NotFound'
 
 const notify = () => alert('hello')

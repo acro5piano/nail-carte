@@ -1,8 +1,8 @@
 import * as React from 'react'
 import CssBaseline from 'material-ui/CssBaseline'
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
-import AppHeader from 'sarte/components/app-header/AppHeaderContainer'
-import AppSidebar from 'sarte/components/app-sidebar/AppSidebarContainer'
+import AppHeader from 'sarte/components/AppHeader/AppHeaderContainer'
+import AppSidebar from 'sarte/components/AppSidebar/AppSidebarContainer'
 import Routes from 'sarte/Routes'
 
 const theme = createMuiTheme({
