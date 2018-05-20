@@ -7,15 +7,20 @@ import NotFound from 'sarte/components/NotFound'
 
 const notify = () => alert('hello')
 
+export const HOME_PATH = '/'
+export const CUSTOMER_LIST_PATH = '/customers'
+export const CUSTOMER_PATH = '/customers/:id'
+export const NEW_CUSTOMER_PATH = '/customers/new'
+
 const Routes = () => {
   return (
     <div className="appBody">
       <FloatingActionButton onClick={notify} />
       <Router>
         <div>
-          <Route exact path="/" component={NotFound}/>
-          <Route exact path="/customers" component={Customers}/>
-          <Route exact path="/customers/new" component={NewCustomer}/>
+          <Route exact path={HOME_PATH} component={NotFound}/>
+          <Route exact path={CUSTOMER_LIST_PATH} component={Customers}/>
+          <Route exact path={NEW_CUSTOMER_PATH} component={NewCustomer}/>
         </div>
       </Router>
     </div>

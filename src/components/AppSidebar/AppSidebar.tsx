@@ -1,20 +1,20 @@
 import * as React from 'react'
 import Drawer from 'material-ui/Drawer'
-import List from 'material-ui/List'
 import { withStyles } from 'material-ui/styles'
 import Divider from 'material-ui/Divider'
+import SideListItem from './SideListItem'
 
-const SideList = ({ classes }) => (
+const SideList = ({ classes, onSelect }) => (
   <div className={classes.list}>
-    <List>An Item</List>
+    <SideListItem title="ホーム" path="/#/" onSelect={onSelect} />
     <Divider />
-    <List>Another Item</List>
+    <SideListItem title="顧客一覧" path="/#/customers" onSelect={onSelect} />
   </div>
 )
 
 interface AppSidebarProps {
-  isOpened: boolean,
-  onCloseSidebar: () => void,
+  isOpened: boolean
+  onCloseSidebar: () => void
 }
 
 const AppSidebar = ({ classes, isOpened, onCloseSidebar }) => (
@@ -23,7 +23,7 @@ const AppSidebar = ({ classes, isOpened, onCloseSidebar }) => (
       tabIndex={0}
       role="button"
     >
-      <SideList classes={classes} />
+      <SideList classes={classes} onSelect={onCloseSidebar} />
     </div>
   </Drawer>
 )
