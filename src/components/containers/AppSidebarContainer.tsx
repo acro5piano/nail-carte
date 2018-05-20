@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import { closeSidebar } from '../../actions'
-import AppSidebar from '../AppSidebar'
+import { closeSidebar } from 'sarte/actions'
+import AppSidebar from 'sarte/components/AppSidebar'
 
 const mapStateToProps = state => ({
   isOpened: state.sidebar.isOpened,

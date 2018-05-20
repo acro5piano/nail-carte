@@ -22,11 +22,12 @@
       "es2015",
       "esnext.asynciterable"
     ],
-    "baseUrl": "./src",
-    "paths": {}
+    "baseUrl": ".",
+    "paths": {
+      "sarte/*": ["./src/*"]
+    }
   },
   "parcelTsPluginOptions": {
-    // If true type-checking is disabled
     "transpileOnly": true
   },
   "exclude": [

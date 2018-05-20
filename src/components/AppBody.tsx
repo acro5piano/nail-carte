@@ -1,7 +1,7 @@
 import * as React from 'react'
-import FloatingActionButton from './material-ui/Button/FloatingActionButton'
+import FloatingActionButton from 'sarte/components/material-ui/Button/FloatingActionButton'
 import { withStyles } from 'material-ui/styles'
-import Customers from './pages/Customers/Customers'
+import Customers from 'sarte/components/pages/Customers/Customers'
 
 interface AppBodyProps {}
 

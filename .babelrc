@@ -3,5 +3,12 @@
     "env",
     "react"
   ],
-  "plugins": []
+  "plugins": [
+    ["module-resolver", {
+      "root": ["./"],
+      "alias": {
+        "sarte": "./src"
+      }
+    }]
+  ]
 }
