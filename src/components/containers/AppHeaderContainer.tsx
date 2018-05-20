@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { openSidebar } from '../../actions'
-import AppHeader from '../../components/AppHeader'
+import AppHeader from '../AppHeader'
 
 const mapStateToProps = state => ({
   isOpened: state.isOpened,
