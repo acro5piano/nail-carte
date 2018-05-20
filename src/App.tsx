@@ -4,6 +4,7 @@ import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
 import AppHeader from 'sarte/components/AppHeader/AppHeaderContainer'
 import AppSidebar from 'sarte/components/AppSidebar/AppSidebarContainer'
 import Routes from 'sarte/Routes'
+import { clientApi } from 'sarte/services/api'
 
 const theme = createMuiTheme({
   palette: {
@@ -19,6 +20,10 @@ const theme = createMuiTheme({
 })
 
 export default class AppContainer extends React.Component<{}> {
+  componentDidMount() {
+    clientApi.list()
+  }
+
   render() {
     return (
       <React.Fragment>

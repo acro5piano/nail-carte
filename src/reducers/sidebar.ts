@@ -1,4 +1,8 @@
-const sidebar = (state, action) => {
+const sidebarInitialState = {
+  isOpened: false,
+}
+
+const sidebar = (state = sidebarInitialState, action) => {
   switch (action.type) {
     case 'OPEN_SIDEBAR':
       return { isOpened: true }
