@@ -5,17 +5,15 @@ import Typography from 'material-ui/Typography'
 import IconButton from 'material-ui/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import { withStyles } from 'material-ui/styles'
-import { OpenSidebarUseCase } from '../use-case/ToggleAppSidebarUseCase'
-import { appContextLocator } from '../AppContextLocator'
 
-interface AppHeaderProps {}
+interface AppHeaderProps {
+  onClickMenu: () => void
+}
 
-const openSidebar = () => appContextLocator.context.useCase(new OpenSidebarUseCase()).execute()
-
-const AppHeader = ({ classes }) => (
+const AppHeader = ({ classes, onClickMenu }) => (
   <AppBar>
     <Toolbar>
-      <IconButton onClick={openSidebar} className={classes.menuButton} color="inherit" aria-label="Menu">
+      <IconButton onClick={onClickMenu} className={classes.menuButton} color="inherit" aria-label="Menu">
         <MenuIcon />
       </IconButton>
       <Typography variant="title" color="inherit" noWrap>

@@ -1,10 +1,9 @@
 import * as React from 'react'
 import CssBaseline from 'material-ui/CssBaseline'
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
-import AppHeader from './AppHeader'
-import AppSidebar from './AppSidebar'
-import AppBody from './AppBody'
-import { appStoreGroup } from '../store/AppStoreGroup'
+import AppHeader from './containers/AppHeaderContainer'
+import AppSidebar from './containers/AppSidebarContainer'
+import AppBody from './components/AppBody'
 
 const theme = createMuiTheme({
   palette: {
@@ -19,9 +18,7 @@ const theme = createMuiTheme({
   },
 })
 
-type AppProps = typeof appStoreGroup.state
-
-export default class AppContainer extends React.Component<AppProps> {
+export default class AppContainer extends React.Component<{}> {
   render() {
     return (
       <React.Fragment>
@@ -30,7 +27,7 @@ export default class AppContainer extends React.Component<AppProps> {
           <div>
             <AppHeader />
             <AppBody />
-            <AppSidebar open={this.props.appSidebarState.isOpened} />
+            <AppSidebar />
           </div>
         </MuiThemeProvider>
       </React.Fragment>

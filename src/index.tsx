@@ -1,28 +1,21 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import 'typeface-roboto'
-import { Context, Dispatcher } from 'almin'
 import './index.css'
-import AppContainer from './components/AppContainer'
-import { appStoreGroup } from './store/AppStoreGroup'
-import { appContextLocator } from './AppContextLocator'
-import { AlminReactContainer } from 'almin-react-container'
+import { Provider } from 'react-redux'
+import { applyMiddleware, createStore } from 'redux'
+import reducers from './reducers'
+import App from './App'
+import logger from 'redux-logger'
 
-const dispatcher = new Dispatcher()
-
-const appContext = new Context({
-  dispatcher,
-  store: appStoreGroup,
-  options: {
-    strict: true,
-  },
-})
-
-appContextLocator.context = appContext
-
-const App = AlminReactContainer.create(AppContainer, appContext)
+const store = createStore(
+  reducers,
+  applyMiddleware(logger),
+)
 
 ReactDOM.render(
-  <App />,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('root'),
 )

@@ -3,8 +3,6 @@ import Drawer from 'material-ui/Drawer'
 import List from 'material-ui/List'
 import { withStyles } from 'material-ui/styles'
 import Divider from 'material-ui/Divider'
-import { CloseSidebarUseCase } from '../use-case/ToggleAppSidebarUseCase'
-import { appContextLocator } from '../AppContextLocator'
 
 const SideList = ({ classes }) => (
   <div className={classes.list}>
@@ -15,13 +13,12 @@ const SideList = ({ classes }) => (
 )
 
 interface AppSidebarProps {
-  open: boolean
+  isOpened: boolean,
+  onCloseSidebar: () => void,
 }
 
-const closeSidebar = () => appContextLocator.context.useCase(new CloseSidebarUseCase()).execute()
-
-const AppSidebar = ({ classes, open }) => (
-  <Drawer open={open} onClose={closeSidebar}>
+const AppSidebar = ({ classes, isOpened, onCloseSidebar }) => (
+  <Drawer open={isOpened} onClose={onCloseSidebar}>
     <div
       tabIndex={0}
       role="button"

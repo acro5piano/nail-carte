@@ -5,8 +5,6 @@ import Divider from 'material-ui/Divider'
 import List, { ListItem, ListItemText } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
 import ImageIcon from '@material-ui/icons/Image'
-// import { OpenSidebarUseCase } from '../use-case/ToggleAppSidebarUseCase'
-// import { appContextLocator } from '../AppContextLocator'
 
 interface AppBodyProps {}
 
