@@ -1,10 +1,7 @@
 import * as React from 'react'
 import FloatingActionButton from './material-ui/Button/FloatingActionButton'
 import { withStyles } from 'material-ui/styles'
-import Divider from 'material-ui/Divider'
-import List, { ListItem, ListItemText } from 'material-ui/List'
-import Avatar from 'material-ui/Avatar'
-import ImageIcon from '@material-ui/icons/Image'
+import Customers from './pages/Customers/Customers'
 
 interface AppBodyProps {}
 
@@ -12,26 +9,8 @@ const notify = () => alert('hello')
 
 const AppBody = ({ classes }) => (
   <div className="appBody">
-    <div className={classes.root}>
-      <List>
-        <ListItem>
-          <Avatar><ImageIcon /></Avatar>
-          <ListItemText primary="Photos" secondary="Jan 9, 2014" />
-        </ListItem>
-        <li><Divider inset /></li>
-        <ListItem>
-          <Avatar><ImageIcon /></Avatar>
-          <ListItemText primary="Photos" secondary="Jan 9, 2014" />
-        </ListItem>
-        <li><Divider inset /></li>
-        <ListItem>
-          <Avatar><ImageIcon /></Avatar>
-          <ListItemText primary="Photos" secondary="Jan 9, 2014" />
-        </ListItem>
-        <li><Divider inset /></li>
-      </List>
-    </div>
     <FloatingActionButton onClick={notify} />
+    <Customers />
   </div>
 )
 

@@ -1,8 +1,8 @@
 import * as React from 'react'
 import CssBaseline from 'material-ui/CssBaseline'
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
-import AppHeader from './containers/AppHeaderContainer'
-import AppSidebar from './containers/AppSidebarContainer'
+import AppHeader from './components/containers/AppHeaderContainer'
+import AppSidebar from './components/containers/AppSidebarContainer'
 import AppBody from './components/AppBody'
 
 const theme = createMuiTheme({
