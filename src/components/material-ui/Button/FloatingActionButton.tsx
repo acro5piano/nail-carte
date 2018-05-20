@@ -19,12 +19,14 @@ FloatingActionButton.defaultProps = {
   color: 'primary',
 }
 
-const styles = {
+const styles = theme => ({
   button: {
-    position: 'fixed',
+    // HACK: 'position: absolute' type needs cast to 'absolute'.
+    // @see https://github.com/Microsoft/TypeScript/issues/11465
+    position: 'fixed' as 'absolute',
     bottom: 16,
     right: 16,
   },
-}
+})
 
 export default withStyles(styles)<FloatingActionButtonProps>(FloatingActionButton)
