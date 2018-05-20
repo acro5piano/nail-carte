@@ -4,6 +4,6 @@ const getPath = path => baseUrl + path
 
 const get = path => fetch(getPath(path)).then(res => res.json)
 
-export const clientApi = {
+export const CustomerApi = {
   list: () => get('/customers'),
 }
