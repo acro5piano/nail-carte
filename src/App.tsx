@@ -6,6 +6,7 @@ import AppSidebar from 'sarte/components/AppSidebar/AppSidebar'
 import Routes from 'sarte/Routes'
 // import { CustomerApi } from 'sarte/services/api'
 import Customer from 'sarte/entities/Customer'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 const theme = createMuiTheme({
   palette: {
@@ -43,14 +44,16 @@ export default class AppContainer extends React.Component<{}, AppState> {
       <React.Fragment>
         <CssBaseline />
         <MuiThemeProvider theme={theme}>
-          <div>
-            <AppHeader onClickMenu={this.toggleSidebar} />
-            <Routes {...this.state} />
-            <AppSidebar
-              isOpened={this.state.isSidebarOpened}
-              onCloseSidebar={this.toggleSidebar}
-            />
-          </div>
+          <Router>
+            <div>
+              <AppHeader onClickMenu={this.toggleSidebar} />
+              <Routes {...this.state} />
+              <AppSidebar
+                isOpened={this.state.isSidebarOpened}
+                onCloseSidebar={this.toggleSidebar}
+              />
+            </div>
+          </Router>
         </MuiThemeProvider>
       </React.Fragment>
     )

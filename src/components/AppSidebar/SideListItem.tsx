@@ -1,5 +1,6 @@
 import * as React from 'react'
 import List from 'material-ui/List'
+import { Link } from 'react-router-dom'
 import { withStyles } from 'material-ui/styles'
 
 interface SideListItemBaseInterface {
@@ -10,11 +11,11 @@ interface SideListItemBaseInterface {
 
 const SideListItemBase = ({ classes, title, path, onSelect }) => (
   <List>
-    <a href={path} onClick={onSelect} className={classes.link}>
+    <Link to={path} onClick={onSelect} className={classes.link}>
       <div className={classes.item}>
         {title}
       </div>
-    </a>
+    </Link>
   </List>
 )
 
