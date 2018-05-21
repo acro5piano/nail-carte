@@ -4,6 +4,12 @@ import 'typeface-roboto'
 import './index.css'
 import App from 'sarte/App'
 
+if (module.hot) {
+  module.hot.accept(() => {
+    window.location.reload()
+  })
+}
+
 ReactDOM.render(
   <App />,
   document.getElementById('root'),
