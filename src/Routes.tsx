@@ -10,15 +10,15 @@ export const CUSTOMER_PATH = '/customers/:id'
 export const NEW_CUSTOMER_PATH = '/customers/new'
 
 const Routes = (props) => {
-  const RouteWithProps = ({ path, render }) =>
-    <Route {...props} exact path={HOME_PATH} render={render}/>
+  // const RouteWithProps = ({ path, render }) =>
+  //   <Route {...props} exact path={HOME_PATH} render={render}/>
 
   return (
     <div className="appBody">
       <Switch>
         <Route exact path={CUSTOMER_LIST_PATH} component={CustomerList}/>
         <Route exact path={NEW_CUSTOMER_PATH} component={NewCustomer}/>
-        <RouteWithProps path={HOME_PATH} render={NotFound}/>
+        <Route exact path={NEW_CUSTOMER_PATH} component={NotFound}/>
       </Switch>
     </div>
   )
