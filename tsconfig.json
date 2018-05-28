@@ -12,10 +12,11 @@
     "outDir": "dist",
     "noUnusedLocals": true,
     "types": [
-      "node"
+      "node",
+      "webpack-env"
     ],
     "typeRoots": [
-    "node_modules/@types"
+      "node_modules/@types"
     ],
     "lib": [
       "dom",
