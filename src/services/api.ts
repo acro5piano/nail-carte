@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseUrl = 'http://54.95.203.161:3000'
+const baseUrl = 'https://api.fastestnews.org'
 
 const getPath = path => baseUrl + path
 
