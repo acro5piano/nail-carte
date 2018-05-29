@@ -14,11 +14,8 @@ interface CustomersProps {}
 // import Customer from '../entities/Customer'
 // const c = new Customer({name: 'KAZUYA'})
 
-const CustomerList = ({ classes }) => (
+const CustomerList = ({ classes, customers }) => (
   <div className={classes.root}>
-    <Link to={NEW_CUSTOMER_PATH}>
-      <FloatingActionButton />
-    </Link>
     <List>
       <ListItem>
         <Avatar><ImageIcon /></Avatar>
@@ -36,6 +33,9 @@ const CustomerList = ({ classes }) => (
       </ListItem>
       <li><Divider inset /></li>
     </List>
+    <Link to={NEW_CUSTOMER_PATH}>
+      <FloatingActionButton />
+    </Link>
   </div>
 )
 
