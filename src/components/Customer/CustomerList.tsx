@@ -17,21 +17,15 @@ interface CustomersProps {}
 const CustomerList = ({ classes, customers }) => (
   <div className={classes.root}>
     <List>
-      <ListItem>
-        <Avatar><ImageIcon /></Avatar>
-        <ListItemText primary="Photos" secondary="Jan 9, 2014" />
-      </ListItem>
-      <li><Divider inset /></li>
-      <ListItem>
-        <Avatar><ImageIcon /></Avatar>
-        <ListItemText primary="Photos" secondary="Jan 9, 2014" />
-      </ListItem>
-      <li><Divider inset /></li>
-      <ListItem>
-        <Avatar><ImageIcon /></Avatar>
-        <ListItemText primary="Photos" secondary="Jan 9, 2014" />
-      </ListItem>
-      <li><Divider inset /></li>
+      {customers.map(customer =>
+        <div key={customer.id}>
+          <ListItem>
+            <Avatar><ImageIcon /></Avatar>
+            <ListItemText primary={customer.name} secondary={customer.birthday} />
+          </ListItem>
+          <li><Divider inset /></li>
+        </div>,
+      )}
     </List>
     <Link to={NEW_CUSTOMER_PATH}>
       <FloatingActionButton />
