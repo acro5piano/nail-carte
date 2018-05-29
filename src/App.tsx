@@ -7,6 +7,7 @@ import Routes from 'sarte/Routes'
 import { CustomerApi } from 'sarte/services/api'
 import Customer from 'sarte/entities/Customer'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { transform, isEqual, isObject } from 'lodash'
 
 const theme = createMuiTheme({
   palette: {
@@ -20,6 +21,20 @@ const theme = createMuiTheme({
     },
   },
 })
+
+/**
+ * Deep diff between two object, using lodash
+ * @param  {Object} object Object compared
+ * @param  {Object} base   Object to compare with
+ * @return {Object}        Return a new object who represent the diff
+ */
+function difference(object, base) {
+  return transform(object, (result, value, key) => {
+    if (!isEqual(value, base[key])) {
+      result[key] = isObject(value) && isObject(base[key]) ? difference(value, base[key]) : value
+    }
+  })
+}
 
 interface AppState {
   isSidebarOpened: boolean
@@ -36,9 +51,12 @@ export default class AppContainer extends React.Component<{}, AppState> {
     await this.fetchCustomers()
   }
 
-  componentDidUpdate() {
-    console.log('%c App State Changed:', 'color: green; font-weight: bold')
-    console.log(this.state)
+  componentDidUpdate(prevProps, prevState) {
+    console.log('%c [log] App State Changed.', 'color: gray; font-weight: bold')
+    console.log('%c [log] Old State:', 'color: red; font-weight: bold')
+    console.log(difference(prevState, this.state))
+    console.log('%c [log] New State:', 'color: green; font-weight: bold')
+    console.log(difference(this.state, prevState))
   }
 
   toggleSidebar = () => this.setState({ isSidebarOpened: !this.state.isSidebarOpened })
