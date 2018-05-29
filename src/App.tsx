@@ -33,11 +33,27 @@ export default class AppContainer extends React.Component<{}, AppState> {
   }
 
   async componentDidMount() {
-    const customers = await CustomerApi.list()
-    this.setState({ customers })
+    await this.fetchCustomers()
+  }
+
+  componentDidUpdate() {
+    console.log('%c App State Changed:', 'color: green; font-weight: bold')
+    console.log(this.state)
   }
 
   toggleSidebar = () => this.setState({ isSidebarOpened: !this.state.isSidebarOpened })
+
+  fetchCustomers = async() => this.setState({ customers: await CustomerApi.list() })
+
+  createCustomer = () => CustomerApi.create({ name: 'kazuya' })
+
+  get actions() {
+    const {
+      fetchCustomers,
+      createCustomer,
+    } = this
+    return { fetchCustomers, createCustomer }
+  }
 
   render() {
     return (
@@ -47,7 +63,10 @@ export default class AppContainer extends React.Component<{}, AppState> {
           <Router>
             <div>
               <AppHeader onClickMenu={this.toggleSidebar} />
-              <Routes {...this.state} />
+              <Routes
+                {...this.state}
+                {...this.actions}
+              />
               <AppSidebar
                 isOpened={this.state.isSidebarOpened}
                 onCloseSidebar={this.toggleSidebar}

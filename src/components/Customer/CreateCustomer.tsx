@@ -5,17 +5,11 @@ import { withStyles } from 'material-ui/styles'
 
 interface CustomersProps {}
 
-const handle = values => {
-  console.log(values)
-}
-
-const NewCustomer = ({ classes }) => (
+const NewCustomer = ({ classes, createCustomer }) => (
   <div className={classes.root}>
-    <form onSubmit={handle}>
-      <label htmlFor="firstName">First Name</label>
-      <input name="firstName" type="text" />
-      <button type="submit">Submit</button>
-    </form>
+    <label htmlFor="firstName">First Name</label>
+    <input name="firstName" type="text" />
+    <button onClick={createCustomer}>Submit</button>
   </div>
 )
 
