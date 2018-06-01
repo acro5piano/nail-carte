@@ -52,11 +52,12 @@ export default class AppContainer extends React.Component<{}, AppState> {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('%c [log] App State Changed.', 'color: gray; font-weight: bold')
+    console.group('%c [log] App State Changed.', 'color: gray; font-weight: bold')
     console.log('%c [log] Old State:', 'color: red; font-weight: bold')
     console.log(difference(prevState, this.state))
     console.log('%c [log] New State:', 'color: green; font-weight: bold')
     console.log(difference(this.state, prevState))
+    console.groupEnd()
   }
 
   toggleSidebar = () => this.setState({ isSidebarOpened: !this.state.isSidebarOpened })
