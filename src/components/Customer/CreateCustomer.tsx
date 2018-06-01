@@ -1,12 +1,13 @@
 import * as React from 'react'
 import { withStyles } from 'material-ui/styles'
-// import AppHeader from 'sarte/components/AppHeader'
+import AppHeader from 'sarte/components/AppHeader'
 // import Customer from '../entities/Customer'
 
 interface CustomersProps {}
 
-const NewCustomer = ({ classes, createCustomer }) => (
+const NewCustomer = ({ classes, createCustomer, history }) => (
   <div className={classes.root}>
+    <AppHeader hasBack history={history} title="New Customer" />
     <label htmlFor="firstName">First Name</label>
     <input name="firstName" type="text" />
     <button onClick={createCustomer}>Submit</button>

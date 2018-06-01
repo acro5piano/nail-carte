@@ -1,7 +1,6 @@
 import * as React from 'react'
 import CssBaseline from 'material-ui/CssBaseline'
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
-import AppHeader from 'sarte/components/AppHeader'
 import AppSidebar from 'sarte/components/AppSidebar/AppSidebar'
 import Routes from 'sarte/Routes'
 import { CustomerApi } from 'sarte/services/api'
@@ -70,8 +69,9 @@ export default class AppContainer extends React.Component<{}, AppState> {
     const {
       fetchCustomers,
       createCustomer,
+      toggleSidebar,
     } = this
-    return { fetchCustomers, createCustomer }
+    return { fetchCustomers, createCustomer, toggleSidebar }
   }
 
   render() {
@@ -81,7 +81,6 @@ export default class AppContainer extends React.Component<{}, AppState> {
         <MuiThemeProvider theme={theme}>
           <Router>
             <div>
-              <AppHeader onClickMenu={this.toggleSidebar} />
               <Routes
                 {...this.state}
                 {...this.actions}

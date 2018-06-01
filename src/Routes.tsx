@@ -10,7 +10,7 @@ export const CUSTOMER_PATH = '/customers/:id'
 export const NEW_CUSTOMER_PATH = '/customers/new'
 
 const Routes = (props) => {
-  const renderWithProps = (ComposedComponent) => () => <ComposedComponent {...props} />
+  const renderWithProps = (ComposedComponent) => (routerProps) => <ComposedComponent {...props} {...routerProps} />
 
   const RouteWithProps = ({ path, component }) =>
      <Route exact path={path} render={renderWithProps(component)}/>

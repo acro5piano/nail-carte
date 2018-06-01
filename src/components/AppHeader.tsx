@@ -4,20 +4,24 @@ import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
 import IconButton from 'material-ui/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import { withStyles } from 'material-ui/styles'
 
 interface AppHeaderProps {
-  onClickMenu: () => void
+  title: string
+  onClickMenu?: () => void
+  hasBack?: boolean
+  history?: any
 }
 
-const AppHeader = ({ classes, onClickMenu }) => (
+const AppHeader = ({ classes, onClickMenu, hasBack = false, history, title }) => (
   <AppBar>
     <Toolbar>
-      <IconButton onClick={onClickMenu} className={classes.menuButton} color="inherit" aria-label="Menu">
-        <MenuIcon />
+      <IconButton onClick={onClickMenu ? onClickMenu : history.goBack} className={classes.menuButton} color="inherit" aria-label="Menu">
+        {hasBack ? <ArrowBackIcon /> : <MenuIcon />}
       </IconButton>
       <Typography variant="title" color="inherit" noWrap>
-        Customers
+        {title}
       </Typography>
     </Toolbar>
   </AppBar>

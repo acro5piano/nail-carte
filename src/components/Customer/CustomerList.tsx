@@ -7,15 +7,16 @@ import List, { ListItem, ListItemText } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
 import ImageIcon from '@material-ui/icons/Image'
 import { NEW_CUSTOMER_PATH } from 'sarte/Routes'
-// import AppHeader from 'sarte/components/AppHeader'
+import AppHeader from 'sarte/components/AppHeader'
 
 interface CustomersProps {}
 
 // import Customer from '../entities/Customer'
 // const c = new Customer({name: 'KAZUYA'})
 
-const CustomerList = ({ classes, customers }) => (
+const CustomerList = ({ classes, customers, toggleSidebar, history }) => (
   <div className={classes.root}>
+    <AppHeader onClickMenu={toggleSidebar} title="Customers" />
     <List>
       {customers.map(customer =>
         <div key={customer.id}>
