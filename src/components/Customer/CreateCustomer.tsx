@@ -27,14 +27,28 @@ class NewCustomer extends React.PureComponent<NewCustomerProps, NewCustomerState
     return (
       <div className={classes.root}>
         <AppHeader hasBack onSubmit={this.submit} submitTitle="Create" />
-        <TextField
-          name="name"
-          type="text"
-          label="Name"
-          fullWidth
-          defaultValue={this.state.newCustomer.name}
-          onChange={this.onUpdateName}
-        />
+        <div>
+          <TextField
+            name="name"
+            type="text"
+            label="Name"
+            fullWidth
+            defaultValue={this.state.newCustomer.name}
+            onChange={this.onUpdateName}
+          />
+        </div>
+        <div className={classes.input}>
+          <TextField
+            name="birthday"
+            type="date"
+            label="Birthday"
+            defaultValue={this.state.newCustomer.name}
+            onChange={this.onUpdateName}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+        </div>
       </div>
     )
   }
@@ -42,7 +56,7 @@ class NewCustomer extends React.PureComponent<NewCustomerProps, NewCustomerState
   private handleChange = field => event => {
     const newCustomer = new CustomerForm({
       ...this.state.newCustomer,
-      name: event.target.value,
+      [field]: event.target.value,
     })
     this.setState({ newCustomer })
   }
@@ -59,6 +73,9 @@ const styles = {
     marginTop: 24,
     backgroundColor: '#fff',
     padding: 12,
+  },
+  input: {
+    marginTop: 36,
   },
 }
 
