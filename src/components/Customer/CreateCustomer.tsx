@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { withStyles } from 'material-ui/styles'
 import AppHeader from 'sarte/components/AppHeader'
-// import Customer from '../entities/Customer'
 import { CustomerForm } from 'sarte/forms/CustomerForm'
+import TextField from '@material-ui/core/TextField'
 
 interface CustomersProps {}
 
@@ -18,7 +18,7 @@ interface NewCustomerState {
 
 class NewCustomer extends React.PureComponent<NewCustomerProps, NewCustomerState> {
   public state = {
-    newCustomer: new CustomerForm({ name: 'kazuya' }),
+    newCustomer: new CustomerForm(),
   }
 
   public render() {
@@ -27,9 +27,11 @@ class NewCustomer extends React.PureComponent<NewCustomerProps, NewCustomerState
     return (
       <div className={classes.root}>
         <AppHeader hasBack onSubmit={this.submit} submitTitle="Create" />
-        <input
+        <TextField
           name="name"
           type="text"
+          label="Name"
+          fullWidth
           defaultValue={this.state.newCustomer.name}
           onChange={this.onUpdateName}
         />

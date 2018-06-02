@@ -5,7 +5,7 @@ export class CustomerForm {
   address?: string = ''
   zip?: number
 
-  constructor(args) {
+  constructor(args = {}) {
     Object.assign(this, args)
   }
 
