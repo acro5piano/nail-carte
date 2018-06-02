@@ -5,6 +5,7 @@ interface CustomerArgs {
   address: string
   zip: number
   email: string
+  createdAt: string
 }
 
 export default class Customer {
@@ -14,6 +15,7 @@ export default class Customer {
   address: string
   zip: number
   email: string
+  createdAt: string
 
   constructor(args: CustomerArgs) {
     Object.assign(this, args)

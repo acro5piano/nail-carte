@@ -13,6 +13,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@material-ui/core": "^1.1.0",
     "axios": "^0.17.1",
     "lodash": "^4.17.10",
     "material-ui": "v1.0.0-beta.43",

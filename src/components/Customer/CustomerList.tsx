@@ -8,17 +8,15 @@ import Avatar from 'material-ui/Avatar'
 import ImageIcon from '@material-ui/icons/Image'
 import { NEW_CUSTOMER_PATH } from 'sarte/Routes'
 import AppHeader from 'sarte/components/AppHeader'
+import { orderBy } from 'lodash'
 
 interface CustomersProps {}
 
-// import Customer from '../entities/Customer'
-// const c = new Customer({name: 'KAZUYA'})
-
-const CustomerList = ({ classes, customers, toggleSidebar, history }) => (
+const CustomerList = ({ classes, customers, toggleSidebar }) => (
   <div className={classes.root}>
     <AppHeader onClickMenu={toggleSidebar} title="Customers" />
     <List>
-      {customers.map(customer =>
+      {orderBy(customers, 'createdAt').reverse().map(customer =>
         <div key={customer.id}>
           <ListItem>
             <Avatar><ImageIcon /></Avatar>

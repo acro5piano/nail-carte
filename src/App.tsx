@@ -6,7 +6,8 @@ import Routes from 'sarte/Routes'
 import { CustomerApi } from 'sarte/services/api'
 import Customer from 'sarte/entities/Customer'
 import { BrowserRouter as Router } from 'react-router-dom'
-import { transform, isEqual, isObject } from 'lodash'
+import { CustomerForm } from 'sarte/forms/CustomerForm'
+import { logDifference } from 'sarte/utils'
 
 const theme = createMuiTheme({
   palette: {
@@ -21,57 +22,25 @@ const theme = createMuiTheme({
   },
 })
 
-/**
- * Deep diff between two object, using lodash
- * @param  {Object} object Object compared
- * @param  {Object} base   Object to compare with
- * @return {Object}        Return a new object who represent the diff
- */
-function difference(object, base) {
-  return transform(object, (result, value, key) => {
-    if (!isEqual(value, base[key])) {
-      result[key] = isObject(value) && isObject(base[key]) ? difference(value, base[key]) : value
-    }
-  })
-}
-
 interface AppState {
   isSidebarOpened: boolean
   customers: Customer[]
+  newCustomer: CustomerForm
 }
 
 export default class AppContainer extends React.Component<{}, AppState> {
-  state = {
+  public state = {
     isSidebarOpened: false,
     customers: [],
+    newCustomer: new CustomerForm({ name: 'kazuya' }),
   }
 
-  async componentDidMount() {
+  public async componentDidMount() {
     await this.fetchCustomers()
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    console.group('%c [log] App State Changed.', 'color: gray; font-weight: bold')
-    console.log('%c [log] Old State:', 'color: red; font-weight: bold')
-    console.log(difference(prevState, this.state))
-    console.log('%c [log] New State:', 'color: green; font-weight: bold')
-    console.log(difference(this.state, prevState))
-    console.groupEnd()
-  }
-
-  toggleSidebar = () => this.setState({ isSidebarOpened: !this.state.isSidebarOpened })
-
-  fetchCustomers = async() => this.setState({ customers: await CustomerApi.list() })
-
-  createCustomer = () => CustomerApi.create({ name: 'kazuya' })
-
-  get actions() {
-    const {
-      fetchCustomers,
-      createCustomer,
-      toggleSidebar,
-    } = this
-    return { fetchCustomers, createCustomer, toggleSidebar }
+  public componentDidUpdate(prevProps, prevState) {
+    logDifference(prevState, this.state)
   }
 
   render() {
@@ -94,5 +63,27 @@ export default class AppContainer extends React.Component<{}, AppState> {
         </MuiThemeProvider>
       </React.Fragment>
     )
+  }
+
+  private get actions() {
+    const {
+      fetchCustomers,
+      createCustomer,
+      toggleSidebar,
+    } = this
+    return { fetchCustomers, createCustomer, toggleSidebar }
+  }
+
+  private toggleSidebar = () => this.setState({ isSidebarOpened: !this.state.isSidebarOpened })
+
+  private fetchCustomers = async() => this.setState({ customers: await CustomerApi.list() })
+
+  private createCustomer = async(customerForm: CustomerForm) => {
+    await CustomerApi.create({
+      ...customerForm.toCreateCustomerParams(),
+      createAt: Date.now(),
+    })
+    await this.fetchCustomers()
+    history.back()
   }
 }

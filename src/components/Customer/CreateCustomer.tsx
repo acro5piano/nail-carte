@@ -2,17 +2,55 @@ import * as React from 'react'
 import { withStyles } from 'material-ui/styles'
 import AppHeader from 'sarte/components/AppHeader'
 // import Customer from '../entities/Customer'
+import { CustomerForm } from 'sarte/forms/CustomerForm'
 
 interface CustomersProps {}
 
-const NewCustomer = ({ classes, createCustomer, history }) => (
-  <div className={classes.root}>
-    <AppHeader hasBack history={history} title="New Customer" />
-    <label htmlFor="firstName">First Name</label>
-    <input name="firstName" type="text" />
-    <button onClick={createCustomer}>Submit</button>
-  </div>
-)
+interface NewCustomerProps {
+  classes: any
+  history: any
+  createCustomer: (customer: CustomerForm) => void
+}
+
+interface NewCustomerState {
+  newCustomer: CustomerForm
+}
+
+class NewCustomer extends React.PureComponent<NewCustomerProps, NewCustomerState> {
+  public state = {
+    newCustomer: new CustomerForm({ name: 'kazuya' }),
+  }
+
+  public render() {
+    const { classes } = this.props
+
+    return (
+      <div className={classes.root}>
+        <AppHeader hasBack onSubmit={this.submit} submitTitle="Create" />
+        <input
+          name="name"
+          type="text"
+          defaultValue={this.state.newCustomer.name}
+          onChange={this.onUpdateName}
+        />
+      </div>
+    )
+  }
+
+  private handleChange = field => event => {
+    const newCustomer = new CustomerForm({
+      ...this.state.newCustomer,
+      name: event.target.value,
+    })
+    this.setState({ newCustomer })
+  }
+
+  private onUpdateName = event => {
+    this.handleChange('name')(event)
+  }
+
+  private submit = () => this.props.createCustomer(this.state.newCustomer)
+}
 
 const styles = {
   root: {

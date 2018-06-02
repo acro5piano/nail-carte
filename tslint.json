@@ -6,12 +6,12 @@
   ],
   "rules": {
     "space-before-function-paren": [
-      true, 
+      true,
       "never"
     ],
     "jsx-boolean-value": ["always", { "never": ["personal"] }],
     "comma-dangle": [
-      "error", 
+      "error",
       "always-multiline"
     ],
     "quotemark": [
