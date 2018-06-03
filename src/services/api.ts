@@ -11,3 +11,7 @@ export const CustomerApi = {
   list: () => GET('/customers'),
   create: (data: object) => POST('/customers', data),
 }
+
+export const VisitApi = {
+  create: (data: object) => POST('/visits', data),
+}

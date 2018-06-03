@@ -3,7 +3,10 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import AppSidebar from 'sarte/components/AppSidebar/AppSidebar'
 import Routes from 'sarte/Routes'
-import { CustomerApi } from 'sarte/services/api'
+import {
+  CustomerApi,
+  VisitApi,
+} from 'sarte/services/api'
 import Customer from 'sarte/entities/Customer'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { CustomerForm } from 'sarte/forms/CustomerForm'
@@ -95,7 +98,7 @@ export default class AppContainer extends React.Component<{}, AppState> {
   }
 
   private createVisit = async(visitForm: VisitForm) => {
-    await CustomerApi.create({
+    await VisitApi.create({
       ...visitForm.toCreateVisitParams(),
       createAt: Date.now(),
     })

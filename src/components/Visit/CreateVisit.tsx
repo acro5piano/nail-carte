@@ -9,7 +9,7 @@ interface VisitsProps {}
 interface NewVisitProps {
   classes: any
   match: any
-  createVisit: (customer: VisitForm) => void
+  createVisit: (visitForm: VisitForm) => void
 }
 
 interface NewVisitState {
