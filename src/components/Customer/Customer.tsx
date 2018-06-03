@@ -14,29 +14,30 @@ import { orderBy } from 'lodash'
 
 interface CustomersProps {}
 
-const getLink = (pathname, id) => pathname.replace(/:.+\//, id + '/').replace(/:.+$/, id)
+const Customer = ({ classes, customers, toggleSidebar, match }) => {
+  const customer = customers.find(c => c.id === Number(match.params.id))
+  console.log(customer)
 
-const CustomerList = ({ classes, customers, toggleSidebar }) => (
-  <div className={classes.root}>
-    <AppHeader onClickMenu={toggleSidebar} title="Customers" />
-    <List>
-      {orderBy(customers, 'createdAt').reverse().map(customer =>
+  return (
+    <div className={classes.root}>
+      <AppHeader hasBack title="Customers" />
+      <List>
+        {orderBy(customers, 'createdAt').reverse().map(customer =>
         <div key={customer.id}>
-          <Link to={getLink('/customers/:id', customer.id)}>
-            <ListItem>
-              <Avatar><ImageIcon /></Avatar>
-              <ListItemText primary={customer.name} secondary={customer.birthday} />
-            </ListItem>
-            <li><Divider inset /></li>
-          </Link>
+          <ListItem>
+            <Avatar><ImageIcon /></Avatar>
+            <ListItemText primary={customer.name} secondary={customer.birthday} />
+          </ListItem>
+          <li><Divider inset /></li>
         </div>,
-      )}
-    </List>
-    <Link to={NEW_CUSTOMER_PATH}>
-      <FloatingActionButton />
-    </Link>
-  </div>
-)
+        )}
+      </List>
+      <Link to={NEW_CUSTOMER_PATH}>
+        <FloatingActionButton />
+      </Link>
+    </div>
+  )
+}
 
 const styles = {
   root: {
@@ -46,4 +47,4 @@ const styles = {
   },
 }
 
-export default withStyles(styles)<CustomersProps>(CustomerList)
+export default withStyles(styles)<CustomersProps>(Customer)

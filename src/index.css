@@ -13,3 +13,7 @@ body {
   font-weight: 400;
   src: local('Material Icons'), local('MaterialIcons-Regular');
 }
+
+a {
+  text-decoration: none;
+}

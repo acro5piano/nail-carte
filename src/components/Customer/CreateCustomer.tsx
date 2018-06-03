@@ -39,11 +39,20 @@ class NewCustomer extends React.PureComponent<NewCustomerProps, NewCustomerState
         </div>
         <div className={classes.input}>
           <TextField
+            name="email"
+            type="email"
+            label="Email"
+            defaultValue={this.state.newCustomer.email}
+            onChange={this.onUpdateEmail}
+          />
+        </div>
+        <div className={classes.input}>
+          <TextField
             name="birthday"
             type="date"
             label="Birthday"
             defaultValue={this.state.newCustomer.name}
-            onChange={this.onUpdateName}
+            onChange={this.onUpdateBirthday}
             InputLabelProps={{
               shrink: true,
             }}
@@ -63,6 +72,14 @@ class NewCustomer extends React.PureComponent<NewCustomerProps, NewCustomerState
 
   private onUpdateName = event => {
     this.handleChange('name')(event)
+  }
+
+  private onUpdateBirthday = event => {
+    this.handleChange('birthday')(event)
+  }
+
+  private onUpdateEmail = event => {
+    this.handleChange('email')(event)
   }
 
   private submit = () => this.props.createCustomer(this.state.newCustomer)
