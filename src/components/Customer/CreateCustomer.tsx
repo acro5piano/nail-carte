@@ -70,17 +70,11 @@ class NewCustomer extends React.PureComponent<NewCustomerProps, NewCustomerState
     this.setState({ newCustomer })
   }
 
-  private onUpdateName = event => {
-    this.handleChange('name')(event)
-  }
+  private onUpdateName = event => this.handleChange('name')(event)
 
-  private onUpdateBirthday = event => {
-    this.handleChange('birthday')(event)
-  }
+  private onUpdateEmail = event => this.handleChange('email')(event)
 
-  private onUpdateEmail = event => {
-    this.handleChange('email')(event)
-  }
+  private onUpdateBirthday = event => this.handleChange('birthday')(event)
 
   private submit = () => this.props.createCustomer(this.state.newCustomer)
 }
