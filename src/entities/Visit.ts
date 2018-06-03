@@ -6,4 +6,8 @@ export default class Visit {
   startAt: number
   endAt: number
   createdAt: number
+
+  constructor(args: any) {
+    Object.assign(this, args)
+  }
 }

@@ -32,6 +32,9 @@ const Customer = ({ classes, customers, toggleSidebar, match }) => {
           </Grid>
         </Grid>
       </div>
+      <div className={classes.basic}>
+        {customer.visits.map(v => v.note)}
+      </div>
       <Link to={getLink(CREATE_VISIT_PATH, customer.id)}>
         <FloatingActionButton />
       </Link>

@@ -8,7 +8,7 @@ const GET = (path: string) => axios.get(getPath(path)).then(res => res.data)
 const POST = (path: string, data: object) => axios.post(getPath(path), data)
 
 export const CustomerApi = {
-  list: () => GET('/customers'),
+  list: () => GET('/customers?_embed=visits'),
   create: (data: object) => POST('/customers', data),
 }
 
