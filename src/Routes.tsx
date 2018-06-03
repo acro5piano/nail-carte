@@ -3,6 +3,8 @@ import { Route, Switch } from 'react-router-dom'
 import CustomerList from 'sarte/components/Customer/CustomerList'
 import CreateCustomer from 'sarte/components/Customer/CreateCustomer'
 import Customer from 'sarte/components/Customer/Customer'
+import CreateVisit from 'sarte/components/Visit/CreateVisit'
+
 import NotFound from 'sarte/components/NotFound'
 
 export const HOME_PATH = '/'
@@ -23,11 +25,11 @@ const Routes = (props) => {
   return (
     <div className="appBody">
       <Switch>
+        <RouteWithProps path={CREATE_VISIT_PATH} component={CreateVisit}/>
+
         <RouteWithProps path={CREATE_CUSTOMER_PATH} component={CreateCustomer}/>
         <RouteWithProps path={CUSTOMER_PATH} component={Customer}/>
         <RouteWithProps path={CUSTOMER_LIST_PATH} component={CustomerList}/>
-
-        <RouteWithProps path={CREATE_VISIT_PATH} component={CustomerList}/>
 
         <RouteWithProps path={HOME_PATH} component={NotFound}/>
       </Switch>

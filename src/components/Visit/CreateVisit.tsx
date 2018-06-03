@@ -8,7 +8,7 @@ interface VisitsProps {}
 
 interface NewVisitProps {
   classes: any
-  history: any
+  match: any
   createVisit: (customer: VisitForm) => void
 }
 
@@ -18,7 +18,9 @@ interface NewVisitState {
 
 class CreateVisit extends React.PureComponent<NewVisitProps, NewVisitState> {
   public state = {
-    newVisit: new VisitForm(),
+    newVisit: new VisitForm({
+      customerId: this.props.match.id,
+    }),
   }
 
   public render() {
@@ -26,33 +28,49 @@ class CreateVisit extends React.PureComponent<NewVisitProps, NewVisitState> {
 
     return (
       <div className={classes.root}>
-        <AppHeader hasBack onSubmit={this.submit} submitTitle="Create" />
+        <AppHeader hasBack title="New Visits" onSubmit={this.submit} submitTitle="Create" />
         <div>
           <TextField
-            name="name"
-            type="text"
-            label="Name"
+            name="price"
+            type="number"
+            label="Price"
             fullWidth
             defaultValue={this.state.newVisit.price}
-            onChange={this.onUpdateName}
+            onChange={this.onUpdatePrice}
           />
         </div>
         <div className={classes.input}>
           <TextField
-            name="email"
-            type="datetime"
-            label="Email"
-            defaultValue={this.state.newVisit.startAt}
-            onChange={this.onUpdateEmail}
-          />
-        </div>
-        <div className={classes.input}>
-          <TextField
-            name="occupation"
-            type="occupation"
-            label="Occupation"
+            name="note"
+            label="Note"
+            multiline
+            fullWidth
             defaultValue={this.state.newVisit.note}
-            onChange={this.onUpdateEmail}
+            onChange={this.onUpdateNote}
+          />
+        </div>
+        <div className={classes.input}>
+          <TextField
+            name="startAt"
+            type="datetime-local"
+            label="Start At"
+            defaultValue={this.state.newVisit.startAtForHuman}
+            onChange={this.onUpdateStartAt}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+        </div>
+        <div className={classes.input}>
+          <TextField
+            name="endAt"
+            type="datetime-local"
+            label="End At"
+            defaultValue={this.state.newVisit.endAtForHuman}
+            onChange={this.onUpdateEndAt}
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
         </div>
       </div>
@@ -67,9 +85,13 @@ class CreateVisit extends React.PureComponent<NewVisitProps, NewVisitState> {
     this.setState({ newVisit })
   }
 
-  private onUpdateName = event => this.handleChange('name')(event)
+  private onUpdatePrice = event => this.handleChange('price')(event)
 
-  private onUpdateEmail = event => this.handleChange('email')(event)
+  private onUpdateNote = event => this.handleChange('note')(event)
+
+  private onUpdateStartAt = event => this.handleChange('startAt')(event)
+
+  private onUpdateEndAt = event => this.handleChange('endAt')(event)
 
   private submit = () => this.props.createVisit(this.state.newVisit)
 }

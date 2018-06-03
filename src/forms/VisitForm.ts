@@ -3,10 +3,10 @@ import moment = require('moment')
 export class VisitForm {
   id?: number
   customerId: number
-  price: number
-  note?: string
-  startAt?: number
-  endAt?: number
+  price?: number
+  note: string = ''
+  startAt?: number = new Date()
+  endAt?: number = new Date()
   createdAt?: number
 
   constructor(args = {}) {
@@ -19,6 +19,10 @@ export class VisitForm {
   }
 
   get startAtForHuman() {
-    return moment(this.startAt).format('YYYY-MM-DD H:m:s')
+    return moment(this.startAt).format('YYYY-MM-DDTHH:mm')
+  }
+
+  get endAtForHuman() {
+    return moment(this.endAt).add(1, 'hour').format('YYYY-MM-DDTHH:MM')
   }
 }
