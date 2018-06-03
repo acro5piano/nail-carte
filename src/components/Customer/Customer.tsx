@@ -1,37 +1,37 @@
 import * as React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
-import Divider from '@material-ui/core/Divider'
 import FloatingActionButton from 'sarte/components/MaterialUi/Button/FloatingActionButton'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
 import Avatar from '@material-ui/core/Avatar'
 import ImageIcon from '@material-ui/icons/Image'
 import { NEW_CUSTOMER_PATH } from 'sarte/Routes'
 import AppHeader from 'sarte/components/AppHeader'
-import { orderBy } from 'lodash'
+import Grid from '@material-ui/core/Grid'
 
 interface CustomersProps {}
 
 const Customer = ({ classes, customers, toggleSidebar, match }) => {
   const customer = customers.find(c => c.id === Number(match.params.id))
-  console.log(customer)
+  if (!customer) {
+    return null
+  }
 
   return (
     <div className={classes.root}>
-      <AppHeader hasBack title="Customers" />
-      <List>
-        {orderBy(customers, 'createdAt').reverse().map(customer =>
-        <div key={customer.id}>
-          <ListItem>
-            <Avatar><ImageIcon /></Avatar>
-            <ListItemText primary={customer.name} secondary={customer.birthday} />
-          </ListItem>
-          <li><Divider inset /></li>
-        </div>,
-        )}
-      </List>
+      <AppHeader hasBack title={customer.name} />
+      <div className={classes.basic}>
+        <Grid container spacing={16}>
+          <Grid item xs={4}>
+            <div className={classes.photo}>
+              <Avatar className={classes.avatar}><ImageIcon /></Avatar>
+            </div>
+          </Grid>
+          <Grid item xs={8}>
+            <div>{customer.name}</div>
+            <div>{customer.birthday}</div>
+          </Grid>
+        </Grid>
+      </div>
       <Link to={NEW_CUSTOMER_PATH}>
         <FloatingActionButton />
       </Link>
@@ -41,9 +41,19 @@ const Customer = ({ classes, customers, toggleSidebar, match }) => {
 
 const styles = {
   root: {
-    marginTop: 24,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
+  },
+  photo: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  avatar: {
+    width: 80,
+    height: 80,
+  },
+  basic: {
     padding: 12,
+    backgroundColor: '#fff',
   },
 }
 

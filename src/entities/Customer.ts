@@ -16,6 +16,7 @@ export default class Customer {
   zip: number
   email: string
   createdAt: string
+  occupation: string
 
   constructor(args: CustomerArgs) {
     Object.assign(this, args)
