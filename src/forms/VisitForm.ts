@@ -5,8 +5,8 @@ export class VisitForm {
   customerId: number
   price?: number
   note: string = ''
-  startAt?: number = new Date()
-  endAt?: number = new Date()
+  startAt?: Date = new Date()
+  endAt?: Date = new Date()
   createdAt?: number
 
   constructor(args = {}) {
@@ -15,7 +15,14 @@ export class VisitForm {
 
   toCreateVisitParams() {
     const { customerId, price, note, startAt, endAt, createdAt } = this
-    return { customerId, price, note, startAt, endAt, createdAt }
+    return {
+      customerId: Number(customerId),
+      price: Number(price),
+      note,
+      startAt: Number(moment(startAt)),
+      endAt: Number(moment(endAt)),
+      createdAt,
+    }
   }
 
   get startAtForHuman() {

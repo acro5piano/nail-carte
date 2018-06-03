@@ -98,9 +98,10 @@ export default class AppContainer extends React.Component<{}, AppState> {
   }
 
   private createVisit = async(visitForm: VisitForm) => {
+    console.log(visitForm.toCreateVisitParams())
     await VisitApi.create({
       ...visitForm.toCreateVisitParams(),
-      createAt: Date.now(),
+      createdAt: Date.now(),
     })
     await this.fetchCustomers()
     history.back()

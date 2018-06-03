@@ -18,9 +18,7 @@ interface NewVisitState {
 
 class CreateVisit extends React.PureComponent<NewVisitProps, NewVisitState> {
   public state = {
-    newVisit: new VisitForm({
-      customerId: this.props.match.id,
-    }),
+    newVisit: new VisitForm(),
   }
 
   public render() {
@@ -93,7 +91,11 @@ class CreateVisit extends React.PureComponent<NewVisitProps, NewVisitState> {
 
   private onUpdateEndAt = event => this.handleChange('endAt')(event)
 
-  private submit = () => this.props.createVisit(this.state.newVisit)
+  private submit = () => {
+    const { newVisit } = this.state
+    newVisit.customerId = this.props.match.params.id,
+    this.props.createVisit(newVisit)
+  }
 }
 
 const styles = {
