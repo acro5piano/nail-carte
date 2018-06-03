@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import FloatingActionButton from 'sarte/components/MaterialUi/Button/FloatingActionButton'
 import Avatar from '@material-ui/core/Avatar'
 import ImageIcon from '@material-ui/icons/Image'
-import { NEW_CUSTOMER_PATH } from 'sarte/Routes'
+import { CREATE_VISIT_PATH, getLink } from 'sarte/Routes'
 import AppHeader from 'sarte/components/AppHeader'
 import Grid from '@material-ui/core/Grid'
 
@@ -32,7 +32,7 @@ const Customer = ({ classes, customers, toggleSidebar, match }) => {
           </Grid>
         </Grid>
       </div>
-      <Link to={NEW_CUSTOMER_PATH}>
+      <Link to={getLink(CREATE_VISIT_PATH, customer.id)}>
         <FloatingActionButton />
       </Link>
     </div>

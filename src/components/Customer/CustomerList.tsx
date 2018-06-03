@@ -8,13 +8,11 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Avatar from '@material-ui/core/Avatar'
 import ImageIcon from '@material-ui/icons/Image'
-import { NEW_CUSTOMER_PATH } from 'sarte/Routes'
+import { CREATE_CUSTOMER_PATH, getLink } from 'sarte/Routes'
 import AppHeader from 'sarte/components/AppHeader'
 import { orderBy } from 'lodash'
 
 interface CustomersProps {}
-
-const getLink = (pathname, id) => pathname.replace(/:.+\//, id + '/').replace(/:.+$/, id)
 
 const CustomerList = ({ classes, customers, toggleSidebar }) => (
   <div className={classes.root}>
@@ -32,7 +30,7 @@ const CustomerList = ({ classes, customers, toggleSidebar }) => (
         </div>,
       )}
     </List>
-    <Link to={NEW_CUSTOMER_PATH}>
+    <Link to={CREATE_CUSTOMER_PATH}>
       <FloatingActionButton />
     </Link>
   </div>

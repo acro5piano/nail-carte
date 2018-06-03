@@ -7,6 +7,7 @@ import { CustomerApi } from 'sarte/services/api'
 import Customer from 'sarte/entities/Customer'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { CustomerForm } from 'sarte/forms/CustomerForm'
+import { VisitForm } from 'sarte/forms/VisitForm'
 import { logDifference } from 'sarte/utils'
 
 const theme = createMuiTheme({
@@ -70,8 +71,14 @@ export default class AppContainer extends React.Component<{}, AppState> {
       fetchCustomers,
       createCustomer,
       toggleSidebar,
+      createVisit,
     } = this
-    return { fetchCustomers, createCustomer, toggleSidebar }
+    return {
+      fetchCustomers,
+      createCustomer,
+      toggleSidebar,
+      createVisit,
+    }
   }
 
   private toggleSidebar = () => this.setState({ isSidebarOpened: !this.state.isSidebarOpened })
@@ -81,6 +88,15 @@ export default class AppContainer extends React.Component<{}, AppState> {
   private createCustomer = async(customerForm: CustomerForm) => {
     await CustomerApi.create({
       ...customerForm.toCreateCustomerParams(),
+      createdAt: Date.now(),
+    })
+    await this.fetchCustomers()
+    history.back()
+  }
+
+  private createVisit = async(visitForm: VisitForm) => {
+    await CustomerApi.create({
+      ...visitForm.toCreateVisitParams(),
       createAt: Date.now(),
     })
     await this.fetchCustomers()

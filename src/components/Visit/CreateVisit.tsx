@@ -1,24 +1,24 @@
 import * as React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import AppHeader from 'sarte/components/AppHeader'
-import { CustomerForm } from 'sarte/forms/CustomerForm'
+import { VisitForm } from 'sarte/forms/VisitForm'
 import TextField from '@material-ui/core/TextField'
 
-interface CustomersProps {}
+interface VisitsProps {}
 
-interface NewCustomerProps {
+interface NewVisitProps {
   classes: any
   history: any
-  createCustomer: (customer: CustomerForm) => void
+  createVisit: (customer: VisitForm) => void
 }
 
-interface NewCustomerState {
-  newCustomer: CustomerForm
+interface NewVisitState {
+  newVisit: VisitForm
 }
 
-class CreateCustomer extends React.PureComponent<NewCustomerProps, NewCustomerState> {
+class CreateVisit extends React.PureComponent<NewVisitProps, NewVisitState> {
   public state = {
-    newCustomer: new CustomerForm(),
+    newVisit: new VisitForm(),
   }
 
   public render() {
@@ -33,16 +33,16 @@ class CreateCustomer extends React.PureComponent<NewCustomerProps, NewCustomerSt
             type="text"
             label="Name"
             fullWidth
-            defaultValue={this.state.newCustomer.name}
+            defaultValue={this.state.newVisit.price}
             onChange={this.onUpdateName}
           />
         </div>
         <div className={classes.input}>
           <TextField
             name="email"
-            type="email"
+            type="datetime"
             label="Email"
-            defaultValue={this.state.newCustomer.createdAt}
+            defaultValue={this.state.newVisit.startAt}
             onChange={this.onUpdateEmail}
           />
         </div>
@@ -51,20 +51,8 @@ class CreateCustomer extends React.PureComponent<NewCustomerProps, NewCustomerSt
             name="occupation"
             type="occupation"
             label="Occupation"
-            defaultValue={this.state.newCustomer.occupation}
+            defaultValue={this.state.newVisit.note}
             onChange={this.onUpdateEmail}
-          />
-        </div>
-        <div className={classes.input}>
-          <TextField
-            name="birthday"
-            type="date"
-            label="Birthday"
-            defaultValue={this.state.newCustomer.birthdayForHuman}
-            onChange={this.onUpdateBirthday}
-            InputLabelProps={{
-              shrink: true,
-            }}
           />
         </div>
       </div>
@@ -72,20 +60,18 @@ class CreateCustomer extends React.PureComponent<NewCustomerProps, NewCustomerSt
   }
 
   private handleChange = field => event => {
-    const newCustomer = new CustomerForm({
-      ...this.state.newCustomer,
+    const newVisit = new VisitForm({
+      ...this.state.newVisit,
       [field]: event.target.value,
     })
-    this.setState({ newCustomer })
+    this.setState({ newVisit })
   }
 
   private onUpdateName = event => this.handleChange('name')(event)
 
   private onUpdateEmail = event => this.handleChange('email')(event)
 
-  private onUpdateBirthday = event => this.handleChange('birthday')(event)
-
-  private submit = () => this.props.createCustomer(this.state.newCustomer)
+  private submit = () => this.props.createVisit(this.state.newVisit)
 }
 
 const styles = {
@@ -99,4 +85,4 @@ const styles = {
   },
 }
 
-export default withStyles(styles)<CustomersProps>(CreateCustomer)
+export default withStyles(styles)<VisitsProps>(CreateVisit)
