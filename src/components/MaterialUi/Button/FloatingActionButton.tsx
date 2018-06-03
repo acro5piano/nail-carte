@@ -1,8 +1,8 @@
 import * as React from 'react'
-import Button from 'material-ui/Button'
-import { PropTypes } from 'material-ui'
+import Button from '@material-ui/core/Button'
+import { PropTypes } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
-import { withStyles } from 'material-ui/styles'
+import { withStyles } from '@material-ui/core/styles'
 
 interface FloatingActionButtonProps {
   onClick?: () => void

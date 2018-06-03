@@ -1,7 +1,7 @@
 import * as React from 'react'
-import List from 'material-ui/List'
+import List from '@material-ui/core/List'
 import { Link } from 'react-router-dom'
-import { withStyles } from 'material-ui/styles'
+import { withStyles } from '@material-ui/core/styles'
 
 interface SideListItemBaseInterface {
   title: string

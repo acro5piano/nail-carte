@@ -1,6 +1,6 @@
 import * as React from 'react'
-import CssBaseline from 'material-ui/CssBaseline'
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import AppSidebar from 'sarte/components/AppSidebar/AppSidebar'
 import Routes from 'sarte/Routes'
 import { CustomerApi } from 'sarte/services/api'

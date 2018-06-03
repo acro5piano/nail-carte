@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { withStyles } from 'material-ui/styles'
+import { withStyles } from '@material-ui/core/styles'
 import AppHeader from 'sarte/components/AppHeader'
 import { CustomerForm } from 'sarte/forms/CustomerForm'
 import TextField from '@material-ui/core/TextField'
