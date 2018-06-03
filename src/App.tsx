@@ -103,10 +103,12 @@ export default class AppContainer extends React.Component<{}, AppState> {
       createdAt: Date.now(),
     })
     if (visitPhotos.length > 0) {
-      await VisitPhotoApi.create({
-        ...visitPhotos,
-        visitId: id,
-      })
+      await visitPhotos.map(async(visitPhoto) =>
+        VisitPhotoApi.create({
+          ...visitPhoto,
+          visitId: id,
+        }),
+      )
     }
     await this.fetchCustomers()
     history.back()
