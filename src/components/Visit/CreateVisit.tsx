@@ -2,23 +2,33 @@ import * as React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import AppHeader from 'sarte/components/AppHeader'
 import { VisitForm } from 'sarte/forms/VisitForm'
+import VisitPhoto from 'sarte/entities/VisitPhoto'
 import TextField from '@material-ui/core/TextField'
+import {
+  FileApi,
+} from 'sarte/services/api'
 
-interface VisitsProps {}
+interface CreateVisitParams {
+  newVisit: VisitForm
+  visitPhotos: VisitPhoto[]
+}
 
 interface NewVisitProps {
   classes: any
   match: any
-  createVisit: (visitForm: VisitForm) => void
+  createVisit: (data: CreateVisitParams) => void
+  uploadFile: (data: any) => void
 }
 
 interface NewVisitState {
   newVisit: VisitForm
+  visitPhotos: VisitPhoto[]
 }
 
 class CreateVisit extends React.PureComponent<NewVisitProps, NewVisitState> {
   public state = {
     newVisit: new VisitForm(),
+    visitPhotos: [],
   }
 
   public render() {
@@ -71,6 +81,10 @@ class CreateVisit extends React.PureComponent<NewVisitProps, NewVisitState> {
             }}
           />
         </div>
+        Images
+        <div className={classes.input} onChange={this.onAddPhoto}>
+          <input type="file" />
+        </div>
       </div>
     )
   }
@@ -91,10 +105,22 @@ class CreateVisit extends React.PureComponent<NewVisitProps, NewVisitState> {
 
   private onUpdateEndAt = event => this.handleChange('endAt')(event)
 
+  private onAddPhoto = async(event) => {
+    const formData = new FormData()
+    formData.append('file', event.target.files[0])
+    const res = await FileApi.upload(formData)
+    this.setState({
+      visitPhotos: [
+        ...this.state.visitPhotos,
+        new VisitPhoto({ url: res.fileName, createAt: Number(new Date()) }),
+      ],
+    })
+  }
+
   private submit = () => {
-    const { newVisit } = this.state
+    const { newVisit, visitPhotos } = this.state
     newVisit.customerId = this.props.match.params.id,
-    this.props.createVisit(newVisit)
+    this.props.createVisit({ newVisit, visitPhotos })
   }
 }
 
@@ -109,4 +135,4 @@ const styles = {
   },
 }
 
-export default withStyles(styles)<VisitsProps>(CreateVisit)
+export default withStyles(styles)<NewVisitProps>(CreateVisit)

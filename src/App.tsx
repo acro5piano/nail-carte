@@ -6,11 +6,11 @@ import Routes from 'sarte/Routes'
 import {
   CustomerApi,
   VisitApi,
+  VisitPhotoApi,
 } from 'sarte/services/api'
 import Customer from 'sarte/entities/Customer'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { CustomerForm } from 'sarte/forms/CustomerForm'
-import { VisitForm } from 'sarte/forms/VisitForm'
 import { logDifference } from 'sarte/utils'
 
 const theme = createMuiTheme({
@@ -97,12 +97,17 @@ export default class AppContainer extends React.Component<{}, AppState> {
     history.back()
   }
 
-  private createVisit = async(visitForm: VisitForm) => {
-    console.log(visitForm.toCreateVisitParams())
-    await VisitApi.create({
-      ...visitForm.toCreateVisitParams(),
+  private createVisit = async({ newVisit, visitPhotos }) => {
+    const { id } = await VisitApi.create({
+      ...newVisit.toCreateVisitParams(),
       createdAt: Date.now(),
     })
+    if (visitPhotos.length > 0) {
+      await VisitPhotoApi.create({
+        ...visitPhotos,
+        visitId: id,
+      })
+    }
     await this.fetchCustomers()
     history.back()
   }
