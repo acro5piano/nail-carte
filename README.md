@@ -6,21 +6,31 @@ https://distracted-hugle-ae38eb.netlify.com
 
 Currently just prototype, will change how nailists work on the earth.
 
+# Setup
+
+```
+yarn install
+yarn start
+```
+
+If you have FSWatch errors in Linux, run the following commands:
+
+```
+echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p
+```
+
 # Coding Rules
 
 ## /src/components
 
 JSX components.
 
-### /src/components/**/*Container.tsx
+### /src/components/App.tsx
 
-Responsible for Connecting React component to Redux state.
-They can be entry points of Router.
+Responsible for App State.
 
-Rules:
-
-- Do not write too much JSX.
-- Use Redux's `connect`.
+Write async actions here.
 
 ### /src/components/**/*.tsx
 
@@ -48,18 +58,6 @@ Domain specific entities.
 Rules:
 
 - Define type, do not use `any` type.
-
-## /src/reducers
-
-Redux reducers.
-
-## /src/actions
-
-Redux actions.
-
-## /src/actions
-
-Redux actions.
 
 ## /src/services
 
