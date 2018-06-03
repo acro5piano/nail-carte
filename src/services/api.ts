@@ -1,4 +1,6 @@
 import axios from 'axios'
+import Customer from 'sarte/entities/Customer'
+import Visit from 'sarte/entities/Visit'
 
 const baseUrl = 'https://api.fastestnews.org'
 
@@ -8,10 +10,10 @@ const GET = (path: string) => axios.get(getPath(path)).then(res => res.data)
 const POST = (path: string, data: object) => axios.post(getPath(path), data)
 
 export const CustomerApi = {
-  list: () => GET('/customers?_embed=visits'),
+  list: () => GET('/customers?_embed=visits').then(res => res.map(c => new Customer(c))),
   create: (data: object) => POST('/customers', data),
 }
 
 export const VisitApi = {
-  create: (data: object) => POST('/visits', data),
+  create: (data: object) => POST('/visits', data).then(res => new Visit(res)),
 }
