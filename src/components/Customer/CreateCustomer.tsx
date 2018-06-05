@@ -1,24 +1,24 @@
 import * as React from 'react'
+import { inject, observer } from 'mobx-react'
+import { compose } from 'recompose'
 import { withStyles } from '@material-ui/core/styles'
 import AppHeader from 'sarte/components/AppHeader'
 import { CustomerForm } from 'sarte/forms/CustomerForm'
 import TextField from '@material-ui/core/TextField'
-
-interface CustomersProps {}
+import CustomerStore from 'sarte/stores/CustomerStore'
 
 interface NewCustomerProps {
   classes: any
-  history: any
-  createCustomer: (customer: CustomerForm) => void
+  customerStore: CustomerStore
 }
 
 interface NewCustomerState {
-  newCustomer: CustomerForm
+  customerForm: CustomerForm
 }
 
-class CreateCustomer extends React.PureComponent<NewCustomerProps, NewCustomerState> {
+class CreateCustomer extends React.Component<NewCustomerProps, NewCustomerState> {
   public state = {
-    newCustomer: new CustomerForm(),
+    customerForm: new CustomerForm(),
   }
 
   public render() {
@@ -33,7 +33,7 @@ class CreateCustomer extends React.PureComponent<NewCustomerProps, NewCustomerSt
             type="text"
             label="Name"
             fullWidth
-            defaultValue={this.state.newCustomer.name}
+            defaultValue={this.state.customerForm.name}
             onChange={this.onUpdateName}
           />
         </div>
@@ -42,7 +42,7 @@ class CreateCustomer extends React.PureComponent<NewCustomerProps, NewCustomerSt
             name="email"
             type="email"
             label="Email"
-            defaultValue={this.state.newCustomer.createdAt}
+            defaultValue={this.state.customerForm.createdAt}
             onChange={this.onUpdateEmail}
           />
         </div>
@@ -51,7 +51,7 @@ class CreateCustomer extends React.PureComponent<NewCustomerProps, NewCustomerSt
             name="occupation"
             type="occupation"
             label="Occupation"
-            defaultValue={this.state.newCustomer.occupation}
+            defaultValue={this.state.customerForm.occupation}
             onChange={this.onUpdateEmail}
           />
         </div>
@@ -60,7 +60,7 @@ class CreateCustomer extends React.PureComponent<NewCustomerProps, NewCustomerSt
             name="birthday"
             type="date"
             label="Birthday"
-            defaultValue={this.state.newCustomer.birthdayForHuman}
+            defaultValue={this.state.customerForm.birthdayForHuman}
             onChange={this.onUpdateBirthday}
             InputLabelProps={{
               shrink: true,
@@ -72,11 +72,11 @@ class CreateCustomer extends React.PureComponent<NewCustomerProps, NewCustomerSt
   }
 
   private handleChange = field => event => {
-    const newCustomer = new CustomerForm({
-      ...this.state.newCustomer,
+    const customerForm = new CustomerForm({
+      ...this.state.customerForm,
       [field]: event.target.value,
     })
-    this.setState({ newCustomer })
+    this.setState({ customerForm })
   }
 
   private onUpdateName = event => this.handleChange('name')(event)
@@ -85,7 +85,7 @@ class CreateCustomer extends React.PureComponent<NewCustomerProps, NewCustomerSt
 
   private onUpdateBirthday = event => this.handleChange('birthday')(event)
 
-  private submit = () => this.props.createCustomer(this.state.newCustomer)
+  private submit = () => this.props.customerStore.createCustomer(this.state.customerForm)
 }
 
 const styles = {
@@ -99,4 +99,8 @@ const styles = {
   },
 }
 
-export default withStyles(styles)<CustomersProps>(CreateCustomer)
+export default compose(
+  withStyles(styles),
+  inject('customerStore'),
+  observer,
+)(CreateCustomer)

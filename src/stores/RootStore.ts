@@ -17,6 +17,10 @@ class RootStore {
     this.customerStore = customerStore || new CustomerStore(this)
     this.uiStore = uiStore || new UiStore(this)
   }
+
+  public async boot() {
+    this.customerStore.fetchCustomers()
+  }
 }
 
 export default RootStore

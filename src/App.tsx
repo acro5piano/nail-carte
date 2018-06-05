@@ -11,10 +11,8 @@ import {
   VisitApi,
   VisitPhotoApi,
 } from 'sarte/services/api'
-import Customer from 'sarte/entities/Customer'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { CustomerForm } from 'sarte/forms/CustomerForm'
-import { logDifference } from 'sarte/utils'
 
 const theme = createMuiTheme({
   palette: {
@@ -31,28 +29,12 @@ const theme = createMuiTheme({
 
 configure({ enforceActions: true })
 
-interface AppState {
-  customers: Customer[]
-  newCustomer: CustomerForm
-}
-
-const rootStore: RootStore = new RootStore()
-
-export default class AppContainer extends React.Component<{}, AppState> {
+export default class AppContainer extends React.Component<{}> {
   rootStore: RootStore = new RootStore()
 
-  public state = {
-    customers: [],
-    newCustomer: new CustomerForm({ name: 'kazuya' }),
-  }
-
-  public async componentDidMount() {
-    await this.fetchCustomers()
-    this.rootStore = rootStore
-  }
-
-  public componentDidUpdate(prevProps, prevState) {
-    logDifference(prevState, this.state)
+  public async componentWillMount() {
+    this.rootStore = new RootStore()
+    this.rootStore.boot()
   }
 
   render() {
@@ -78,25 +60,20 @@ export default class AppContainer extends React.Component<{}, AppState> {
 
   private get actions() {
     const {
-      fetchCustomers,
       createCustomer,
       createVisit,
     } = this
     return {
-      fetchCustomers,
       createCustomer,
       createVisit,
     }
   }
-
-  private fetchCustomers = async() => this.setState({ customers: await CustomerApi.list() })
 
   private createCustomer = async(customerForm: CustomerForm) => {
     await CustomerApi.create({
       ...customerForm.toCreateCustomerParams(),
       createdAt: Date.now(),
     })
-    await this.fetchCustomers()
     history.back()
   }
 
@@ -113,7 +90,6 @@ export default class AppContainer extends React.Component<{}, AppState> {
         }),
       )
     }
-    await this.fetchCustomers()
     history.back()
   }
 }

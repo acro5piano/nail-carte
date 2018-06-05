@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { inject, observer } from 'mobx-react'
 import { withStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 import Divider from '@material-ui/core/Divider'
@@ -10,15 +11,19 @@ import Avatar from '@material-ui/core/Avatar'
 import ImageIcon from '@material-ui/icons/Image'
 import { CREATE_CUSTOMER_PATH, getLink } from 'sarte/Routes'
 import AppHeader from 'sarte/components/AppHeader'
-import { orderBy } from 'lodash'
+import { compose } from 'recompose'
+import CustomerStore from 'sarte/stores/CustomerStore'
 
-interface CustomersProps {}
+interface CustomersProps {
+  classes: any
+  customerStore: CustomerStore
+}
 
-const CustomerList = ({ classes, customers, toggleSidebar }) => (
+const CustomerList = ({ classes, customerStore }: CustomersProps) => (
   <div className={classes.root}>
     <AppHeader title="Customers" />
     <List>
-      {orderBy(customers, 'createdAt').reverse().map(customer =>
+      {customerStore.sortedCustomers.map(customer =>
         <div key={customer.id}>
           <Link to={getLink('/customers/:id', customer.id)}>
             <ListItem>
@@ -44,4 +49,8 @@ const styles = {
   },
 }
 
-export default withStyles(styles)<CustomersProps>(CustomerList)
+export default compose(
+  withStyles(styles),
+  inject('customerStore'),
+  observer,
+)(CustomerList)
