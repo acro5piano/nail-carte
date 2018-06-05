@@ -1,4 +1,6 @@
 import * as React from 'react'
+import { inject, observer } from 'mobx-react'
+import { compose } from 'recompose'
 import { withStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 import FloatingActionButton from 'sarte/components/MaterialUi/Button/FloatingActionButton'
@@ -7,11 +9,16 @@ import ImageIcon from '@material-ui/icons/Image'
 import { CREATE_VISIT_PATH, getLink } from 'sarte/Routes'
 import AppHeader from 'sarte/components/AppHeader'
 import Grid from '@material-ui/core/Grid'
+import CustomerStore from 'sarte/stores/CustomerStore'
 
-interface CustomersProps {}
+interface CustomerProps {
+  classes: any
+  match: any
+  customerStore: CustomerStore
+}
 
-const Customer = ({ classes, customers, toggleSidebar, match }) => {
-  const customer = customers.find(c => c.id === Number(match.params.id))
+const Customer = ({ classes, customerStore, match }: CustomerProps) => {
+  const customer = customerStore.selectedCustomer
   if (!customer) {
     return null
   }
@@ -60,4 +67,8 @@ const styles = {
   },
 }
 
-export default withStyles(styles)<CustomersProps>(Customer)
+export default compose(
+  withStyles(styles),
+  inject('customerStore'),
+  observer,
+)<CustomerProps>(Customer)

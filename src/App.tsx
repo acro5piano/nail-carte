@@ -6,13 +6,12 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import AppSidebar from 'sarte/components/AppSidebar/AppSidebar'
 import Routes from 'sarte/Routes'
-import {
-  CustomerApi,
-  VisitApi,
-  VisitPhotoApi,
-} from 'sarte/services/api'
+// import {
+//   CustomerApi,
+//   VisitApi,
+//   VisitPhotoApi,
+// } from 'sarte/services/api'
 import { BrowserRouter as Router } from 'react-router-dom'
-import { CustomerForm } from 'sarte/forms/CustomerForm'
 
 const theme = createMuiTheme({
   palette: {
@@ -29,6 +28,7 @@ const theme = createMuiTheme({
 
 configure({ enforceActions: true })
 
+// TODO: ref or withRouter...?
 export default class AppContainer extends React.Component<{}> {
   rootStore: RootStore = new RootStore()
 
@@ -43,12 +43,9 @@ export default class AppContainer extends React.Component<{}> {
         <CssBaseline />
         <MuiThemeProvider theme={theme}>
           <Provider {...this.rootStore}>
-            <Router>
+            <Router ref={router => this.rootStore.routerStore.setRouter(router)}>
               <div>
-                <Routes
-                  {...this.state}
-                  {...this.actions}
-                />
+                <Routes />
                 <AppSidebar />
               </div>
             </Router>
@@ -58,38 +55,27 @@ export default class AppContainer extends React.Component<{}> {
     )
   }
 
-  private get actions() {
-    const {
-      createCustomer,
-      createVisit,
-    } = this
-    return {
-      createCustomer,
-      createVisit,
-    }
-  }
-
-  private createCustomer = async(customerForm: CustomerForm) => {
-    await CustomerApi.create({
-      ...customerForm.toCreateCustomerParams(),
-      createdAt: Date.now(),
-    })
-    history.back()
-  }
-
-  private createVisit = async({ newVisit, visitPhotos }) => {
-    const { id } = await VisitApi.create({
-      ...newVisit.toCreateVisitParams(),
-      createdAt: Date.now(),
-    })
-    if (visitPhotos.length > 0) {
-      await visitPhotos.map(async(visitPhoto) =>
-        VisitPhotoApi.create({
-          ...visitPhoto,
-          visitId: id,
-        }),
-      )
-    }
-    history.back()
-  }
+  // private createCustomer = async(customerForm: CustomerForm) => {
+  //   await CustomerApi.create({
+  //     ...customerForm.toCreateCustomerParams(),
+  //     createdAt: Date.now(),
+  //   })
+  //   history.back()
+  // }
+  //
+  // private createVisit = async({ newVisit, visitPhotos }) => {
+  //   const { id } = await VisitApi.create({
+  //     ...newVisit.toCreateVisitParams(),
+  //     createdAt: Date.now(),
+  //   })
+  //   if (visitPhotos.length > 0) {
+  //     await visitPhotos.map(async(visitPhoto) =>
+  //       VisitPhotoApi.create({
+  //         ...visitPhoto,
+  //         visitId: id,
+  //       }),
+  //     )
+  //   }
+  //   history.back()
+  // }
 }

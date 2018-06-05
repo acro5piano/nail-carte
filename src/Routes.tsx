@@ -16,25 +16,18 @@ export const CREATE_VISIT_PATH = '/customers/:id/visits/new'
 
 export const getLink = (pathname, id) => pathname.replace(/:.+?\//, id + '/').replace(/:.+$/, id)
 
-const Routes = (props) => {
-  const renderWithProps = (ComposedComponent) => (routerProps) => <ComposedComponent {...props} {...routerProps} />
+const Routes = (props) => (
+  <div className="appBody">
+    <Switch>
+      <Route path={CREATE_VISIT_PATH} component={CreateVisit}/>
 
-  const RouteWithProps = ({ path, component }) =>
-     <Route exact path={path} render={renderWithProps(component)}/>
+      <Route path={CREATE_CUSTOMER_PATH} component={CreateCustomer}/>
+      <Route path={CUSTOMER_PATH} component={Customer}/>
+      <Route path={CUSTOMER_LIST_PATH} component={CustomerList}/>
 
-  return (
-    <div className="appBody">
-      <Switch>
-        <RouteWithProps path={CREATE_VISIT_PATH} component={CreateVisit}/>
-
-        <RouteWithProps path={CREATE_CUSTOMER_PATH} component={CreateCustomer}/>
-        <RouteWithProps path={CUSTOMER_PATH} component={Customer}/>
-        <RouteWithProps path={CUSTOMER_LIST_PATH} component={CustomerList}/>
-
-        <RouteWithProps path={HOME_PATH} component={NotFound}/>
-      </Switch>
-    </div>
-  )
-}
+      <Route path={HOME_PATH} component={NotFound}/>
+    </Switch>
+  </div>
+)
 
 export default Routes

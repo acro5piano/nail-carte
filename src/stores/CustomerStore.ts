@@ -24,12 +24,21 @@ export default class CustomerStore extends BaseStore {
       createdAt: Date.now(),
     })
     yield this.fetchCustomers()
-    history.back()
+    this.rootStore.routerStore.goBack()
   })
+
+  public get selectedCustomer() {
+    if (!location.pathname.match(/customers\/(\d+)/)) {
+      return null
+    }
+    const id = location.pathname.match(/customers\/(\d+)/)[1]
+    return this.customers.find(c => c.id === Number(id))
+  }
 }
 
 decorate(CustomerStore, {
   customers: observable,
-  sortedCustomers: computed,
   fetchCustomers: action,
+  sortedCustomers: computed,
+  selectedCustomer: computed,
 })
