@@ -1,4 +1,6 @@
 import * as React from 'react'
+import { inject, observer } from 'mobx-react'
+import { compose } from 'recompose'
 import { withStyles } from '@material-ui/core/styles'
 import AppHeader from 'sarte/components/AppHeader'
 import { VisitForm } from 'sarte/forms/VisitForm'
@@ -7,27 +9,23 @@ import TextField from '@material-ui/core/TextField'
 import {
   FileApi,
 } from 'sarte/services/api'
-
-interface CreateVisitParams {
-  newVisit: VisitForm
-  visitPhotos: VisitPhoto[]
-}
+import CustomerStore from 'sarte/stores/CustomerStore'
 
 interface NewVisitProps {
   classes: any
   match: any
-  createVisit: (data: CreateVisitParams) => void
   uploadFile: (data: any) => void
+  customerStore: CustomerStore
 }
 
 interface NewVisitState {
-  newVisit: VisitForm
+  visitForm: VisitForm
   visitPhotos: VisitPhoto[]
 }
 
-class CreateVisit extends React.PureComponent<NewVisitProps, NewVisitState> {
+class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
   public state = {
-    newVisit: new VisitForm(),
+    visitForm: new VisitForm(),
     visitPhotos: [],
   }
 
@@ -43,7 +41,7 @@ class CreateVisit extends React.PureComponent<NewVisitProps, NewVisitState> {
             type="number"
             label="Price"
             fullWidth
-            defaultValue={this.state.newVisit.price}
+            defaultValue={this.state.visitForm.price}
             onChange={this.onUpdatePrice}
           />
         </div>
@@ -53,7 +51,7 @@ class CreateVisit extends React.PureComponent<NewVisitProps, NewVisitState> {
             label="Note"
             multiline
             fullWidth
-            defaultValue={this.state.newVisit.note}
+            defaultValue={this.state.visitForm.note}
             onChange={this.onUpdateNote}
           />
         </div>
@@ -62,7 +60,7 @@ class CreateVisit extends React.PureComponent<NewVisitProps, NewVisitState> {
             name="startAt"
             type="datetime-local"
             label="Start At"
-            defaultValue={this.state.newVisit.startAtForHuman}
+            defaultValue={this.state.visitForm.startAtForHuman}
             onChange={this.onUpdateStartAt}
             InputLabelProps={{
               shrink: true,
@@ -74,7 +72,7 @@ class CreateVisit extends React.PureComponent<NewVisitProps, NewVisitState> {
             name="endAt"
             type="datetime-local"
             label="End At"
-            defaultValue={this.state.newVisit.endAtForHuman}
+            defaultValue={this.state.visitForm.endAtForHuman}
             onChange={this.onUpdateEndAt}
             InputLabelProps={{
               shrink: true,
@@ -90,11 +88,11 @@ class CreateVisit extends React.PureComponent<NewVisitProps, NewVisitState> {
   }
 
   private handleChange = field => event => {
-    const newVisit = new VisitForm({
-      ...this.state.newVisit,
+    const visitForm = new VisitForm({
+      ...this.state.visitForm,
       [field]: event.target.value,
     })
-    this.setState({ newVisit })
+    this.setState({ visitForm })
   }
 
   private onUpdatePrice = event => this.handleChange('price')(event)
@@ -118,9 +116,7 @@ class CreateVisit extends React.PureComponent<NewVisitProps, NewVisitState> {
   }
 
   private submit = () => {
-    const { newVisit, visitPhotos } = this.state
-    newVisit.customerId = this.props.match.params.id,
-    this.props.createVisit({ newVisit, visitPhotos })
+    this.props.customerStore.createVisit(this.state)
   }
 }
 
@@ -135,4 +131,8 @@ const styles = {
   },
 }
 
-export default withStyles(styles)<NewVisitProps>(CreateVisit)
+export default compose(
+  withStyles(styles),
+  inject('customerStore'),
+  observer,
+)(CreateVisit)

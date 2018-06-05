@@ -6,11 +6,6 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import AppSidebar from 'sarte/components/AppSidebar/AppSidebar'
 import Routes from 'sarte/Routes'
-// import {
-//   CustomerApi,
-//   VisitApi,
-//   VisitPhotoApi,
-// } from 'sarte/services/api'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 const theme = createMuiTheme({
@@ -54,28 +49,4 @@ export default class AppContainer extends React.Component<{}> {
       </React.Fragment>
     )
   }
-
-  // private createCustomer = async(customerForm: CustomerForm) => {
-  //   await CustomerApi.create({
-  //     ...customerForm.toCreateCustomerParams(),
-  //     createdAt: Date.now(),
-  //   })
-  //   history.back()
-  // }
-  //
-  // private createVisit = async({ newVisit, visitPhotos }) => {
-  //   const { id } = await VisitApi.create({
-  //     ...newVisit.toCreateVisitParams(),
-  //     createdAt: Date.now(),
-  //   })
-  //   if (visitPhotos.length > 0) {
-  //     await visitPhotos.map(async(visitPhoto) =>
-  //       VisitPhotoApi.create({
-  //         ...visitPhoto,
-  //         visitId: id,
-  //       }),
-  //     )
-  //   }
-  //   history.back()
-  // }
 }
