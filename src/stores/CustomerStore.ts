@@ -7,6 +7,7 @@ import {
   CustomerApi,
   VisitApi,
   VisitPhotoApi,
+  FileApi,
 } from 'sarte/services/api'
 import { CustomerForm } from 'sarte/forms/CustomerForm'
 import { VisitForm } from 'sarte/forms/VisitForm'
@@ -43,6 +44,16 @@ export default class CustomerStore extends BaseStore {
     const id = location.pathname.match(/customers\/(\d+)/)[1]
     return this.customers.find(c => c.id === Number(id))
   }
+
+  public uploadPhoto = flow(function *(file) {
+    const formData = new FormData()
+    formData.append('file', file)
+    const res = yield FileApi.upload(formData)
+    return new VisitPhoto({
+      url: res.fileName,
+      createAt: Number(new Date()),
+    })
+  })
 
   public createVisit = flow(function *({ visitForm, visitPhotos = [] }: CreateVisitParams) {
     visitForm.customerId = this.selectedCustomer.id

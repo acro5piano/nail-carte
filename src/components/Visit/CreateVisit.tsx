@@ -6,9 +6,6 @@ import AppHeader from 'sarte/components/AppHeader'
 import { VisitForm } from 'sarte/forms/VisitForm'
 import VisitPhoto from 'sarte/entities/VisitPhoto'
 import TextField from '@material-ui/core/TextField'
-import {
-  FileApi,
-} from 'sarte/services/api'
 import CustomerStore from 'sarte/stores/CustomerStore'
 
 interface NewVisitProps {
@@ -104,13 +101,11 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
   private onUpdateEndAt = event => this.handleChange('endAt')(event)
 
   private onAddPhoto = async(event) => {
-    const formData = new FormData()
-    formData.append('file', event.target.files[0])
-    const res = await FileApi.upload(formData)
+    const visitPhoto = await this.props.customerStore.uploadPhoto(event.target.files[0])
     this.setState({
       visitPhotos: [
         ...this.state.visitPhotos,
-        new VisitPhoto({ url: res.fileName, createAt: Number(new Date()) }),
+        visitPhoto,
       ],
     })
   }
