@@ -16,7 +16,7 @@ interface CustomersProps {}
 
 const CustomerList = ({ classes, customers, toggleSidebar }) => (
   <div className={classes.root}>
-    <AppHeader onClickMenu={toggleSidebar} title="Customers" />
+    <AppHeader title="Customers" />
     <List>
       {orderBy(customers, 'createdAt').reverse().map(customer =>
         <div key={customer.id}>

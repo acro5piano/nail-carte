@@ -1,4 +1,7 @@
 import * as React from 'react'
+import { Provider } from 'mobx-react'
+import { configure } from 'mobx'
+import RootStore from 'sarte/stores/RootStore'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import AppSidebar from 'sarte/components/AppSidebar/AppSidebar'
@@ -26,21 +29,26 @@ const theme = createMuiTheme({
   },
 })
 
+configure({ enforceActions: true })
+
 interface AppState {
-  isSidebarOpened: boolean
   customers: Customer[]
   newCustomer: CustomerForm
 }
 
+const rootStore: RootStore = new RootStore()
+
 export default class AppContainer extends React.Component<{}, AppState> {
+  rootStore: RootStore = new RootStore()
+
   public state = {
-    isSidebarOpened: false,
     customers: [],
     newCustomer: new CustomerForm({ name: 'kazuya' }),
   }
 
   public async componentDidMount() {
     await this.fetchCustomers()
+    this.rootStore = rootStore
   }
 
   public componentDidUpdate(prevProps, prevState) {
@@ -52,18 +60,17 @@ export default class AppContainer extends React.Component<{}, AppState> {
       <React.Fragment>
         <CssBaseline />
         <MuiThemeProvider theme={theme}>
-          <Router>
-            <div>
-              <Routes
-                {...this.state}
-                {...this.actions}
-              />
-              <AppSidebar
-                isOpened={this.state.isSidebarOpened}
-                onCloseSidebar={this.toggleSidebar}
-              />
-            </div>
-          </Router>
+          <Provider {...this.rootStore}>
+            <Router>
+              <div>
+                <Routes
+                  {...this.state}
+                  {...this.actions}
+                />
+                <AppSidebar />
+              </div>
+            </Router>
+          </Provider>
         </MuiThemeProvider>
       </React.Fragment>
     )
@@ -73,18 +80,14 @@ export default class AppContainer extends React.Component<{}, AppState> {
     const {
       fetchCustomers,
       createCustomer,
-      toggleSidebar,
       createVisit,
     } = this
     return {
       fetchCustomers,
       createCustomer,
-      toggleSidebar,
       createVisit,
     }
   }
-
-  private toggleSidebar = () => this.setState({ isSidebarOpened: !this.state.isSidebarOpened })
 
   private fetchCustomers = async() => this.setState({ customers: await CustomerApi.list() })
 

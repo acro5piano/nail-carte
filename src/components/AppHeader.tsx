@@ -1,4 +1,6 @@
 import * as React from 'react'
+import { compose } from 'recompose'
+import { inject, observer } from 'mobx-react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
@@ -10,7 +12,6 @@ import Button from '@material-ui/core/Button'
 
 interface AppHeaderProps {
   title?: string
-  onClickMenu?: () => void
   hasBack?: boolean
   onSubmit?: () => void
   submitTitle?: string
@@ -18,10 +19,10 @@ interface AppHeaderProps {
 
 const back = () => history.back()
 
-const AppHeader = ({ classes, onClickMenu, hasBack = false, title = '', onSubmit, submitTitle }) => (
+const AppHeader = ({ classes, hasBack = false, title = '', onSubmit, submitTitle, uiStore }) => (
   <AppBar>
     <Toolbar>
-      <IconButton onClick={onClickMenu ? onClickMenu : back} className={classes.menuButton} color="inherit" aria-label="Menu">
+      <IconButton onClick={hasBack ? back : uiStore.toggleSidebar} className={classes.menuButton} color="inherit" aria-label="Menu">
         {hasBack ? <ArrowBackIcon /> : <MenuIcon />}
       </IconButton>
       <Typography variant="title" color="inherit" noWrap className={classes.flex}>
@@ -42,4 +43,8 @@ const styles = {
   },
 }
 
-export default withStyles(styles)<AppHeaderProps>(AppHeader)
+export default compose(
+  inject('uiStore'),
+  observer,
+  withStyles(styles),
+)<AppHeaderProps>(AppHeader)
