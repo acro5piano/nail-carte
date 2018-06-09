@@ -13,8 +13,8 @@ export default class Visit {
   constructor(args: any) {
     Object.assign(this, _.pick(args, 'note'))
     this.id = Number(args.id)
-    this.endAt = moment.unix(args.endAt)
-    this.startAt = moment.unix(args.startAt)
-    this.createdAt = moment.unix(args.createdAt)
+    this.endAt = moment(args.endAt)
+    this.startAt = moment(args.startAt)
+    this.createdAt = moment(args.createdAt)
   }
 }

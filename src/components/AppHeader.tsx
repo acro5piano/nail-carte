@@ -14,18 +14,21 @@ interface AppHeaderProps {
   title?: string
   hasBack?: boolean
   canSubmit?: boolean
+  noMenu?: boolean
   onSubmit?: () => void
   submitTitle?: string
 }
 
 const back = () => history.back()
 
-const AppHeader = ({ classes, canSubmit = true, hasBack = false, title = '', onSubmit, submitTitle, uiStore }) => (
+const AppHeader = ({ classes, noMenu = false, canSubmit = true, hasBack = false, title = '', onSubmit, submitTitle, uiStore }) => (
   <AppBar>
     <Toolbar>
-      <IconButton onClick={hasBack ? back : uiStore.toggleSidebar} className={classes.menuButton} color="inherit" aria-label="Menu">
-        {hasBack ? <ArrowBackIcon /> : <MenuIcon />}
-      </IconButton>
+      {!noMenu &&
+        <IconButton onClick={hasBack ? back : uiStore.toggleSidebar} className={classes.menuButton} color="inherit" aria-label="Menu">
+          {hasBack ? <ArrowBackIcon /> : <MenuIcon />}
+        </IconButton>
+      }
       <Typography variant="title" color="inherit" noWrap className={classes.flex}>
         {title}
       </Typography>

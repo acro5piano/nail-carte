@@ -21,14 +21,14 @@ interface CustomersProps {
 
 const CustomerList = ({ classes, customerStore }: CustomersProps) => (
   <div className={classes.root}>
-    <AppHeader title="Customers" />
+    <AppHeader noMenu title="Customers" />
     <List>
       {customerStore.sortedCustomers.map(customer =>
         <div key={customer.id}>
           <Link to={getLink('/customers/:id', customer.id)}>
             <ListItem>
               <Avatar><ImageIcon /></Avatar>
-              <ListItemText primary={customer.name} secondary={customer.birthday} />
+              <ListItemText primary={customer.name} secondary={customer.lastVisitAt} />
             </ListItem>
             <li><Divider inset /></li>
           </Link>

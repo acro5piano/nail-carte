@@ -5,7 +5,7 @@ import CreateCustomer from 'sarte/components/Customer/CreateCustomer'
 import Customer from 'sarte/components/Customer/Customer'
 import CreateVisit from 'sarte/components/Visit/CreateVisit'
 
-import NotFound from 'sarte/components/NotFound'
+// import NotFound from 'sarte/components/NotFound'
 
 export const HOME_PATH = '/'
 export const CUSTOMER_LIST_PATH = '/customers'
@@ -25,7 +25,7 @@ const Routes = (props) => (
       <Route path={CUSTOMER_PATH} component={Customer}/>
       <Route path={CUSTOMER_LIST_PATH} component={CustomerList}/>
 
-      <Route path={HOME_PATH} component={NotFound}/>
+      <Route path={HOME_PATH} component={Customer}/>
     </Switch>
   </div>
 )
