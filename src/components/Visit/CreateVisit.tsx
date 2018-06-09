@@ -93,7 +93,7 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
         {loading
           ? <CircularProgress />
           : <div className={classes.input}>
-              <GridList cellHeight={160} className={classes.gridList} cols={4}>
+              <GridList cellHeight={120} className={classes.gridList} cols={2}>
                 {visitPhotos.map(photo =>
                   <GridListTile key={photo.url} cols={1}>
                     <img src={photo.url} alt="uploading image" />
