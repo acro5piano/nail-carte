@@ -60,6 +60,15 @@ class CreateCustomer extends React.Component<NewCustomerProps, NewCustomerState>
         </div>
         <div className={classes.input}>
           <TextField
+            name="phoneNumber"
+            type="number"
+            label="電話番号"
+            value={this.state.customerForm.phoneNumber}
+            onChange={this.onUpdatePhoneNumber}
+          />
+        </div>
+        <div className={classes.input}>
+          <TextField
             name="address"
             type="text"
             label="住所"
@@ -112,6 +121,7 @@ class CreateCustomer extends React.Component<NewCustomerProps, NewCustomerState>
 
   private onUpdateName = event => this.handleChange('name')(event)
   private onUpdateEmail = event => this.handleChange('email')(event)
+  private onUpdatePhoneNumber = event => this.handleChange('phoneNumber')(event)
   private onUpdateBirthday = event => this.handleChange('birthday')(event)
   private onUpdateOccupation = event => this.handleChange('occupation')(event)
   private onUpdateAddress = event => this.handleChange('address')(event)

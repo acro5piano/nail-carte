@@ -15,10 +15,11 @@ export class CustomerForm {
   }
 
   toCreateCustomerParams() {
-    const { email, name, occupation, birthday, address, zip } = this
+    const { email, name, occupation, phoneNumber, birthday, address, zip } = this
     return {
       email,
       name,
+      phoneNumber: String(phoneNumber),
       occupation,
       address,
       zip,

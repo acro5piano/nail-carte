@@ -16,15 +16,19 @@ const theme = createMuiTheme({
       contrastText: '#fff',
     },
     secondary: {
-      main: '#02f1f8',
+      main: '#FFAF05',
     },
   },
 })
 
+interface AppState {
+  booted: boolean
+}
+
 configure({ enforceActions: true })
 
 // TODO: ref or withRouter...?
-export default class AppContainer extends React.Component<{}> {
+export default class AppContainer extends React.Component<{}, AppState> {
   rootStore: RootStore = new RootStore()
 
   state = {
@@ -35,13 +39,10 @@ export default class AppContainer extends React.Component<{}> {
     this.rootStore = new RootStore()
     await this.rootStore.boot()
     this.setState({ booted: true })
+    document.getElementById('loading').remove()
   }
 
   render() {
-    if (!this.state.booted) {
-      return null
-    }
-
     return (
       <React.Fragment>
         <CssBaseline />

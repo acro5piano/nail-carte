@@ -11,6 +11,102 @@
   <title>Sarte</title>
 </head>
 <body>
+  <!-- Initial Loading -->
+  <style>
+    #loading {
+      background: #fafafa;
+      position: absolute;
+      top:0;
+      left:0;
+      bottom: 0;
+      right: 0;
+    }
+
+    #loading .loading-icon {
+      width: 90px;
+      text-align: center;
+      height: auto;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translate3d(-50%, -50%, 0);
+      -moz-transform: translate3d(-50%, -50%, 0);
+      -ms-transform: translate3d(-50%, -50%, 0);
+      -o-transform: translate3d(-50%, -50%, 0);
+      transform: translate3d(-50%, -50%, 0);
+    }
+
+    #loading .loading-logo {
+      padding: 25px 0;
+    }
+
+    #loading .loading-progressbar {
+      height: 5px;
+      position: relative;
+      overflow: hidden;
+      background-color: #D0D9DD;
+    }
+
+    #loading .loading-progressbar-item {
+      width: auto;
+      will-change: left, right;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      position: absolute;
+      transition: transform 0.2s linear;
+      transform-origin: left;
+    }
+    #loading .loading-progressbar-top {
+      animation: loading-progressbar-top-keyframes 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+      background-color: #EB5757;
+    }
+
+    #loading .loading-progressbar-bottom {
+      animation: loading-progressbar-bottom-keyframes 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+      animation-delay: 1.15s;
+      background-color: #FFAF05;
+    }
+
+    @keyframes loading-progressbar-top-keyframes {
+      0% {
+        left: -35%;
+        right: 100%;
+      }
+      60% {
+        left: 100%;
+        right: -90%;
+      }
+      100% {
+        left: 100%;
+        right: -90%;
+      }
+    }
+    @keyframes loading-progressbar-bottom-keyframes {
+      0% {
+        left: -200%;
+        right: 100%;
+      }
+      60% {
+        left: 107%;
+        right: -8%;
+      }
+      100% {
+        left: 107%;
+        right: -8%;
+      }
+    }
+  </style>
+  <div id="loading">
+    <div class="loading-icon">
+      <div class="loading-progressbar">
+        <div class="loading-progressbar-item loading-progressbar-top"></div>
+        <div class="loading-progressbar-item loading-progressbar-bottom"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Initial Loading -->
+
   <div id="root"></div>
   <script src="./src/index.tsx"></script>
 </body>
