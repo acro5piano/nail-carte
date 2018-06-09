@@ -53,4 +53,4 @@ export default compose(
   withStyles(styles),
   inject('customerStore'),
   observer,
-)(CustomerList)
+)<CustomersProps>(CustomerList)

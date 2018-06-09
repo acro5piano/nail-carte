@@ -14,14 +14,13 @@ export class VisitForm {
   }
 
   toCreateVisitParams() {
-    const { customerId, price, note, startAt, endAt, createdAt } = this
+    const { customerId, price, note, startAt, endAt } = this
     return {
       customerId: Number(customerId),
       price: Number(price),
       note,
       startAt: Number(moment(startAt)),
       endAt: Number(moment(endAt)),
-      createdAt,
     }
   }
 
