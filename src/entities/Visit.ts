@@ -13,8 +13,8 @@ export default class Visit {
   visitPhotos: VisitPhoto[]
 
   constructor(args: any) {
-    this.id = Number(args.id)
-    this.price = Number(args.price)
+    this.id = args.id
+    this.price = args.price
     this.endAt = moment(args.endAt)
     this.startAt = moment(args.startAt)
     this.createdAt = moment(args.createdAt)
