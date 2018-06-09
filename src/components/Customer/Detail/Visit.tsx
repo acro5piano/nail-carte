@@ -38,6 +38,7 @@ const VisitComponent = ({ classes, visit }: VisitProps) => (
           {visit.visitPhotos.map(photo => <Photo key={photo.id} photo={photo} />)}
         </Grid>
         <Grid item xs={8}>
+          {visit.price}
           {visit.note}
         </Grid>
       </Grid>

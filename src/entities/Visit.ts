@@ -1,4 +1,4 @@
-import _ from 'lodash'
+// import _ from 'lodash'
 import moment = require('moment')
 import VisitPhoto from 'sarte/entities/VisitPhoto'
 
@@ -13,11 +13,11 @@ export default class Visit {
   visitPhotos: VisitPhoto[]
 
   constructor(args: any) {
-    Object.assign(this, _.pick(args, 'note'))
     this.id = Number(args.id)
+    this.price = Number(args.price)
     this.endAt = moment(args.endAt)
     this.startAt = moment(args.startAt)
     this.createdAt = moment(args.createdAt)
-    this.visitPhotos = args.visitPhotos.map(v => new VisitPhoto(v))
+    this.visitPhotos = args.visitPhotos ? args.visitPhotos.map(v => new VisitPhoto(v)) : []
   }
 }

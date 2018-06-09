@@ -7,6 +7,7 @@ import { VisitForm } from 'sarte/forms/VisitForm'
 import VisitPhoto from 'sarte/entities/VisitPhoto'
 import TextField from '@material-ui/core/TextField'
 import CustomerStore from 'sarte/stores/CustomerStore'
+import { validate } from 'sarte/utils'
 
 interface NewVisitProps {
   classes: any
@@ -31,7 +32,7 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
 
     return (
       <div className={classes.root}>
-        <AppHeader hasBack title="New Visits" onSubmit={this.submit} submitTitle="Create" />
+        <AppHeader hasBack canSubmit={this.validate} title="New Visits" onSubmit={this.submit} submitTitle="Create" />
         <div>
           <TextField
             name="price"
@@ -76,12 +77,29 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
             }}
           />
         </div>
-        Images
         <div className={classes.input} onChange={this.onAddPhoto}>
-          <input type="file" />
+          <div>
+            Images
+          </div>
+          <input type="file" multiple />
         </div>
       </div>
     )
+  }
+
+  private get validate() {
+    const { price, note, startAt, endAt } = this.state.visitForm
+    return validate({
+      price,
+      note,
+      startAt,
+      endAt,
+    }, {
+      price: 'required|numeric',
+      note: 'max:200',
+      startAt: 'date',
+      endAt: 'date',
+    })
   }
 
   private handleChange = field => event => {
@@ -101,11 +119,16 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
   private onUpdateEndAt = event => this.handleChange('endAt')(event)
 
   private onAddPhoto = async(event) => {
-    const visitPhoto = await this.props.customerStore.uploadPhoto(event.target.files[0])
+    const visitPhotos = await Promise.all(Array.from(event.target.files).map(async(file) => {
+      await this.props.customerStore.uploadPhoto(file)
+      const visitPhoto = await this.props.customerStore.uploadPhoto(file)
+      return visitPhoto
+    }))
+    console.log(visitPhotos)
     this.setState({
       visitPhotos: [
         ...this.state.visitPhotos,
-        visitPhoto,
+        ...visitPhotos,
       ],
     })
   }

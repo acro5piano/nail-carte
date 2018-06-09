@@ -5,8 +5,8 @@ export class VisitForm {
   customerId: number
   price?: number
   note: string = ''
-  startAt?: Date = new Date()
-  endAt?: Date = new Date()
+  startAt?: moment.Moment = moment()
+  endAt?: moment.Moment = moment()
   createdAt?: number
 
   constructor(args = {}) {
