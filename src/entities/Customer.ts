@@ -1,5 +1,6 @@
 import Visit from 'sarte/entities/Visit'
 import moment = require('moment')
+import { CustomerForm } from 'sarte/forms/CustomerForm'
 import _ from 'lodash'
 
 interface CustomerArgs {
@@ -7,12 +8,12 @@ interface CustomerArgs {
   name?: string
   birthday?: number
   address?: string
-  phoneNumber?: string
   zip?: number
+  phoneNumber?: string
   email?: string
-  createdAt?: moment.Moment | string | number
   occupation?: string
   visits?: Visit[]
+  createdAt?: moment.Moment | string | number
 }
 
 export default class Customer {
@@ -20,12 +21,12 @@ export default class Customer {
   name: string
   email: string
   address?: string
-  createdAt?: moment.Moment
-  occupation?: string
   zip?: number
+  occupation?: string
   birthday?: moment.Moment
   phoneNumber?: string
   visits: Visit[]
+  createdAt?: moment.Moment
 
   constructor(args: CustomerArgs) {
     this.id = Number(args.id)
@@ -34,9 +35,9 @@ export default class Customer {
     this.address = args.address
     this.occupation = args.occupation
     this.phoneNumber = args.phoneNumber
-    this.createdAt = moment(args.createdAt)
     this.birthday = moment(args.birthday)
     this.visits = args.visits.map(v => new Visit(v))
+    this.createdAt = moment(args.createdAt)
   }
 
   public get lastVisitAt(): string {
@@ -52,5 +53,10 @@ export default class Customer {
 
   public get birthdayForHuman() {
     return this.birthday ? this.birthday.format('YYYY/MM/DD') : ''
+  }
+
+  public toForm(): CustomerForm {
+    const { id, name, email, address, occupation, phoneNumber, birthday } = this
+    return new CustomerForm({ id, name, email, address, occupation, phoneNumber, birthday })
   }
 }

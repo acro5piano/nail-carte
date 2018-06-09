@@ -22,19 +22,30 @@ class CreateCustomer extends React.Component<NewCustomerProps, NewCustomerState>
     customerForm: new CustomerForm(),
   }
 
+  componentDidMount() {
+    const { selectedCustomer } = this.props.customerStore
+    if (selectedCustomer) {
+      this.setState({ customerForm: selectedCustomer.toForm() })
+    }
+  }
+
+  get title() {
+    return this.props.customerStore.selectedCustomer ? '顧客編集' : '顧客登録'
+  }
+
   public render() {
     const { classes } = this.props
 
     return (
       <div className={classes.root}>
-        <AppHeader hasBack canSubmit={this.validate} onSubmit={this.submit} submitTitle="Create" />
+        <AppHeader hasBack title={this.title} canSubmit={this.validate} onSubmit={this.submit} submitTitle="保存" />
         <div>
           <TextField
             name="name"
             type="text"
-            label="Name"
+            label="名前"
             fullWidth
-            defaultValue={this.state.customerForm.name}
+            value={this.state.customerForm.name}
             onChange={this.onUpdateName}
           />
         </div>
@@ -42,30 +53,38 @@ class CreateCustomer extends React.Component<NewCustomerProps, NewCustomerState>
           <TextField
             name="email"
             type="email"
-            label="Email"
-            defaultValue={this.state.customerForm.createdAt}
+            label="メールアドレス"
+            value={this.state.customerForm.email}
             onChange={this.onUpdateEmail}
           />
         </div>
         <div className={classes.input}>
           <TextField
+            name="address"
+            type="text"
+            label="住所"
+            fullWidth
+            value={this.state.customerForm.address}
+            onChange={this.onUpdateAddress}
+          />
+        </div>
+        <div className={classes.input}>
+          <TextField
             name="occupation"
-            type="occupation"
-            label="Occupation"
-            defaultValue={this.state.customerForm.occupation}
-            onChange={this.onUpdateEmail}
+            type="text"
+            label="職業"
+            value={this.state.customerForm.occupation}
+            onChange={this.onUpdateOccupation}
           />
         </div>
         <div className={classes.input}>
           <TextField
             name="birthday"
             type="date"
-            label="Birthday"
-            defaultValue={this.state.customerForm.birthdayForHuman}
+            label="誕生日"
+            value={this.state.customerForm.birthdayForHuman}
             onChange={this.onUpdateBirthday}
-            InputLabelProps={{
-              shrink: true,
-            }}
+            InputLabelProps={{ shrink: true }}
           />
         </div>
       </div>
@@ -79,7 +98,7 @@ class CreateCustomer extends React.Component<NewCustomerProps, NewCustomerState>
       email,
     }, {
       name: 'required',
-      email: 'required|email',
+      email: 'email',
     })
   }
 
@@ -92,10 +111,10 @@ class CreateCustomer extends React.Component<NewCustomerProps, NewCustomerState>
   }
 
   private onUpdateName = event => this.handleChange('name')(event)
-
   private onUpdateEmail = event => this.handleChange('email')(event)
-
   private onUpdateBirthday = event => this.handleChange('birthday')(event)
+  private onUpdateOccupation = event => this.handleChange('occupation')(event)
+  private onUpdateAddress = event => this.handleChange('address')(event)
 
   private submit = () => this.props.customerStore.createCustomer(this.state.customerForm)
 }

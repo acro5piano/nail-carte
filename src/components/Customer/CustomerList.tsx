@@ -21,7 +21,7 @@ interface CustomersProps {
 
 const CustomerList = ({ classes, customerStore }: CustomersProps) => (
   <div className={classes.root}>
-    <AppHeader noMenu title="Customers" />
+    <AppHeader noMenu title="顧客一覧" />
     <List>
       {customerStore.sortedCustomers.map(customer =>
         <div key={customer.id}>

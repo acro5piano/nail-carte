@@ -27,12 +27,21 @@ configure({ enforceActions: true })
 export default class AppContainer extends React.Component<{}> {
   rootStore: RootStore = new RootStore()
 
+  state = {
+    booted: false,
+  }
+
   public async componentWillMount() {
     this.rootStore = new RootStore()
-    this.rootStore.boot()
+    await this.rootStore.boot()
+    this.setState({ booted: true })
   }
 
   render() {
+    if (!this.state.booted) {
+      return null
+    }
+
     return (
       <React.Fragment>
         <CssBaseline />

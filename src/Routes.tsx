@@ -11,9 +11,12 @@ export const HOME_PATH = '/'
 export const CUSTOMER_LIST_PATH = '/customers'
 export const CUSTOMER_PATH = '/customers/:id'
 export const CREATE_CUSTOMER_PATH = '/customers/new'
+export const EDIT_CUSTOMER_PATH = '/customers/:id/edit'
 
 export const CREATE_VISIT_PATH = '/customers/:id/visits/new'
 
+// Get full path to a resource.
+//     e.g.) getLink(1, CREATE_VISIT_PATH) => /customers/1/visits/new
 export const getLink = (pathname, id) => pathname.replace(/:.+?\//, id + '/').replace(/:.+$/, id)
 
 const Routes = (props) => (
@@ -22,6 +25,7 @@ const Routes = (props) => (
       <Route path={CREATE_VISIT_PATH} component={CreateVisit}/>
 
       <Route path={CREATE_CUSTOMER_PATH} component={CreateCustomer}/>
+      <Route path={EDIT_CUSTOMER_PATH} component={CreateCustomer}/>
       <Route path={CUSTOMER_PATH} component={Customer}/>
       <Route path={CUSTOMER_LIST_PATH} component={CustomerList}/>
 

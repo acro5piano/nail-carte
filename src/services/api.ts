@@ -10,10 +10,12 @@ const getPath = path => baseUrl + path
 
 const GET = (path: string) => axios.get(getPath(path)).then(res => res.data)
 const POST = (path: string, data: object) => axios.post(getPath(path), data).then(res => res.data)
+const PUT = (path: string, data: object) => axios.put(getPath(path), data).then(res => res.data)
 
 export const CustomerApi = {
   list: () => GET('/customers').then(res => res.map(c => new Customer(c))),
   create: (data: object) => POST('/customers', data),
+  update: (id: number, data: object) => PUT(`/customers/${id}`, data),
 }
 
 export const VisitApi = {

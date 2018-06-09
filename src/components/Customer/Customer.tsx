@@ -7,6 +7,7 @@ import { CREATE_VISIT_PATH, getLink } from 'sarte/Routes'
 import AppHeader from 'sarte/components/AppHeader'
 // import Grid from '@material-ui/core/Grid'
 import CustomerStore from 'sarte/stores/CustomerStore'
+import RouterStore from 'sarte/stores/RouterStore'
 import FloatingActionButton from 'sarte/components/MaterialUi/Button/FloatingActionButton'
 import Visit from './Detail/Visit'
 import Basic from './Detail/Basic'
@@ -14,11 +15,11 @@ import Contact from './Detail/Contact'
 
 interface CustomerProps {
   classes: any
-  match: any
   customerStore: CustomerStore
+  routerStore: RouterStore
 }
 
-const Customer = ({ classes, customerStore, match }: CustomerProps) => {
+const Customer = ({ classes, customerStore, routerStore }: CustomerProps) => {
   const customer = customerStore.selectedCustomer
   if (!customer) {
     return null
@@ -26,15 +27,15 @@ const Customer = ({ classes, customerStore, match }: CustomerProps) => {
 
   return (
     <div className={classes.root}>
-      <AppHeader hasBack title={customer.name} />
+      <AppHeader hasBack title={customer.name} onSubmit={routerStore.toSelectedCustomerEditPath} submitTitle="編集" />
       <div className={classes.basic}>
         <Basic customer={customer} />
       </div>
-      <h2 className={classes.title}>Contact</h2>
+      <h2 className={classes.title}>連絡先</h2>
       <div className={classes.basic}>
         <Contact customer={customer} />
       </div>
-      <h2 className={classes.title}>History</h2>
+      <h2 className={classes.title}>来店履歴</h2>
       <div className={classes.basic}>
         {customer.visits.length === 0 && <div>来店履歴なし</div>}
         {customer.visits.map(visit => <Visit key={visit.id} visit={visit} />)}
@@ -65,6 +66,6 @@ const styles = {
 
 export default compose(
   withStyles(styles),
-  inject('customerStore'),
+  inject('customerStore', 'routerStore'),
   observer,
 )<CustomerProps>(Customer)

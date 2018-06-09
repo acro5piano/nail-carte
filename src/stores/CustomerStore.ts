@@ -29,10 +29,18 @@ export default class CustomerStore extends BaseStore {
   }
 
   public createCustomer = flow(function *(customerForm: CustomerForm) {
-    yield CustomerApi.create({
-      ...customerForm.toCreateCustomerParams(),
-      createdAt: Date.now(),
-    })
+    if (customerForm.id) {
+      yield CustomerApi.update(customerForm.id, {
+        ...customerForm.toCreateCustomerParams(),
+        id: customerForm.id,
+        updatedAt: Date.now(),
+      })
+    } else {
+      yield CustomerApi.create({
+        ...customerForm.toCreateCustomerParams(),
+        createdAt: Date.now(),
+      })
+    }
     yield this.fetchCustomers()
     this.rootStore.routerStore.goBack()
   })
@@ -62,12 +70,12 @@ export default class CustomerStore extends BaseStore {
       createdAt: Date.now(),
     })
     if (visitPhotos.length > 0) {
-      yield visitPhotos.map(async(visitPhoto) =>
+      yield Promise.all(visitPhotos.map(async(visitPhoto) =>
         VisitPhotoApi.create({
           ...visitPhoto,
           visitId: id,
         }),
-      )
+      ))
     }
     yield this.fetchCustomers()
     history.back()

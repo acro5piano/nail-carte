@@ -24,7 +24,7 @@ class RootStore {
   }
 
   public async boot() {
-    this.customerStore.fetchCustomers()
+    return this.customerStore.fetchCustomers()
   }
 }
 

@@ -43,8 +43,15 @@ const VisitComponent = ({ classes, visit }: VisitProps) => (
           {visit.visitPhotos.map(photo => <Photo key={photo.id} photo={photo} />)}
         </Grid>
         <Grid item xs={8}>
-          {visit.price}
-          {visit.note}
+          <div>
+            {visit.localeStringPrice}円
+          </div>
+          <div>
+            {visit.note}
+          </div>
+          <div>
+            {visit.startAtForHuman}
+          </div>
         </Grid>
       </Grid>
     </div>
