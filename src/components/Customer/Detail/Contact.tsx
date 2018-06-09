@@ -1,32 +1,23 @@
 import * as React from 'react'
 import Grid from '@material-ui/core/Grid'
 import { compose } from 'recompose'
-import { withStyles } from '@material-ui/core/styles'
-import Avatar from '@material-ui/core/Avatar'
-import ImageIcon from '@material-ui/icons/Image'
-import BusinessCenterIcon from '@material-ui/icons/BusinessCenter'
-import PlaceIcon from '@material-ui/icons/Place'
-import CakeIcon from '@material-ui/icons/Cake'
+import { withStyles, WithStyles } from '@material-ui/core/styles'
 import Customer from 'sarte/entities/Customer'
 
-interface VisitProps {
-  classes: any
-  match: any
+interface ContactProps {
   customer: Customer
 }
 
-const VisitComponent = ({ classes, customer }: VisitProps) => (
+const Contact = ({ classes, customer }: ContactProps & WithStyles) => (
   <div className={classes.basic}>
     <Grid container spacing={16}>
-      <Grid item xs={4}>
-        <div className={classes.photo}>
-          <Avatar className={classes.avatar}><ImageIcon /></Avatar>
-        </div>
+      <Grid item xs={3}>
+        <div className={classes.photo}>Email</div>
+        <div className={classes.photo}>Phone</div>
       </Grid>
-      <Grid item xs={8}>
-        <div><BusinessCenterIcon className={classes.basicIcon}/>{customer.occupation}</div>
-        <div><CakeIcon className={classes.basicIcon}/>{customer.birthday}</div>
-        <div><PlaceIcon className={classes.basicIcon}/>{customer.address}</div>
+      <Grid item xs={9}>
+        <div>{customer.email}</div>
+        <div>{customer.phoneNumber}</div>
       </Grid>
     </Grid>
   </div>
@@ -35,7 +26,7 @@ const VisitComponent = ({ classes, customer }: VisitProps) => (
 const styles = {
   photo: {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   avatar: {
     width: 80,
@@ -53,4 +44,4 @@ const styles = {
 
 export default compose(
   withStyles(styles),
-)<VisitProps>(VisitComponent)
+)<ContactProps>(Contact)

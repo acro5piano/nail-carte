@@ -7,6 +7,7 @@ interface CustomerArgs {
   name?: string
   birthday?: number
   address?: string
+  phoneNumber?: string
   zip?: number
   email?: string
   createdAt?: moment.Moment | string | number
@@ -23,6 +24,7 @@ export default class Customer {
   occupation?: string
   zip?: number
   birthday?: moment.Moment
+  phoneNumber?: string
   visits: Visit[]
 
   constructor(args: CustomerArgs) {
@@ -31,6 +33,7 @@ export default class Customer {
     this.email = args.email
     this.address = args.address
     this.occupation = args.occupation
+    this.phoneNumber = args.phoneNumber
     this.createdAt = moment(args.createdAt)
     this.birthday = moment(args.birthday)
     this.visits = args.visits.map(v => new Visit(v))

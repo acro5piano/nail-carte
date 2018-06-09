@@ -4,6 +4,8 @@ import { compose } from 'recompose'
 import { withStyles, WithStyles } from '@material-ui/core/styles'
 import Visit from 'sarte/entities/Visit'
 import VisitPhoto from 'sarte/entities/VisitPhoto'
+import Avatar from '@material-ui/core/Avatar'
+import ImageIcon from '@material-ui/icons/Image'
 
 interface VisitProps {
   classes: any
@@ -17,7 +19,10 @@ interface PhotoProps {
 
 const PhotoComponent: React.SFC<any> = ({ photo, classes }: PhotoProps & WithStyles) => (
   <div>
-    <img className={classes.photo} src={photo.url} />
+    {photo.url
+      ? <img className={classes.photo} src={photo.url} />
+      : <Avatar className={classes.avatar}><ImageIcon /></Avatar>
+    }
   </div>
 )
 

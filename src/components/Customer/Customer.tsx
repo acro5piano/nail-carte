@@ -10,6 +10,7 @@ import CustomerStore from 'sarte/stores/CustomerStore'
 import FloatingActionButton from 'sarte/components/MaterialUi/Button/FloatingActionButton'
 import Visit from './Detail/Visit'
 import Basic from './Detail/Basic'
+import Contact from './Detail/Contact'
 
 interface CustomerProps {
   classes: any
@@ -28,6 +29,10 @@ const Customer = ({ classes, customerStore, match }: CustomerProps) => {
       <AppHeader hasBack title={customer.name} />
       <div className={classes.basic}>
         <Basic customer={customer} />
+      </div>
+      <h2 className={classes.title}>Contact</h2>
+      <div className={classes.basic}>
+        <Contact customer={customer} />
       </div>
       <h2 className={classes.title}>History</h2>
       <div className={classes.basic}>
