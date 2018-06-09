@@ -36,6 +36,7 @@ const Customer = ({ classes, customerStore, match }: CustomerProps) => {
       </div>
       <h2 className={classes.title}>History</h2>
       <div className={classes.basic}>
+        {customer.visits.length === 0 && <div>来店履歴なし</div>}
         {customer.visits.map(visit => <Visit key={visit.id} visit={visit} />)}
       </div>
       <Link to={getLink(CREATE_VISIT_PATH, customer.id)}>

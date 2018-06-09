@@ -16,7 +16,7 @@ const Contact = ({ classes, customer }: ContactProps & WithStyles) => (
         <div className={classes.photo}>Phone</div>
       </Grid>
       <Grid item xs={9}>
-        <div>{customer.email}</div>
+        <div><a href={`mailto:${customer.email}`}>{customer.email}</a></div>
         <div>{customer.phoneNumber}</div>
       </Grid>
     </Grid>
