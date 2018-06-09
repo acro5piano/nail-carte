@@ -55,6 +55,13 @@ export default class Customer {
     return this.birthday ? this.birthday.format('YYYY/MM/DD') : ''
   }
 
+  public get age(): number | undefined {
+    if (!this.birthday) {
+      return undefined
+    }
+    return moment().diff(this.birthday, 'year')
+  }
+
   public toForm(): CustomerForm {
     const { id, name, email, address, occupation, phoneNumber, birthday } = this
     return new CustomerForm({ id, name, email, address, occupation, phoneNumber, birthday })
