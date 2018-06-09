@@ -18,24 +18,13 @@ const VisitComponent = ({ classes, visit }: VisitProps) => (
 )
 
 const styles = {
-  root: {
-    // backgroundColor: '#fff',
-  },
   photo: {
     display: 'flex',
     justifyContent: 'center',
   },
-  avatar: {
-    width: 80,
-    height: 80,
-  },
   basic: {
     padding: 12,
     backgroundColor: '#fff',
-  },
-  basicIcon: {
-    fontSize: 12,
-    marginRight: 8,
   },
   title: {
     padding: 12,
