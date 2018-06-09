@@ -25,7 +25,7 @@ const Routes = (props) => (
       <Route path={CUSTOMER_PATH} component={Customer}/>
       <Route path={CUSTOMER_LIST_PATH} component={CustomerList}/>
 
-      <Route path={HOME_PATH} component={Customer}/>
+      <Route path={HOME_PATH} component={CustomerList}/>
     </Switch>
   </div>
 )
