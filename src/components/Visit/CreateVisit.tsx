@@ -7,7 +7,11 @@ import { VisitForm } from 'sarte/forms/VisitForm'
 import VisitPhoto from 'sarte/entities/VisitPhoto'
 import TextField from '@material-ui/core/TextField'
 import CustomerStore from 'sarte/stores/CustomerStore'
+// import Photo from 'sarte/components/Customer/Detail/Visit'
 import { validate } from 'sarte/utils'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import GridList from '@material-ui/core/GridList'
+import GridListTile from '@material-ui/core/GridListTile'
 
 interface NewVisitProps {
   classes: any
@@ -19,16 +23,19 @@ interface NewVisitProps {
 interface NewVisitState {
   visitForm: VisitForm
   visitPhotos: VisitPhoto[]
+  loading: boolean
 }
 
 class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
   public state = {
     visitForm: new VisitForm(),
     visitPhotos: [],
+    loading: false,
   }
 
   public render() {
     const { classes } = this.props
+    const { loading, visitPhotos } = this.state
 
     return (
       <div className={classes.root}>
@@ -81,13 +88,29 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
           <div>
             Images
           </div>
-          <input type="file" multiple />
+          <input type="file" accept="image/*" multiple />
         </div>
+        {loading
+          ? <CircularProgress />
+          : <div className={classes.input}>
+              <GridList cellHeight={160} className={classes.gridList} cols={4}>
+                {visitPhotos.map(photo =>
+                  <GridListTile key={photo.url} cols={1}>
+                    <img src={photo.url} alt="uploading image" />
+                  </GridListTile>,
+                )}
+              </GridList>
+            </div>
+        }
       </div>
     )
   }
 
   private get validate() {
+    if (this.state.loading) {
+      return false
+    }
+
     const { price, note, startAt, endAt } = this.state.visitForm
     return validate({
       price,
@@ -111,25 +134,23 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
   }
 
   private onUpdatePrice = event => this.handleChange('price')(event)
-
   private onUpdateNote = event => this.handleChange('note')(event)
-
   private onUpdateStartAt = event => this.handleChange('startAt')(event)
-
   private onUpdateEndAt = event => this.handleChange('endAt')(event)
 
   private onAddPhoto = async(event) => {
+    this.setState({ loading: true })
     const visitPhotos = await Promise.all(Array.from(event.target.files).map(async(file) => {
       await this.props.customerStore.uploadPhoto(file)
       const visitPhoto = await this.props.customerStore.uploadPhoto(file)
       return visitPhoto
     }))
-    console.log(visitPhotos)
     this.setState({
       visitPhotos: [
         ...this.state.visitPhotos,
         ...visitPhotos,
       ],
+      loading: false,
     })
   }
 

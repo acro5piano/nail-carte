@@ -33,7 +33,7 @@ const photoStyles = {
   },
 }
 
-const Photo = withStyles(photoStyles)<PhotoProps>(PhotoComponent)
+export const Photo = withStyles(photoStyles)<PhotoProps>(PhotoComponent)
 
 const VisitComponent = ({ classes, visit }: VisitProps) => (
   <div className={classes.root}>
