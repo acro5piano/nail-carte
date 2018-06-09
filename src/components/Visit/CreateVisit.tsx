@@ -7,7 +7,6 @@ import { VisitForm } from 'sarte/forms/VisitForm'
 import VisitPhoto from 'sarte/entities/VisitPhoto'
 import TextField from '@material-ui/core/TextField'
 import CustomerStore from 'sarte/stores/CustomerStore'
-// import Photo from 'sarte/components/Customer/Detail/Visit'
 import { validate } from 'sarte/utils'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import GridList from '@material-ui/core/GridList'
@@ -118,7 +117,7 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
       startAt,
       endAt,
     }, {
-      price: 'required|numeric',
+      price: 'required|numeric|min:500',
       note: 'max:200',
       startAt: 'date',
       endAt: 'date',

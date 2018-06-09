@@ -32,7 +32,6 @@ export default class CustomerStore extends BaseStore {
     if (customerForm.id) {
       yield CustomerApi.update(customerForm.id, {
         ...customerForm.toCreateCustomerParams(),
-        id: customerForm.id,
         updatedAt: Date.now(),
       })
     } else {

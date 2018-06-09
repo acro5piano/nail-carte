@@ -1,6 +1,6 @@
-// import _ from 'lodash'
 import moment = require('moment')
 import VisitPhoto from 'sarte/entities/VisitPhoto'
+import { VisitForm } from 'sarte/forms/VisitForm'
 
 export default class Visit {
   id: number
@@ -9,7 +9,6 @@ export default class Visit {
   price: number
   startAt: moment.Moment
   endAt: moment.Moment
-  createdAt: moment.Moment
   visitPhotos: VisitPhoto[]
 
   constructor(args: any) {
@@ -18,7 +17,6 @@ export default class Visit {
     this.note = args.note
     this.endAt = moment(args.endAt)
     this.startAt = moment(args.startAt)
-    this.createdAt = moment(args.createdAt)
     this.visitPhotos = args.visitPhotos ? args.visitPhotos.map(v => new VisitPhoto(v)) : []
   }
 
@@ -28,5 +26,10 @@ export default class Visit {
 
   public get startAtForHuman() {
     return this.startAt ? this.startAt.format('YYYY/MM/DD') : ''
+  }
+
+  public toForm(): VisitForm {
+    const { id, customerId, note, price, startAt, visitPhotos } = this
+    return new VisitForm({ id, customerId, note, price, startAt, visitPhotos })
   }
 }
