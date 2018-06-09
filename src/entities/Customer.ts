@@ -5,7 +5,7 @@ import _ from 'lodash'
 interface CustomerArgs {
   id?: number
   name?: string
-  birthday?: moment.Moment
+  birthday?: number
   address?: string
   zip?: number
   email?: string
@@ -32,8 +32,7 @@ export default class Customer {
     this.address = args.address
     this.occupation = args.occupation
     this.createdAt = moment(args.createdAt)
-    this.birthday = args.birthday
-    // this.birthday = moment(args.birthday)
+    this.birthday = moment(args.birthday)
     this.visits = args.visits.map(v => new Visit(v))
   }
 
@@ -46,5 +45,9 @@ export default class Customer {
       return '来店履歴なし'
     }
     return String(moment().diff(lastVisit.startAt, 'days') + '日前')
+  }
+
+  public get birthdayForHuman() {
+    return this.birthday ? this.birthday.format('YYYY/MM/DD') : ''
   }
 }

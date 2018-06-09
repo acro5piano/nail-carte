@@ -15,7 +15,13 @@ export class CustomerForm {
 
   toCreateCustomerParams() {
     const { email, name, birthday, address, zip } = this
-    return { email, name, birthday, address, zip }
+    return {
+      email,
+      name,
+      address,
+      zip,
+      birthday: Number(moment(birthday)),
+    }
   }
 
   get birthdayForHuman() {

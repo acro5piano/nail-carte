@@ -25,7 +25,7 @@ const VisitComponent = ({ classes, customer }: VisitProps) => (
       </Grid>
       <Grid item xs={8}>
         <div><BusinessCenterIcon className={classes.basicIcon}/>{customer.occupation}</div>
-        <div><CakeIcon className={classes.basicIcon}/>{customer.birthdayForHuman}</div>
+        <div><CakeIcon className={classes.basicIcon}/>{customer.birthday}</div>
         <div><PlaceIcon className={classes.basicIcon}/>{customer.address}</div>
       </Grid>
     </Grid>
