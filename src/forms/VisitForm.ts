@@ -5,7 +5,7 @@ export class VisitForm {
   customerId: number
   price?: number
   note: string = ''
-  startAt?: moment.Moment = moment()
+  startAt?: moment.Moment = moment().add(-1, 'hour')
   endAt?: moment.Moment = moment()
   createdAt?: number
 
@@ -25,10 +25,10 @@ export class VisitForm {
   }
 
   get startAtForHuman() {
-    return moment(this.startAt).format('YYYY-MM-DDTHH:mm')
+    return this.startAt.format('YYYY-MM-DDTHH:mm')
   }
 
   get endAtForHuman() {
-    return moment(this.endAt).add(1, 'hour').format('YYYY-MM-DDTHH:MM')
+    return this.endAt.format('YYYY-MM-DDTHH:mm')
   }
 }

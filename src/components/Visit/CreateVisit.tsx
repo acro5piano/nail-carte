@@ -43,7 +43,7 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
           <TextField
             name="price"
             type="number"
-            label="Price"
+            label="金額"
             fullWidth
             defaultValue={this.state.visitForm.price}
             onChange={this.onUpdatePrice}
@@ -52,7 +52,7 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
         <div className={classes.input}>
           <TextField
             name="note"
-            label="Note"
+            label="メモ"
             multiline
             fullWidth
             defaultValue={this.state.visitForm.note}
@@ -63,7 +63,7 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
           <TextField
             name="startAt"
             type="datetime-local"
-            label="Start At"
+            label="来店時間"
             defaultValue={this.state.visitForm.startAtForHuman}
             onChange={this.onUpdateStartAt}
             InputLabelProps={{
@@ -75,7 +75,7 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
           <TextField
             name="endAt"
             type="datetime-local"
-            label="End At"
+            label="終了時間"
             defaultValue={this.state.visitForm.endAtForHuman}
             onChange={this.onUpdateEndAt}
             InputLabelProps={{
@@ -85,7 +85,7 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
         </div>
         <div className={classes.input} onChange={this.onAddPhoto}>
           <div>
-            Images
+            写真
           </div>
           <input type="file" accept="image/*" multiple />
         </div>
