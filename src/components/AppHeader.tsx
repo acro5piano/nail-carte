@@ -13,13 +13,14 @@ import Button from '@material-ui/core/Button'
 interface AppHeaderProps {
   title?: string
   hasBack?: boolean
+  canSubmit?: boolean
   onSubmit?: () => void
   submitTitle?: string
 }
 
 const back = () => history.back()
 
-const AppHeader = ({ classes, hasBack = false, title = '', onSubmit, submitTitle, uiStore }) => (
+const AppHeader = ({ classes, canSubmit = true, hasBack = false, title = '', onSubmit, submitTitle, uiStore }) => (
   <AppBar>
     <Toolbar>
       <IconButton onClick={hasBack ? back : uiStore.toggleSidebar} className={classes.menuButton} color="inherit" aria-label="Menu">
@@ -28,7 +29,7 @@ const AppHeader = ({ classes, hasBack = false, title = '', onSubmit, submitTitle
       <Typography variant="title" color="inherit" noWrap className={classes.flex}>
         {title}
       </Typography>
-      {onSubmit && <Button onClick={onSubmit} color="inherit">{submitTitle}</Button>}
+      {onSubmit && <Button disabled={!canSubmit} onClick={onSubmit} color="inherit">{submitTitle}</Button>}
     </Toolbar>
   </AppBar>
 )

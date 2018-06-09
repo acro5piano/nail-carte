@@ -6,6 +6,7 @@ import AppHeader from 'sarte/components/AppHeader'
 import { CustomerForm } from 'sarte/forms/CustomerForm'
 import TextField from '@material-ui/core/TextField'
 import CustomerStore from 'sarte/stores/CustomerStore'
+import { validate } from 'sarte/utils'
 
 interface NewCustomerProps {
   classes: any
@@ -26,7 +27,7 @@ class CreateCustomer extends React.Component<NewCustomerProps, NewCustomerState>
 
     return (
       <div className={classes.root}>
-        <AppHeader hasBack onSubmit={this.submit} submitTitle="Create" />
+        <AppHeader hasBack canSubmit={this.validate} onSubmit={this.submit} submitTitle="Create" />
         <div>
           <TextField
             name="name"
@@ -69,6 +70,17 @@ class CreateCustomer extends React.Component<NewCustomerProps, NewCustomerState>
         </div>
       </div>
     )
+  }
+
+  private get validate() {
+    const { name, email } = this.state.customerForm
+    return validate({
+      name,
+      email,
+    }, {
+      name: 'required',
+      email: 'required|email',
+    })
   }
 
   private handleChange = field => event => {
