@@ -38,7 +38,7 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
 
     return (
       <div className={classes.root}>
-        <AppHeader hasBack canSubmit={this.validate} title="来店を追加" onSubmit={this.submit} submitTitle="Create" />
+        <AppHeader hasBack canSubmit={this.validate} title="来店を追加" onSubmit={this.submit} submitTitle="追加" />
         <div>
           <TextField
             name="price"
