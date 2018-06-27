@@ -7,11 +7,12 @@ import { withStyles } from '@material-ui/core/styles'
 interface FloatingActionButtonProps {
   onClick?: () => void
   color?: PropTypes.Color
+  Icon: React.ComponentType<any>
 }
 
-const FloatingActionButton: React.SFC<any> = ({ classes, onClick, color }) => (
+const FloatingActionButton: React.SFC<any> = ({ classes, onClick, color, Icon = AddIcon }) => (
   <Button onClick={onClick} variant="fab" color={color} className={classes.button}>
-    <AddIcon />
+    <Icon />
   </Button>
 )
 

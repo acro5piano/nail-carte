@@ -7,6 +7,7 @@ import FloatingActionButton from 'sarte/components/MaterialUi/Button/FloatingAct
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
+import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import Avatar from '@material-ui/core/Avatar'
 import ImageIcon from '@material-ui/icons/Image'
 import { CREATE_CUSTOMER_PATH, getLink } from 'sarte/Routes'
@@ -36,7 +37,7 @@ const CustomerList = ({ classes, customerStore }: CustomersProps) => (
       )}
     </List>
     <Link to={CREATE_CUSTOMER_PATH}>
-      <FloatingActionButton />
+      <FloatingActionButton Icon={PersonAddIcon} />
     </Link>
   </div>
 )
