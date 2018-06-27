@@ -29,7 +29,7 @@ const AppHeader = ({ classes, noMenu = false, canSubmit = true, hasBack = false,
           {hasBack ? <ArrowBackIcon /> : <MenuIcon />}
         </IconButton>
       }
-      <Typography variant="title" color="inherit" noWrap className={classes.flex}>
+      <Typography variant="title" color="inherit" noWrap className={classes.title}>
         {title}
       </Typography>
       {onSubmit && <Button disabled={!canSubmit} onClick={onSubmit} color="inherit">{submitTitle}</Button>}
@@ -38,8 +38,10 @@ const AppHeader = ({ classes, noMenu = false, canSubmit = true, hasBack = false,
 )
 
 const styles = {
-  flex: {
+  title: {
     flex: 1,
+    fontSize: 18,
+    fontWeight: 'bold' as 'bold',
   },
   menuButton: {
     marginLeft: -12,
