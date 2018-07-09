@@ -3,12 +3,7 @@ import { orderBy } from 'lodash'
 import BaseStore from './BaseStore'
 import Customer from 'sarte/entities/Customer'
 import VisitPhoto from 'sarte/entities/VisitPhoto'
-import {
-  CustomerApi,
-  VisitApi,
-  VisitPhotoApi,
-  FileApi,
-} from 'sarte/services/api'
+import { CustomerApi, VisitApi, VisitPhotoApi, FileApi } from 'sarte/services/api'
 import { CustomerForm } from 'sarte/forms/CustomerForm'
 import { VisitForm } from 'sarte/forms/VisitForm'
 
@@ -20,7 +15,7 @@ interface CreateVisitParams {
 export default class CustomerStore extends BaseStore {
   public customers: Customer[] = []
 
-  public fetchCustomers = flow(function *() {
+  public fetchCustomers = flow(function*() {
     this.customers = yield CustomerApi.list()
   })
 
@@ -28,7 +23,7 @@ export default class CustomerStore extends BaseStore {
     return orderBy(this.customers, 'createdAt').reverse()
   }
 
-  public createCustomer = flow(function *(customerForm: CustomerForm) {
+  public createCustomer = flow(function*(customerForm: CustomerForm) {
     if (customerForm.id) {
       yield CustomerApi.update(customerForm.id, {
         ...customerForm.toCreateCustomerParams(),
@@ -45,14 +40,15 @@ export default class CustomerStore extends BaseStore {
   })
 
   public get selectedCustomer() {
-    if (!location.pathname.match(/customers\/(\d+)/)) {
+    const match = location.pathname.match(/customers\/([0-9|a-z]+)/)
+    if (!match) {
       return null
     }
-    const id = location.pathname.match(/customers\/(\d+)/)[1]
-    return this.customers.find(c => c.id === Number(id))
+    const id = match[1]
+    return this.customers.find(c => c.id === id)
   }
 
-  public uploadPhoto = flow(function *(file) {
+  public uploadPhoto = flow(function*(file) {
     const formData = new FormData()
     formData.append('file', file)
     const res = yield FileApi.upload(formData)
@@ -62,19 +58,21 @@ export default class CustomerStore extends BaseStore {
     })
   })
 
-  public createVisit = flow(function *({ visitForm, visitPhotos = [] }: CreateVisitParams) {
+  public createVisit = flow(function*({ visitForm, visitPhotos = [] }: CreateVisitParams) {
     visitForm.customerId = this.selectedCustomer.id
     const { id } = yield VisitApi.create({
       ...visitForm.toCreateVisitParams(),
       createdAt: Date.now(),
     })
     if (visitPhotos.length > 0) {
-      yield Promise.all(visitPhotos.map(async(visitPhoto) =>
-        VisitPhotoApi.create({
-          ...visitPhoto,
-          visitId: id,
-        }),
-      ))
+      yield Promise.all(
+        visitPhotos.map(async visitPhoto =>
+          VisitPhotoApi.create({
+            ...visitPhoto,
+            visitId: id,
+          }),
+        ),
+      )
     }
     yield this.fetchCustomers()
     history.back()

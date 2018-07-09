@@ -5,10 +5,11 @@
     "tslint-config-standard"
   ],
   "rules": {
-    "space-before-function-paren": [
-      true,
-      "never"
-    ],
+    "space-before-function-paren": ["error", {
+      "anonymous": "never",
+      "named": "never",
+      "asyncArrow": "always"
+    }],
     "jsx-boolean-value": ["always", { "never": ["personal"] }],
     "comma-dangle": [
       "error",

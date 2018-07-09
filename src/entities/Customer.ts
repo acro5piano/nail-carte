@@ -4,7 +4,7 @@ import { CustomerForm } from 'sarte/forms/CustomerForm'
 import _ from 'lodash'
 
 interface CustomerArgs {
-  id?: number
+  id?: string
   name?: string
   birthday?: number
   address?: string
@@ -17,7 +17,7 @@ interface CustomerArgs {
 }
 
 export default class Customer {
-  id: number
+  id: string
   name: string
   email: string
   address?: string
@@ -29,7 +29,7 @@ export default class Customer {
   createdAt?: moment.Moment
 
   constructor(args: CustomerArgs) {
-    this.id = Number(args.id)
+    this.id = args.id
     this.name = args.name
     this.email = args.email
     this.address = args.address

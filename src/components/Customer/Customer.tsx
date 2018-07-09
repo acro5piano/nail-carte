@@ -21,6 +21,7 @@ interface CustomerProps {
 
 const Customer = ({ classes, customerStore, routerStore }: CustomerProps) => {
   const customer = customerStore.selectedCustomer
+  console.log(customer)
   if (!customer) {
     return null
   }

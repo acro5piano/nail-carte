@@ -3,7 +3,7 @@ import VisitPhoto from 'sarte/entities/VisitPhoto'
 import { VisitForm } from 'sarte/forms/VisitForm'
 
 export default class Visit {
-  id: number
+  id: string
   customerId: number
   note?: string
   price: number

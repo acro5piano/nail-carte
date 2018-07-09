@@ -1,7 +1,7 @@
 import moment = require('moment')
 
 export default class VisitPhoto {
-  id: number
+  id: string
   visitId: number
   url: string
   createdAt: moment.Moment
