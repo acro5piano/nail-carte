@@ -7,7 +7,6 @@ export class VisitForm {
   note: string = ''
   startAt?: moment.Moment = moment().add(-1, 'hour')
   endAt?: moment.Moment = moment()
-  createdAt?: number
 
   constructor(args = {}) {
     Object.assign(this, args)

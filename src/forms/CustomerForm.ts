@@ -23,7 +23,7 @@ export class CustomerForm {
       occupation,
       address,
       zip,
-      birthday: Number(moment(birthday)),
+      birthday: String(birthday),
     }
   }
 

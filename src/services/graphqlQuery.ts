@@ -19,3 +19,11 @@ export const getCustomers = `
     }
   }
 `
+
+export const createCustomer = `
+  mutation createCustomer($customer: CreateCustomerInput!) {
+    createCustomer(customer: $customer) {
+      id
+    }
+  }
+`

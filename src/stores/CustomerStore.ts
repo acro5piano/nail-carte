@@ -25,15 +25,9 @@ export default class CustomerStore extends BaseStore {
 
   public createCustomer = flow(function*(customerForm: CustomerForm) {
     if (customerForm.id) {
-      yield CustomerApi.update(customerForm.id, {
-        ...customerForm.toCreateCustomerParams(),
-        updatedAt: Date.now(),
-      })
+      yield CustomerApi.update(customerForm.id, customerForm.toCreateCustomerParams())
     } else {
-      yield CustomerApi.create({
-        ...customerForm.toCreateCustomerParams(),
-        createdAt: Date.now(),
-      })
+      yield CustomerApi.create(customerForm.toCreateCustomerParams())
     }
     yield this.fetchCustomers()
     this.rootStore.routerStore.goBack()
@@ -54,16 +48,12 @@ export default class CustomerStore extends BaseStore {
     const res = yield FileApi.upload(formData)
     return new VisitPhoto({
       url: res.fileName,
-      createAt: Number(new Date()),
     })
   })
 
   public createVisit = flow(function*({ visitForm, visitPhotos = [] }: CreateVisitParams) {
     visitForm.customerId = this.selectedCustomer.id
-    const { id } = yield VisitApi.create({
-      ...visitForm.toCreateVisitParams(),
-      createdAt: Date.now(),
-    })
+    const { id } = yield VisitApi.create(visitForm.toCreateVisitParams())
     if (visitPhotos.length > 0) {
       yield Promise.all(
         visitPhotos.map(async visitPhoto =>
