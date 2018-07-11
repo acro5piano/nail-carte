@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { inject, observer } from 'mobx-react'
+import { withRouter } from 'react-router-dom'
 import { compose } from 'recompose'
 import { withStyles } from '@material-ui/core/styles'
 import AppHeader from 'sarte/components/AppHeader'
@@ -7,10 +8,12 @@ import { CustomerForm } from 'sarte/forms/CustomerForm'
 import TextField from '@material-ui/core/TextField'
 import CustomerStore from 'sarte/stores/CustomerStore'
 import { validate } from 'sarte/utils'
+import { History } from 'sarte/types'
 
 interface NewCustomerProps {
   classes: any
   customerStore: CustomerStore
+  history: History
 }
 
 interface NewCustomerState {
@@ -102,13 +105,16 @@ class CreateCustomer extends React.Component<NewCustomerProps, NewCustomerState>
 
   private get validate() {
     const { name, email } = this.state.customerForm
-    return validate({
-      name,
-      email,
-    }, {
-      name: 'required',
-      email: 'email',
-    })
+    return validate(
+      {
+        name,
+        email,
+      },
+      {
+        name: 'required',
+        email: 'email',
+      },
+    )
   }
 
   private handleChange = field => event => {
@@ -126,7 +132,10 @@ class CreateCustomer extends React.Component<NewCustomerProps, NewCustomerState>
   private onUpdateOccupation = event => this.handleChange('occupation')(event)
   private onUpdateAddress = event => this.handleChange('address')(event)
 
-  private submit = () => this.props.customerStore.createCustomer(this.state.customerForm)
+  private submit = async () => {
+    await this.props.customerStore.createCustomer(this.state.customerForm)
+    this.props.history.goBack()
+  }
 }
 
 const styles = {
@@ -141,6 +150,7 @@ const styles = {
 }
 
 export default compose(
+  withRouter,
   withStyles(styles),
   inject('customerStore'),
   observer,

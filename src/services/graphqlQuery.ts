@@ -13,6 +13,7 @@ export const getCustomers = `
         price
         note
         visitPhotos {
+          id
           url
         }
       }

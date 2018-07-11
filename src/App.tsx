@@ -39,7 +39,11 @@ export default class AppContainer extends React.Component<{}, AppState> {
     this.rootStore = new RootStore()
     await this.rootStore.boot()
     this.setState({ booted: true })
-    document.getElementById('loading').remove()
+    const loading = document.getElementById('loading')
+    if (!loading) {
+      throw Error('Loading Element not found')
+    }
+    loading.remove()
   }
 
   render() {
@@ -48,7 +52,7 @@ export default class AppContainer extends React.Component<{}, AppState> {
         <CssBaseline />
         <MuiThemeProvider theme={theme}>
           <Provider {...this.rootStore}>
-            <Router ref={router => this.rootStore.routerStore.setRouter(router)}>
+            <Router>
               <div>
                 <Routes />
                 <AppSidebar />

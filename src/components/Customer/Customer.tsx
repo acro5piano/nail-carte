@@ -2,33 +2,37 @@ import * as React from 'react'
 import { inject, observer } from 'mobx-react'
 import { compose } from 'recompose'
 import { withStyles } from '@material-ui/core/styles'
-import { Link } from 'react-router-dom'
-import { CREATE_VISIT_PATH, getLink } from 'sarte/Routes'
+import { Link, withRouter } from 'react-router-dom'
+import { CREATE_VISIT_PATH, EDIT_CUSTOMER_PATH, getLink } from 'sarte/Routes'
 import AppHeader from 'sarte/components/AppHeader'
 // import Grid from '@material-ui/core/Grid'
 import CustomerStore from 'sarte/stores/CustomerStore'
-import RouterStore from 'sarte/stores/RouterStore'
 import FloatingActionButton from 'sarte/components/MaterialUi/Button/FloatingActionButton'
 import Visit from './Detail/Visit'
 import Basic from './Detail/Basic'
 import Contact from './Detail/Contact'
+import { History } from 'sarte/types'
 
 interface CustomerProps {
   classes: any
   customerStore: CustomerStore
-  routerStore: RouterStore
+  history: History
 }
 
-const Customer = ({ classes, customerStore, routerStore }: CustomerProps) => {
+const Customer = ({ classes, customerStore, history }: CustomerProps) => {
   const customer = customerStore.selectedCustomer
-  console.log(customer)
   if (!customer) {
     return null
   }
 
+  const toSelectedCustomerEditPath = () => {
+    const path = getLink(EDIT_CUSTOMER_PATH, customer.id)
+    history.push(path)
+  }
+
   return (
     <div className={classes.root}>
-      <AppHeader hasBack title={customer.name} onSubmit={routerStore.toSelectedCustomerEditPath} submitTitle="編集" />
+      <AppHeader hasBack title={customer.name} onSubmit={toSelectedCustomerEditPath} submitTitle="編集" />
       <div className={classes.basic}>
         <Basic customer={customer} />
       </div>
@@ -66,7 +70,8 @@ const styles = {
 }
 
 export default compose(
+  withRouter,
   withStyles(styles),
-  inject('customerStore', 'routerStore'),
+  inject('customerStore'),
   observer,
 )<CustomerProps>(Customer)

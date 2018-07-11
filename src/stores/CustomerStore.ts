@@ -15,7 +15,7 @@ interface CreateVisitParams {
 export default class CustomerStore extends BaseStore {
   public customers: Customer[] = []
 
-  public fetchCustomers = flow(function*() {
+  public fetchCustomers = flow(function*(this: CustomerStore) {
     this.customers = yield CustomerApi.list()
   })
 
@@ -23,14 +23,13 @@ export default class CustomerStore extends BaseStore {
     return orderBy(this.customers, 'createdAt').reverse()
   }
 
-  public createCustomer = flow(function*(customerForm: CustomerForm) {
+  public createCustomer = flow(function*(this: CustomerStore, customerForm: CustomerForm) {
     if (customerForm.id) {
       yield CustomerApi.update(customerForm.id, customerForm.toCreateCustomerParams())
     } else {
       yield CustomerApi.create(customerForm.toCreateCustomerParams())
     }
     yield this.fetchCustomers()
-    this.rootStore.routerStore.goBack()
   })
 
   public get selectedCustomer() {
@@ -51,7 +50,10 @@ export default class CustomerStore extends BaseStore {
     })
   })
 
-  public createVisit = flow(function*({ visitForm, visitPhotos = [] }: CreateVisitParams) {
+  public createVisit = flow(function*(this: CustomerStore, { visitForm, visitPhotos = [] }: CreateVisitParams) {
+    if (!this.selectedCustomer) {
+      return null
+    }
     visitForm.customerId = this.selectedCustomer.id
     const { id } = yield VisitApi.create(visitForm.toCreateVisitParams())
     if (visitPhotos.length > 0) {
