@@ -84,23 +84,22 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
           />
         </div>
         <div className={classes.input} onChange={this.onAddPhoto}>
-          <div>
-            写真
-          </div>
+          <div>写真</div>
           <input type="file" accept="image/*" multiple />
         </div>
-        {loading
-          ? <CircularProgress />
-          : <div className={classes.input}>
-              <GridList cellHeight={120} className={classes.gridList} cols={2}>
-                {visitPhotos.map(photo =>
-                  <GridListTile key={photo.url} cols={1}>
-                    <img src={photo.url} alt="uploading image" />
-                  </GridListTile>,
-                )}
-              </GridList>
-            </div>
-        }
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <div className={classes.input}>
+            <GridList cellHeight={120} className={classes.gridList} cols={2}>
+              {visitPhotos.map((photo: VisitPhoto) => (
+                <GridListTile key={photo.url} cols={1}>
+                  <img src={photo.url} alt="uploading image" />
+                </GridListTile>
+              ))}
+            </GridList>
+          </div>
+        )}
       </div>
     )
   }
@@ -111,17 +110,20 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
     }
 
     const { price, note, startAt, endAt } = this.state.visitForm
-    return validate({
-      price,
-      note,
-      startAt,
-      endAt,
-    }, {
-      price: 'required|numeric|min:500',
-      note: 'max:200',
-      startAt: 'date',
-      endAt: 'date',
-    })
+    return validate(
+      {
+        price,
+        note,
+        startAt,
+        endAt,
+      },
+      {
+        price: 'required|numeric|min:500',
+        note: 'max:200',
+        startAt: 'date',
+        endAt: 'date',
+      },
+    )
   }
 
   private handleChange = field => event => {
@@ -137,18 +139,17 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
   private onUpdateStartAt = event => this.handleChange('startAt')(event)
   private onUpdateEndAt = event => this.handleChange('endAt')(event)
 
-  private onAddPhoto = async(event) => {
+  private onAddPhoto = async event => {
     this.setState({ loading: true })
-    const visitPhotos = await Promise.all(Array.from(event.target.files).map(async(file) => {
-      await this.props.customerStore.uploadPhoto(file)
-      const visitPhoto = await this.props.customerStore.uploadPhoto(file)
-      return visitPhoto
-    }))
+    const visitPhotos = await Promise.all(
+      Array.from(event.target.files).map(async file => {
+        await this.props.customerStore.uploadPhoto(file)
+        const visitPhoto = await this.props.customerStore.uploadPhoto(file)
+        return visitPhoto
+      }),
+    )
     this.setState({
-      visitPhotos: [
-        ...this.state.visitPhotos,
-        ...visitPhotos,
-      ],
+      visitPhotos: [...this.state.visitPhotos, ...visitPhotos],
       loading: false,
     })
   }

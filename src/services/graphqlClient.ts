@@ -1,7 +1,7 @@
 import 'whatwg-fetch'
 
-export const baseUrl = 'https://api.fastestnews.org'
-// export const baseUrl = 'http://localhost:3000'
+// export const baseUrl = 'https://api.fastestnews.org'
+export const baseUrl = 'http://localhost:3000'
 
 const headers = {
   Accept: 'application/json',

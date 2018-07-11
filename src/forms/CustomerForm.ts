@@ -1,7 +1,7 @@
 import moment = require('moment')
 
 export class CustomerForm {
-  id?: number
+  id?: string
   email?: string = ''
   name?: string = ''
   birthday?: Date = new Date('2000-01-01')

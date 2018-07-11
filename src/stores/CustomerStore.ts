@@ -46,7 +46,7 @@ export default class CustomerStore extends BaseStore {
     formData.append('file', file)
     const res = yield FileApi.upload(formData)
     return new VisitPhoto({
-      url: res.fileName,
+      url: res.path,
     })
   })
 

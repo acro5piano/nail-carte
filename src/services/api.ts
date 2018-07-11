@@ -3,14 +3,14 @@ import Customer from 'sarte/entities/Customer'
 import Visit from 'sarte/entities/Visit'
 import VisitPhoto from 'sarte/entities/VisitPhoto'
 import { gql, baseUrl } from './graphqlClient'
-import { getCustomers, createCustomer } from './graphqlQuery'
+import { getCustomers, createCustomer, updateCustomer } from './graphqlQuery'
 
-const POST = (path: string, data: object) => axios.post(`${baseUrl}/${path}`, data).then(res => res.data)
+const POST = (path: string, data: object) => axios.post(`${baseUrl}${path}`, data).then(res => res.data)
 
 export const CustomerApi = {
   list: () => gql(getCustomers).then(res => res.data.customers.map(c => new Customer(c))),
   create: (customer: object) => gql(createCustomer, { customer }),
-  // update: (id: number, data: object) => PUT(`/customers/${id}`, data),
+  update: (id: string, customer: object) => gql(updateCustomer, { id, customer }),
 }
 
 export const VisitApi = {

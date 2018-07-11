@@ -22,8 +22,16 @@ export const getCustomers = `
 `
 
 export const createCustomer = `
-  mutation createCustomer($customer: CreateCustomerInput!) {
+  mutation createCustomer($customer: CustomerInput!) {
     createCustomer(customer: $customer) {
+      id
+    }
+  }
+`
+
+export const updateCustomer = `
+  mutation updateCustomer($id: String!, $customer: CustomerInput!) {
+    updateCustomer(id: $id, customer: $customer) {
       id
     }
   }
