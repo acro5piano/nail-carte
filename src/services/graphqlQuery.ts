@@ -36,3 +36,19 @@ export const updateCustomer = `
     }
   }
 `
+
+export const createVisit = `
+  mutation createVisit($visit: VisitInput!) {
+    createVisit(visit: $visit) {
+      id
+    }
+  }
+`
+
+export const createVisitPhoto = `
+  mutation createVisitPhoto($visitPhoto: VisitPhotoInput!) {
+    createVisitPhoto(visitPhoto: $visitPhoto) {
+      id
+    }
+  }
+`

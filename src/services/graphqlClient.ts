@@ -9,7 +9,7 @@ const headers = {
   // 'Authorization': 'Bearer ' + String(storage.get(KEYS.AUTH_TOKEN)),
 }
 
-export const gql = async (query: any, variables: any = {}) => {
+export const gql = async (query: string, variables: any = {}) => {
   const body = JSON.stringify({
     query,
     variables,

@@ -2,6 +2,7 @@ import { flow, observable, computed, decorate, action } from 'mobx'
 import { orderBy } from 'lodash'
 import BaseStore from './BaseStore'
 import Customer from 'sarte/entities/Customer'
+import Visit from 'sarte/entities/Visit'
 import VisitPhoto from 'sarte/entities/VisitPhoto'
 import { CustomerApi, VisitApi, VisitPhotoApi, FileApi } from 'sarte/services/api'
 import { CustomerForm } from 'sarte/forms/CustomerForm'
@@ -45,9 +46,7 @@ export default class CustomerStore extends BaseStore {
     const formData = new FormData()
     formData.append('file', file)
     const res = yield FileApi.upload(formData)
-    return new VisitPhoto({
-      url: res.path,
-    })
+    return new VisitPhoto(res)
   })
 
   public createVisit = flow(function*(this: CustomerStore, { visitForm, visitPhotos = [] }: CreateVisitParams) {
@@ -55,7 +54,7 @@ export default class CustomerStore extends BaseStore {
       return null
     }
     visitForm.customerId = this.selectedCustomer.id
-    const { id } = yield VisitApi.create(visitForm.toCreateVisitParams())
+    const { id }: Visit = yield VisitApi.create(visitForm.toCreateVisitParams())
     if (visitPhotos.length > 0) {
       yield Promise.all(
         visitPhotos.map(async visitPhoto =>

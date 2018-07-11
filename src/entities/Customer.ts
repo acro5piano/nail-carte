@@ -17,9 +17,9 @@ interface CustomerArgs {
 }
 
 export default class Customer {
-  id: string
-  name: string
-  email: string
+  id?: string
+  name?: string
+  email?: string
   address?: string
   zip?: number
   occupation?: string
@@ -36,8 +36,7 @@ export default class Customer {
     this.occupation = args.occupation
     this.phoneNumber = args.phoneNumber
     this.birthday = moment(args.birthday)
-    this.visits = args.visits.map(v => new Visit(v))
-    this.createdAt = moment(args.createdAt)
+    this.visits = (args.visits || []).map(v => new Visit(v))
   }
 
   public get lastVisitAt(): string {

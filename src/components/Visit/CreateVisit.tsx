@@ -154,8 +154,8 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
     })
   }
 
-  private submit = () => {
-    this.props.customerStore.createVisit(this.state)
+  private submit = async () => {
+    await this.props.customerStore.createVisit(this.state)
   }
 }
 
