@@ -1,7 +1,5 @@
 import 'whatwg-fetch'
-
-export const baseUrl = 'https://api.fastestnews.org'
-// export const baseUrl = 'http://localhost:3000'
+import { API_URL } from 'sarte/config'
 
 const headers = {
   Accept: 'application/json',
@@ -15,7 +13,7 @@ export const gql = async (query: string, variables: any = {}) => {
     variables,
   })
 
-  const response = await fetch(`${baseUrl}/graphql`, {
+  const response = await fetch(`${API_URL}/graphql`, {
     method: 'POST',
     body,
     headers,

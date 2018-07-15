@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { inject, observer } from 'mobx-react'
 import { withStyles, StyledComponentProps } from '@material-ui/core/styles'
-import AuthStore from 'bokulog/stores/AuthStore'
+import AuthStore from 'sarte/stores/AuthStore'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
-import AppHeader from 'bokulog/components/Header'
+import AppHeader from 'sarte/components/AppHeader'
 
 export interface LoginProps {
   authStore: AuthStore
@@ -14,14 +14,14 @@ export interface LoginProps {
 }
 
 export interface LoginState {
-  username: string
+  email: string
   password: string
   errors: string
 }
 
 class Login extends React.Component<LoginProps & StyledComponentProps, LoginState> {
   state = {
-    username: '',
+    email: '',
     password: '',
     errors: '',
   }
@@ -31,7 +31,7 @@ class Login extends React.Component<LoginProps & StyledComponentProps, LoginStat
   }
 
   onChangeEmail = (event: any) => {
-    this.setState({ username: event.target.value })
+    this.setState({ email: event.target.value })
   }
 
   onChangePassword = (event: any) => {
@@ -39,9 +39,9 @@ class Login extends React.Component<LoginProps & StyledComponentProps, LoginStat
   }
 
   submit = async (event: any) => {
-    const { username, password } = this.state
+    const { email, password } = this.state
     try {
-      await this.props.authStore.login({ username, password })
+      await this.props.authStore.login({ email, password })
       this.props.history.push('/')
     } catch (err) {
       this.setState({ errors: '間違っています' })
@@ -67,7 +67,7 @@ class Login extends React.Component<LoginProps & StyledComponentProps, LoginStat
                 id="name"
                 label="ユーザーID"
                 className={classes.textField}
-                value={this.state.username}
+                value={this.state.email}
                 onChange={this.onChangeEmail}
                 margin="normal"
                 fullWidth

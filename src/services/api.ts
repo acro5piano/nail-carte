@@ -1,11 +1,11 @@
-import axios from 'axios'
 import Customer from 'sarte/entities/Customer'
 import Visit from 'sarte/entities/Visit'
 import VisitPhoto from 'sarte/entities/VisitPhoto'
-import { gql, baseUrl } from './graphqlClient'
+import User from 'sarte/entities/User'
+import { LoginCredentials } from 'sarte/types'
+import { gql } from './graphqlClient'
+import { POST, GET } from './xhrClient'
 import * as Query from './graphqlQuery'
-
-const POST = (path: string, data: object) => axios.post(`${baseUrl}${path}`, data).then(res => res.data)
 
 export const CustomerApi = {
   list: () => gql(Query.getCustomers).then(res => res.data.customers.map(c => new Customer(c))),
@@ -19,6 +19,11 @@ export const VisitApi = {
 
 export const VisitPhotoApi = {
   create: (visitPhoto: object) => gql(Query.createVisitPhoto, { visitPhoto }).then(res => new VisitPhoto(res)),
+}
+
+export const AuthApi = {
+  login: (credentials: LoginCredentials) => POST('/login', credentials),
+  me: () => GET('/me').then(res => new User(res)),
 }
 
 export const FileApi = {

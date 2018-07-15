@@ -4,7 +4,7 @@ import { VisitForm } from 'sarte/forms/VisitForm'
 
 export default class Visit {
   id: string
-  customerId: number
+  customerId: string
   note?: string
   price: number
   startAt: moment.Moment
@@ -13,6 +13,7 @@ export default class Visit {
 
   constructor(args: any) {
     this.id = args.id
+    this.customerId = args.customerId
     this.price = args.price
     this.note = args.note
     this.endAt = moment(args.endAt)
