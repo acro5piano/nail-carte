@@ -1,2 +1,2 @@
-// export const API_URL = 'https://api.fastestnews.org'
-export const API_URL = 'http://localhost:3000'
+export const API_URL = 'https://nail-carte-api-beta-ydavidalpt.now.sh'
+// export const API_URL = 'http://localhost:3000'
