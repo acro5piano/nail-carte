@@ -31,7 +31,7 @@ export default class AuthStore extends BaseStore {
     try {
       const res = yield AuthApi.login(credentials)
       this.authenticated = true
-      this.user = new User(res.staff)
+      this.user = new User(res.user)
       localStorage.setItem(STORAGE_TOKEN, res.token)
     } catch (err) {
       throw err
