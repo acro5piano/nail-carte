@@ -1,16 +1,15 @@
 import * as React from 'react'
 import { inject, observer } from 'mobx-react'
 import { compose } from 'recompose'
+import { Route } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import GridList from '@material-ui/core/GridList'
-import GridListTile from '@material-ui/core/GridListTile'
 import CustomerStore from 'sarte/stores/CustomerStore'
 import AppHeader from 'sarte/components/AppHeader'
 import { VisitForm } from 'sarte/forms/VisitForm'
 import VisitPhoto from 'sarte/entities/VisitPhoto'
 import { validate } from 'sarte/utils'
+import TakePhoto from './TakePhoto'
 
 interface NewVisitProps {
   classes: any
@@ -34,21 +33,31 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
 
   public render() {
     const { classes } = this.props
-    const { loading, visitPhotos } = this.state
+    const { visitPhotos } = this.state
 
+    /* tslint:disable */
     return (
       <div className={classes.root}>
         <AppHeader hasBack canSubmit={this.validate} title="来店を追加" onSubmit={this.submit} submitTitle="追加" />
-        <div>
-          <TextField
-            name="price"
-            type="number"
-            label="金額"
-            fullWidth
-            defaultValue={this.state.visitForm.price}
-            onChange={this.onUpdatePrice}
-          />
-        </div>
+        <Route
+          path="/customers/:id/visits/new/photo"
+          render={() => <TakePhoto visitPhotos={visitPhotos} onChange={this.onAddPhoto} />}
+        />
+        <Route
+          path="/customers/:id/visits/new/note"
+          render={() => (
+            <div>
+              <TextField
+                name="price"
+                type="number"
+                label="金額"
+                fullWidth
+                defaultValue={this.state.visitForm.price}
+                onChange={this.onUpdatePrice}
+              />
+            </div>
+          )}
+        />
         <div className={classes.input}>
           <TextField
             name="note"
@@ -83,25 +92,10 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
             }}
           />
         </div>
-        <div className={classes.input} onChange={this.onAddPhoto}>
-          <div>写真</div>
-          <input type="file" accept="image/*" multiple />
-        </div>
-        {loading ? (
-          <CircularProgress />
-        ) : (
-          <div className={classes.input}>
-            <GridList cellHeight={120} className={classes.gridList} cols={2}>
-              {visitPhotos.map((photo: VisitPhoto) => (
-                <GridListTile key={photo.url} cols={1}>
-                  <img src={photo.url} alt="uploading image" />
-                </GridListTile>
-              ))}
-            </GridList>
-          </div>
         )}
       </div>
     )
+    /* tslint:enable */
   }
 
   private get validate() {
