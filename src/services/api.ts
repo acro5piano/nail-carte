@@ -4,7 +4,7 @@ import VisitPhoto from 'sarte/entities/VisitPhoto'
 import User from 'sarte/entities/User'
 import { LoginCredentials } from 'sarte/types'
 import { gql } from './graphqlClient'
-import { POST, GET } from './xhrClient'
+import { POST, GET, UPLOAD } from './xhrClient'
 import * as Query from './graphqlQuery'
 
 export const CustomerApi = {
@@ -27,5 +27,5 @@ export const AuthApi = {
 }
 
 export const FileApi = {
-  upload: (data: object) => POST('/files', data),
+  upload: (data: any) => UPLOAD('/files', data),
 }

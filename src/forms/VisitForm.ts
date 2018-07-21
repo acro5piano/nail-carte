@@ -15,7 +15,7 @@ export class VisitForm {
   toCreateVisitParams() {
     const { customerId, price, note, startAt, endAt } = this
     return {
-      customerId: customerId,
+      customer: customerId,
       price: Number(price),
       note,
       startAt: String(startAt),

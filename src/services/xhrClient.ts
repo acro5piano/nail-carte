@@ -17,3 +17,4 @@ const http = axios.create({
 
 export const GET = (path: string) => http.get(`${API_URL}${path}`).then(res => res.data)
 export const POST = (path: string, data: object) => http.post(`${API_URL}${path}`, data).then(res => res.data)
+export const UPLOAD = (path: string, data: object) => axios.post(`${API_URL}${path}`, data).then(res => res.data)

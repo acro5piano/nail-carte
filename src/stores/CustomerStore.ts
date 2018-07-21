@@ -60,7 +60,7 @@ export default class CustomerStore extends BaseStore {
         visitPhotos.map(async visitPhoto =>
           VisitPhotoApi.create({
             ...visitPhoto,
-            visitId: id,
+            visit: id,
           }),
         ),
       )
