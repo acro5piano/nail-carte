@@ -1,20 +1,21 @@
 import * as React from 'react'
 import { inject, observer } from 'mobx-react'
 import { compose } from 'recompose'
-import { Route } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import CustomerStore from 'sarte/stores/CustomerStore'
 import AppHeader from 'sarte/components/AppHeader'
 import { VisitForm } from 'sarte/forms/VisitForm'
+import { getLink } from 'sarte/Routes'
 import VisitPhoto from 'sarte/entities/VisitPhoto'
-import { validate } from 'sarte/utils'
+// import { validate } from 'sarte/utils'
 import TakePhoto from './TakePhoto'
 
 interface NewVisitProps {
   classes: any
   match: any
-  uploadFile: (data: any) => void
+  history: any
   customerStore: CustomerStore
 }
 
@@ -38,13 +39,13 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
     /* tslint:disable */
     return (
       <div className={classes.root}>
-        <AppHeader hasBack canSubmit={this.validate} title="来店を追加" onSubmit={this.submit} submitTitle="追加" />
+        <AppHeader hasBack title="来店を追加" onSubmit={this.next} submitTitle="次へ" />
         <Route
           path="/customers/:id/visits/new/photo"
           render={() => <TakePhoto visitPhotos={visitPhotos} onChange={this.onAddPhoto} />}
         />
         <Route
-          path="/customers/:id/visits/new/note"
+          path="/customers/:id/visits/new/price"
           render={() => (
             <div>
               <TextField
@@ -98,27 +99,27 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
     /* tslint:enable */
   }
 
-  private get validate() {
-    if (this.state.loading) {
-      return false
-    }
-
-    const { price, note, startAt, endAt } = this.state.visitForm
-    return validate(
-      {
-        price,
-        note,
-        startAt,
-        endAt,
-      },
-      {
-        price: 'required|numeric|min:500',
-        note: 'max:200',
-        startAt: 'date',
-        endAt: 'date',
-      },
-    )
-  }
+  // private get validate() {
+  //   if (this.state.loading) {
+  //     return false
+  //   }
+  //
+  //   const { price, note, startAt, endAt } = this.state.visitForm
+  //   return validate(
+  //     {
+  //       price,
+  //       note,
+  //       startAt,
+  //       endAt,
+  //     },
+  //     {
+  //       price: 'required|numeric|min:500',
+  //       note: 'max:200',
+  //       startAt: 'date',
+  //       endAt: 'date',
+  //     },
+  //   )
+  // }
 
   private handleChange = field => event => {
     const visitForm = new VisitForm({
@@ -148,8 +149,14 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
     })
   }
 
-  private submit = async () => {
-    await this.props.customerStore.createVisit(this.state)
+  // private submit = async () => {
+  //   await this.props.customerStore.createVisit(this.state)
+  // }
+
+  private next = () => {
+    const { history, match } = this.props
+    const { id } = match.params
+    history.push(getLink('/customers/:id/visits/new/photo', id))
   }
 }
 
@@ -165,6 +172,7 @@ const styles = {
 }
 
 export default compose(
+  withRouter,
   withStyles(styles),
   inject('customerStore'),
   observer,

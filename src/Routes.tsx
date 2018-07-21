@@ -15,11 +15,12 @@ export const CUSTOMER_PATH = '/customers/:id'
 export const CREATE_CUSTOMER_PATH = '/customers/new'
 export const EDIT_CUSTOMER_PATH = '/customers/:id/edit'
 
-export const CREATE_VISIT_PATH = '/customers/:id/visits/new'
+export const CREATE_VISIT_PATH = '/customers/:id/visits/new/:step'
 
 // Get full path to a resource.
 //     e.g.) getLink(1, CREATE_VISIT_PATH) => /customers/1/visits/new
-export const getLink = (pathname, id) => pathname.replace(/:.+?\//, id + '/').replace(/:.+$/, id)
+export const getLink = (pathname: string, ...ids: any[]): string =>
+  ids.reduce((cur, id) => cur.replace(/:[a-z|A-Z]+/, id), pathname)
 
 const Routes = props => (
   <div className="appBody">
