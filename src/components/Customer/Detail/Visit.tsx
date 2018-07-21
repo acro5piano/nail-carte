@@ -1,77 +1,44 @@
 import * as React from 'react'
 import Grid from '@material-ui/core/Grid'
-import { compose } from 'recompose'
-import { withStyles, WithStyles } from '@material-ui/core/styles'
 import Visit from 'sarte/entities/Visit'
-import VisitPhoto from 'sarte/entities/VisitPhoto'
 import Avatar from '@material-ui/core/Avatar'
 import ImageIcon from '@material-ui/icons/Image'
+import styled from 'styled-components'
 
 interface VisitProps {
-  classes: any
   match: any
   visit: Visit
 }
 
-interface PhotoProps {
-  photo: VisitPhoto
-}
+const StyledPhoto = styled.img`
+  border-radius: 3px;
+  width: 100%;
+`
 
-const PhotoComponent: React.SFC<any> = ({ photo, classes }: PhotoProps & WithStyles) => (
-  <div>
-    {photo.url
-      ? <img className={classes.photo} src={photo.url} />
-      : <Avatar className={classes.avatar}><ImageIcon /></Avatar>
-    }
-  </div>
-)
+const Container = styled.div`
+  padding: 12px;
+  background-color: #fff;
+`
 
-const photoStyles = {
-  photo: {
-    borderRadius: 3,
-    width: '100%',
-  },
-}
-
-export const Photo = withStyles(photoStyles)<PhotoProps>(PhotoComponent)
-
-const VisitComponent = ({ classes, visit }: VisitProps) => (
-  <div className={classes.root}>
-    <div className={classes.basic}>
-      <Grid container spacing={16}>
-        <Grid item xs={4}>
-          {visit.visitPhotos.map(photo => <Photo key={photo.id} photo={photo} />)}
-        </Grid>
-        <Grid item xs={8}>
-          <div>
-            {visit.localeStringPrice}円
-          </div>
-          <div>
-            {visit.note}
-          </div>
-          <div>
-            {visit.startAtForHuman}
-          </div>
-        </Grid>
+const VisitComponent = ({ visit }: VisitProps) => (
+  <Container>
+    <Grid container spacing={16}>
+      <Grid item xs={4}>
+        {visit.visitPhotos.length === 0 ? (
+          <Avatar>
+            <ImageIcon />
+          </Avatar>
+        ) : (
+          visit.visitPhotos.map(photo => <StyledPhoto key={photo.id} src={photo.url} />)
+        )}
       </Grid>
-    </div>
-  </div>
+      <Grid item xs={8}>
+        <div>{visit.localeStringPrice}円</div>
+        <div>{visit.note}</div>
+        <div>{visit.startAtForHuman}</div>
+      </Grid>
+    </Grid>
+  </Container>
 )
 
-const styles = {
-  photo: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  basic: {
-    padding: 12,
-    backgroundColor: '#fff',
-  },
-  title: {
-    padding: 12,
-  },
-}
-
-export default compose(
-  withStyles(styles),
-)<VisitProps>(VisitComponent)
+export default VisitComponent

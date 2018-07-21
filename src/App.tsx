@@ -48,7 +48,7 @@ export default class AppContainer extends React.Component<{}> {
       <React.Fragment>
         <CssBaseline />
         <MuiThemeProvider theme={theme}>
-          <Provider {...this.rootStore}>
+          <Provider {...this.rootStore} rootStore={this.rootStore}>
             <Router>
               <div>
                 <Routes />

@@ -1,14 +1,16 @@
 import * as React from 'react'
 import { inject, observer } from 'mobx-react'
 import { withStyles, StyledComponentProps } from '@material-ui/core/styles'
-import AuthStore from 'sarte/stores/AuthStore'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
 import AppHeader from 'sarte/components/AppHeader'
+import AuthStore from 'sarte/stores/AuthStore'
+import RootStore from 'sarte/stores/RootStore'
 
 export interface LoginProps {
   authStore: AuthStore
+  rootStore: RootStore
   classes: any
   history: any
 }
@@ -43,6 +45,7 @@ class Login extends React.Component<LoginProps & StyledComponentProps, LoginStat
     try {
       await this.props.authStore.login({ email, password })
       this.props.history.push('/')
+      this.props.rootStore.boot()
     } catch (err) {
       this.setState({ errors: '間違っています' })
       console.error(err)
@@ -58,14 +61,14 @@ class Login extends React.Component<LoginProps & StyledComponentProps, LoginStat
         <div className={classes.main}>
           <div>{this.state.errors}</div>
           <div className={classes.head}>
-            <div className={classes.title}>ぼくろぐ</div>
-            <div className={classes.description}>こどもの学びと育ちを可視化するサービス</div>
+            <div className={classes.title}>Sally</div>
+            <div className={classes.description}>ネイルサロンの経営管理ツール</div>
           </div>
           <Paper className={classes.paper}>
             <div>
               <TextField
                 id="name"
-                label="ユーザーID"
+                label="メールアドレス"
                 className={classes.textField}
                 value={this.state.email}
                 onChange={this.onChangeEmail}
@@ -128,4 +131,4 @@ const styles = {
 // display: 'flex',
 // justifyContent: 'center',
 
-export default withStyles(styles)(inject('authStore')(observer(Login)))
+export default withStyles(styles)(inject('authStore', 'rootStore')(observer(Login)))
