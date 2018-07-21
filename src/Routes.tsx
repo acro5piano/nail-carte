@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import CustomerList from 'sarte/components/Customer/CustomerList'
 import CreateCustomer from 'sarte/components/Customer/CreateCustomer'
 import Customer from 'sarte/components/Customer/Customer'
-import CreateVisit from 'sarte/components/Visit/CreateVisit'
+import CreateVisit from 'sarte/components/CreateVisit/CreateVisit'
 import Login from 'sarte/components/Login'
 
 // import NotFound from 'sarte/components/NotFound'
