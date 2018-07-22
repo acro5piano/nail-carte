@@ -3,7 +3,6 @@ import { inject, observer } from 'mobx-react'
 import { compose } from 'recompose'
 import { Route, withRouter } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
-import TextField from '@material-ui/core/TextField'
 import CustomerStore from 'sarte/stores/CustomerStore'
 import AppHeader from 'sarte/components/AppHeader'
 import { VisitForm } from 'sarte/forms/VisitForm'
@@ -11,6 +10,11 @@ import { getLink } from 'sarte/Routes'
 import VisitPhoto from 'sarte/entities/VisitPhoto'
 // import { validate } from 'sarte/utils'
 import TakePhoto from './TakePhoto'
+import DateInput from './DateInput'
+import Price from './Price'
+import Note from './Note'
+
+const steps = ['date', 'photo', 'menu', 'price', 'components', 'note']
 
 interface NewVisitProps {
   classes: any
@@ -32,71 +36,34 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
     loading: false,
   }
 
-  public render() {
-    const { classes } = this.props
-    const { visitPhotos } = this.state
+  onChange = (visitForm: VisitForm) => this.setState({ visitForm })
 
-    /* tslint:disable */
-    return (
-      <div className={classes.root}>
-        <AppHeader hasBack title="来店を追加" onSubmit={this.next} submitTitle="次へ" />
-        <Route
-          path="/customers/:id/visits/new/photo"
-          render={() => <TakePhoto visitPhotos={visitPhotos} onChange={this.onAddPhoto} />}
-        />
-        <Route
-          path="/customers/:id/visits/new/price"
-          render={() => (
-            <div>
-              <TextField
-                name="price"
-                type="number"
-                label="金額"
-                fullWidth
-                defaultValue={this.state.visitForm.price}
-                onChange={this.onUpdatePrice}
-              />
-            </div>
-          )}
-        />
-        <div className={classes.input}>
-          <TextField
-            name="note"
-            label="メモ"
-            multiline
-            fullWidth
-            defaultValue={this.state.visitForm.note}
-            onChange={this.onUpdateNote}
-          />
-        </div>
-        <div className={classes.input}>
-          <TextField
-            name="startAt"
-            type="datetime-local"
-            label="来店時間"
-            defaultValue={this.state.visitForm.startAtForHuman}
-            onChange={this.onUpdateStartAt}
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-        </div>
-        <div className={classes.input}>
-          <TextField
-            name="endAt"
-            type="datetime-local"
-            label="終了時間"
-            defaultValue={this.state.visitForm.endAtForHuman}
-            onChange={this.onUpdateEndAt}
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-        </div>
-        )}
-      </div>
+  private next = () => {
+    const { history, match } = this.props
+    const { id, step } = match.params
+
+    if (step === 'note') {
+      // submit
+      return
+    }
+
+    const nextStep = steps[steps.indexOf(step) + 1]
+    history.push(getLink('/customers/:id/visits/new/:step', id, nextStep))
+  }
+
+  private onAddPhoto = async event => {
+    this.setState({ loading: true })
+    const visitPhotos = await Promise.all(
+      Array.from(event.target.files).map(async file => {
+        await this.props.customerStore.uploadPhoto(file)
+        const visitPhoto = await this.props.customerStore.uploadPhoto(file)
+        return visitPhoto
+      }),
     )
-    /* tslint:enable */
+    this.setState({
+      visitPhotos: [...this.state.visitPhotos, ...visitPhotos],
+      loading: false,
+    })
   }
 
   // private get validate() {
@@ -121,42 +88,37 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
   //   )
   // }
 
-  private handleChange = field => event => {
-    const visitForm = new VisitForm({
-      ...this.state.visitForm,
-      [field]: event.target.value,
-    })
-    this.setState({ visitForm })
-  }
-
-  private onUpdatePrice = event => this.handleChange('price')(event)
-  private onUpdateNote = event => this.handleChange('note')(event)
-  private onUpdateStartAt = event => this.handleChange('startAt')(event)
-  private onUpdateEndAt = event => this.handleChange('endAt')(event)
-
-  private onAddPhoto = async event => {
-    this.setState({ loading: true })
-    const visitPhotos = await Promise.all(
-      Array.from(event.target.files).map(async file => {
-        await this.props.customerStore.uploadPhoto(file)
-        const visitPhoto = await this.props.customerStore.uploadPhoto(file)
-        return visitPhoto
-      }),
-    )
-    this.setState({
-      visitPhotos: [...this.state.visitPhotos, ...visitPhotos],
-      loading: false,
-    })
-  }
-
   // private submit = async () => {
   //   await this.props.customerStore.createVisit(this.state)
   // }
 
-  private next = () => {
-    const { history, match } = this.props
-    const { id } = match.params
-    history.push(getLink('/customers/:id/visits/new/photo', id))
+  render() {
+    const { classes } = this.props
+    const { visitPhotos, visitForm } = this.state
+
+    /* tslint:disable */
+    return (
+      <div className={classes.root}>
+        <AppHeader hasBack title="来店を追加" onSubmit={this.next} submitTitle="次へ" />
+        <Route
+          path="/customers/:id/visits/new/date"
+          render={() => <DateInput visitForm={visitForm} onChange={this.onChange} />}
+        />
+        <Route
+          path="/customers/:id/visits/new/photo"
+          render={() => <TakePhoto visitPhotos={visitPhotos} onChange={this.onAddPhoto} />}
+        />
+        <Route
+          path="/customers/:id/visits/new/price"
+          render={() => <Price visitForm={visitForm} onChange={this.onChange} />}
+        />
+        <Route
+          path="/customers/:id/visits/new/note"
+          render={() => <Note visitForm={visitForm} onChange={this.onChange} />}
+        />
+      </div>
+    )
+    /* tslint:enable */
   }
 }
 
