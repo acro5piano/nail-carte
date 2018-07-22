@@ -31,7 +31,7 @@ interface NewVisitState {
 
 class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
   public state = {
-    visitForm: new VisitForm(),
+    visitForm: new VisitForm({}),
     visitPhotos: [],
     loading: false,
   }

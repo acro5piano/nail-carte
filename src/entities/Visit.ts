@@ -1,4 +1,5 @@
 import moment = require('moment')
+import { rfc822 } from 'sarte/utils'
 import VisitPhoto from 'sarte/entities/VisitPhoto'
 import { VisitForm } from 'sarte/forms/VisitForm'
 
@@ -16,8 +17,8 @@ export default class Visit {
     this.customerId = args.customerId
     this.price = args.price
     this.note = args.note
-    this.endAt = moment(args.endAt)
-    this.startAt = moment(args.startAt)
+    this.startAt = rfc822(args.startAt)
+    this.endAt = rfc822(args.endAt)
     this.visitPhotos = args.visitPhotos ? args.visitPhotos.map(v => new VisitPhoto(v)) : []
   }
 

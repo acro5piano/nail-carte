@@ -4,36 +4,33 @@ export class VisitForm {
   id?: string
   customerId?: string
   price?: number
-  note: string = ''
-  startAt?: moment.Moment = moment().add(-1, 'hour')
-  endAt?: moment.Moment = moment()
+  note?: string
+  visitOn?: string
+  startAt?: string
+  endAt?: string
 
-  constructor(args = {}) {
-    Object.assign(this, args)
+  constructor(args: any) {
+    this.id = args.id
+    this.customerId = args.customerId
+    this.price = Number(args.price)
+    this.note = args.note
+    this.visitOn = args.visitOn || moment().format('YYYY-MM-DD')
+    this.startAt =
+      args.startAt ||
+      moment()
+        .add(-1, 'hour')
+        .format('HH:mm')
+    this.endAt = args.endAt || moment().format('HH:mm')
   }
 
   toCreateVisitParams() {
-    const { customerId, price, note, startAt, endAt } = this
+    const { customerId, price, note, visitOn, startAt, endAt } = this
     return {
       customer: customerId,
       price: Number(price),
       note,
-      startAt: String(startAt),
-      endAt: String(endAt),
+      startAt: `${visitOn} + ${startAt}`,
+      endAt: `${visitOn} + ${endAt}`,
     }
-  }
-
-  get startAtForHuman() {
-    if (!this.startAt) {
-      return ''
-    }
-    return this.startAt.format('YYYY-MM-DDTHH:mm')
-  }
-
-  get endAtForHuman() {
-    if (!this.endAt) {
-      return ''
-    }
-    return this.endAt.format('YYYY-MM-DDTHH:mm')
   }
 }
