@@ -66,7 +66,6 @@ export default class CustomerStore extends BaseStore {
       )
     }
     yield this.fetchCustomers()
-    history.back()
   })
 }
 

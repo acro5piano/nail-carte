@@ -1,8 +1,22 @@
 import * as React from 'react'
 import GridList from '@material-ui/core/GridList'
+import styled from 'styled-components'
 import GridListTile from '@material-ui/core/GridListTile'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import VisitPhoto from 'sarte/entities/VisitPhoto'
+import { InputContainer, Caption } from './Presentational'
+
+const StyledFileInput = styled.input`
+  border: solid 1px #ccc;
+  padding: 12px;
+  width: 100%;
+  border-radius: 3px;
+  border-style: dashed;
+`
+
+const PhotoPreview = styled.div`
+  margin-top: 24px;
+`
 
 interface Props {
   onChange: (event: any) => Promise<void>
@@ -30,23 +44,25 @@ class TakePhoto extends React.Component<Props, State> {
 
     return (
       <div>
-        <div onChange={this.onAddPhoto}>
-          <div>写真</div>
-          <input type="file" accept="image/*" multiple />
-        </div>
-        {loading ? (
-          <CircularProgress />
-        ) : (
-          <div>
-            <GridList cellHeight={120} cols={2}>
-              {visitPhotos.map((photo: VisitPhoto) => (
-                <GridListTile key={photo.url} cols={1}>
-                  <img src={photo.url} alt="uploading image" />
-                </GridListTile>
-              ))}
-            </GridList>
+        <Caption>写真をアップロードしましょう。</Caption>
+        <InputContainer>
+          <div onChange={this.onAddPhoto}>
+            <StyledFileInput type="file" accept="image/*" multiple />
           </div>
-        )}
+          {loading ? (
+            <CircularProgress />
+          ) : (
+            <PhotoPreview>
+              <GridList cellHeight={120} cols={2}>
+                {visitPhotos.map((photo: VisitPhoto) => (
+                  <GridListTile key={photo.url} cols={1}>
+                    <img src={photo.url} alt="uploading image" />
+                  </GridListTile>
+                ))}
+              </GridList>
+            </PhotoPreview>
+          )}
+        </InputContainer>
       </div>
     )
   }

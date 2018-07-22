@@ -1,18 +1,19 @@
 import * as React from 'react'
 import { inject, observer } from 'mobx-react'
+// import styled from 'styled-components'
 import { compose } from 'recompose'
 import { Route, withRouter } from 'react-router-dom'
-import { withStyles } from '@material-ui/core/styles'
+import { getLink, CUSTOMER_PATH } from 'sarte/Routes'
 import CustomerStore from 'sarte/stores/CustomerStore'
 import AppHeader from 'sarte/components/AppHeader'
 import { VisitForm } from 'sarte/forms/VisitForm'
-import { getLink } from 'sarte/Routes'
 import VisitPhoto from 'sarte/entities/VisitPhoto'
 // import { validate } from 'sarte/utils'
 import TakePhoto from './TakePhoto'
 import DateInput from './DateInput'
 import Price from './Price'
 import Note from './Note'
+import _ from 'lodash'
 
 const steps = ['date', 'photo', 'menu', 'price', 'components', 'note']
 
@@ -42,9 +43,8 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
     const { history, match } = this.props
     const { id, step } = match.params
 
-    if (step === 'note') {
-      // submit
-      return
+    if (step === _.last(steps)) {
+      return this.submit()
     }
 
     const nextStep = steps[steps.indexOf(step) + 1]
@@ -66,40 +66,25 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
     })
   }
 
-  // private get validate() {
-  //   if (this.state.loading) {
-  //     return false
-  //   }
-  //
-  //   const { price, note, startAt, endAt } = this.state.visitForm
-  //   return validate(
-  //     {
-  //       price,
-  //       note,
-  //       startAt,
-  //       endAt,
-  //     },
-  //     {
-  //       price: 'required|numeric|min:500',
-  //       note: 'max:200',
-  //       startAt: 'date',
-  //       endAt: 'date',
-  //     },
-  //   )
-  // }
+  private get submitTitle(): string {
+    if (this.props.match.params.step === _.last(steps)) {
+      return '完了'
+    }
+    return '次へ'
+  }
 
-  // private submit = async () => {
-  //   await this.props.customerStore.createVisit(this.state)
-  // }
+  private submit = async () => {
+    await this.props.customerStore.createVisit(this.state)
+    this.props.history.push(getLink(CUSTOMER_PATH, this.props.match.params.id))
+  }
 
   render() {
-    const { classes } = this.props
     const { visitPhotos, visitForm } = this.state
 
     /* tslint:disable */
     return (
-      <div className={classes.root}>
-        <AppHeader hasBack title="来店を追加" onSubmit={this.next} submitTitle="次へ" />
+      <div>
+        <AppHeader hasBack title="来店を追加" onSubmit={this.next} submitTitle={this.submitTitle} />
         <Route
           path="/customers/:id/visits/new/date"
           render={() => <DateInput visitForm={visitForm} onChange={this.onChange} />}
@@ -122,20 +107,30 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
   }
 }
 
-const styles = {
-  root: {
-    marginTop: 24,
-    backgroundColor: '#fff',
-    padding: 12,
-  },
-  input: {
-    marginTop: 36,
-  },
-}
-
 export default compose(
   withRouter,
-  withStyles(styles),
   inject('customerStore'),
   observer,
 )(CreateVisit)
+
+// private get validate() {
+//   if (this.state.loading) {
+//     return false
+//   }
+//
+//   const { price, note, startAt, endAt } = this.state.visitForm
+//   return validate(
+//     {
+//       price,
+//       note,
+//       startAt,
+//       endAt,
+//     },
+//     {
+//       price: 'required|numeric|min:500',
+//       note: 'max:200',
+//       startAt: 'date',
+//       endAt: 'date',
+//     },
+//   )
+// }

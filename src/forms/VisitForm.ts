@@ -12,7 +12,7 @@ export class VisitForm {
   constructor(args: any) {
     this.id = args.id
     this.customerId = args.customerId
-    this.price = Number(args.price)
+    this.price = Number(args.price || 0)
     this.note = args.note
     this.visitOn = args.visitOn || moment().format('YYYY-MM-DD')
     this.startAt =
@@ -29,8 +29,8 @@ export class VisitForm {
       customer: customerId,
       price: Number(price),
       note,
-      startAt: `${visitOn} + ${startAt}`,
-      endAt: `${visitOn} + ${endAt}`,
+      startAt: `${visitOn} ${startAt}`,
+      endAt: `${visitOn} ${endAt}`,
     }
   }
 }

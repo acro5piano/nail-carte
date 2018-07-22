@@ -1,6 +1,7 @@
 import * as React from 'react'
 import TextField from '@material-ui/core/TextField'
 import { VisitForm } from 'sarte/forms/VisitForm'
+import { InputContainer, Caption } from './Presentational'
 
 interface Props {
   visitForm: VisitForm
@@ -22,14 +23,17 @@ class Note extends React.Component<Props> {
 
     return (
       <div>
-        <TextField
-          name="note"
-          label="メモ"
-          multiline
-          fullWidth
-          defaultValue={visitForm.note}
-          onChange={this.onChange('note')}
-        />
+        <Caption>その他の情報を入力しましょう。</Caption>
+        <InputContainer>
+          <TextField
+            name="note"
+            label="メモ(自由入力)"
+            multiline
+            fullWidth
+            defaultValue={visitForm.note}
+            onChange={this.onChange('note')}
+          />
+        </InputContainer>
       </div>
     )
   }
