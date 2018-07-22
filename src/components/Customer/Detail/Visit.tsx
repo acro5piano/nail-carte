@@ -6,7 +6,6 @@ import ImageIcon from '@material-ui/icons/Image'
 import styled from 'styled-components'
 
 interface VisitProps {
-  match: any
   visit: Visit
 }
 

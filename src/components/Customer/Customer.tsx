@@ -45,7 +45,7 @@ const Customer = ({ classes, customerStore, history }: CustomerProps) => {
         {customer.visits.length === 0 && <div>来店履歴なし</div>}
         {customer.visits.map(visit => <Visit key={visit.id} visit={visit} />)}
       </div>
-      <Link to={getLink(CREATE_VISIT_PATH, customer.id)}>
+      <Link to={getLink(CREATE_VISIT_PATH, customer.id, 'photo')}>
         <FloatingActionButton />
       </Link>
     </div>
