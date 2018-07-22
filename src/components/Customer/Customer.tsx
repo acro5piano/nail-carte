@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react'
 import { compose } from 'recompose'
 import { withStyles } from '@material-ui/core/styles'
 import { Link, withRouter } from 'react-router-dom'
-import { CREATE_VISIT_PATH, EDIT_CUSTOMER_PATH, getLink } from 'sarte/Routes'
+import { CUSTOMER_LIST_PATH, CREATE_VISIT_PATH, EDIT_CUSTOMER_PATH, getLink } from 'sarte/Routes'
 import AppHeader from 'sarte/components/AppHeader'
 // import Grid from '@material-ui/core/Grid'
 import CustomerStore from 'sarte/stores/CustomerStore'
@@ -32,7 +32,13 @@ const Customer = ({ classes, customerStore, history }: CustomerProps) => {
 
   return (
     <div className={classes.root}>
-      <AppHeader hasBack title={customer.name} onSubmit={toSelectedCustomerEditPath} submitTitle="編集" />
+      <AppHeader
+        hasBack
+        title={customer.name}
+        backTo={CUSTOMER_LIST_PATH}
+        onSubmit={toSelectedCustomerEditPath}
+        submitTitle="編集"
+      />
       <div className={classes.basic}>
         <Basic customer={customer} />
       </div>

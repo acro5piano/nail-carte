@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react'
 // import styled from 'styled-components'
 import { compose } from 'recompose'
 import { Route, withRouter } from 'react-router-dom'
-import { getLink, CUSTOMER_PATH } from 'sarte/Routes'
+import { getLink, CUSTOMER_PATH /* CREATE_VISIT_PATH */ } from 'sarte/Routes'
 import CustomerStore from 'sarte/stores/CustomerStore'
 import AppHeader from 'sarte/components/AppHeader'
 import { VisitForm } from 'sarte/forms/VisitForm'
@@ -15,7 +15,7 @@ import Price from './Price'
 import Note from './Note'
 import _ from 'lodash'
 
-const steps = ['date', 'photo', 'menu', 'price', 'components', 'note']
+const steps = ['date', 'photo', 'menu', 'components', 'note', 'price']
 
 interface NewVisitProps {
   classes: any
