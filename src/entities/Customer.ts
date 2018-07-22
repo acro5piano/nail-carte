@@ -3,6 +3,13 @@ import moment = require('moment')
 import { CustomerForm } from 'sarte/forms/CustomerForm'
 import _ from 'lodash'
 
+function hasPropertyAndIncludes(value: any, query: string): boolean {
+  if (!value) {
+    return false
+  }
+  return value.includes(query)
+}
+
 interface CustomerArgs {
   id?: string
   name?: string
@@ -64,5 +71,13 @@ export default class Customer {
   public toForm(): CustomerForm {
     const { id, name, email, address, occupation, phoneNumber, birthday } = this
     return new CustomerForm({ id, name, email, address, occupation, phoneNumber, birthday })
+  }
+
+  public search(query: string) {
+    return (
+      hasPropertyAndIncludes(this.name, query) ||
+      hasPropertyAndIncludes(this.email, query) ||
+      hasPropertyAndIncludes(this.address, query)
+    )
   }
 }
