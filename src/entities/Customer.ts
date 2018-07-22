@@ -46,6 +46,17 @@ export default class Customer {
     this.visits = (args.visits || []).map(v => new Visit(v))
   }
 
+  public get lastVisit(): Visit | null {
+    if (this.visits.length === 0) {
+      return null
+    }
+    const lastVisit = _.takeRight(this.visits)[0]
+    if (!lastVisit) {
+      return null
+    }
+    return lastVisit
+  }
+
   public get lastVisitAt(): string {
     if (this.visits.length === 0) {
       return '来店履歴なし'

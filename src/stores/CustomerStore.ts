@@ -21,7 +21,7 @@ export default class CustomerStore extends BaseStore {
   })
 
   public get sortedCustomers() {
-    return orderBy(this.customers, 'createdAt').reverse()
+    return orderBy(this.customers, customer => (customer.lastVisit ? Number(customer.lastVisit.startAt) : 0)).reverse()
   }
 
   public createCustomer = flow(function*(this: CustomerStore, customerForm: CustomerForm) {
