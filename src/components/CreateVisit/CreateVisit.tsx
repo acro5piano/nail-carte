@@ -9,10 +9,11 @@ import AppHeader from 'sarte/components/AppHeader'
 import { VisitForm } from 'sarte/forms/VisitForm'
 import VisitPhoto from 'sarte/entities/VisitPhoto'
 // import { validate } from 'sarte/utils'
-import TakePhoto from './TakePhoto'
-import DateInput from './DateInput'
-import Price from './Price'
-import Note from './Note'
+import TakePhoto from 'sarte/components/CreateVisit/TakePhoto'
+import DateInput from 'sarte/components/CreateVisit/DateInput'
+import Price from 'sarte/components/CreateVisit/Price'
+import Note from 'sarte/components/CreateVisit/Note'
+import Menu from 'sarte/components/CreateVisit/Menu'
 import _ from 'lodash'
 
 const steps = ['date', 'photo', 'menu', 'components', 'note', 'price']
@@ -92,6 +93,10 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
         <Route
           path="/customers/:id/visits/new/photo"
           render={() => <TakePhoto visitPhotos={visitPhotos} onChange={this.onAddPhoto} />}
+        />
+        <Route
+          path="/customers/:id/visits/new/menu"
+          render={() => <Menu visitPhotos={visitPhotos} onChange={this.onAddPhoto} />}
         />
         <Route
           path="/customers/:id/visits/new/price"

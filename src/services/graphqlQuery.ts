@@ -1,4 +1,6 @@
-export const getCustomers = `
+const gql = (literals: TemplateStringsArray): string => literals[0]
+
+export const getCustomers = gql`
   query getCustomers {
     customers {
       id
@@ -22,7 +24,7 @@ export const getCustomers = `
   }
 `
 
-export const createCustomer = `
+export const createCustomer = gql`
   mutation createCustomer($customer: CustomerInput!) {
     createCustomer(customer: $customer) {
       id
@@ -30,7 +32,7 @@ export const createCustomer = `
   }
 `
 
-export const updateCustomer = `
+export const updateCustomer = gql`
   mutation updateCustomer($id: String!, $customer: CustomerInput!) {
     updateCustomer(id: $id, customer: $customer) {
       id
@@ -38,7 +40,7 @@ export const updateCustomer = `
   }
 `
 
-export const createVisit = `
+export const createVisit = gql`
   mutation createVisit($visit: VisitInput!) {
     createVisit(visit: $visit) {
       id
@@ -46,10 +48,19 @@ export const createVisit = `
   }
 `
 
-export const createVisitPhoto = `
+export const createVisitPhoto = gql`
   mutation createVisitPhoto($visitPhoto: VisitPhotoInput!) {
     createVisitPhoto(visitPhoto: $visitPhoto) {
       id
+    }
+  }
+`
+
+export const getMenus = gql`
+  query getMenus() {
+    getMenus {
+      id
+      name
     }
   }
 `

@@ -1,5 +1,5 @@
 import { observable, decorate, flow } from 'mobx'
-import BaseStore from './BaseStore'
+import BaseStore from 'sarte/stores/BaseStore'
 import { AuthApi } from 'sarte/services/api'
 import { LoginCredentials } from 'sarte/types'
 import User from 'sarte/entities/User'

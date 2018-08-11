@@ -3,6 +3,7 @@ import moment = require('moment')
 export class VisitForm {
   id?: string
   customerId?: string
+  menuId?: string
   price?: number
   note?: string
   visitOn?: string
@@ -12,6 +13,7 @@ export class VisitForm {
   constructor(args: any) {
     this.id = args.id
     this.customerId = args.customerId
+    this.menuId = args.menuId
     this.price = Number(args.price || 0)
     this.note = args.note
     this.visitOn = args.visitOn || moment().format('YYYY-MM-DD')

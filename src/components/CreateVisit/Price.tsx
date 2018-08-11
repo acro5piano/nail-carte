@@ -1,7 +1,7 @@
 import * as React from 'react'
 import TextField from '@material-ui/core/TextField'
 import { VisitForm } from 'sarte/forms/VisitForm'
-import { InputContainer, Caption } from './Presentational'
+import { InputContainer, Caption } from 'sarte/components/CreateVisit/Presentational'
 
 interface Props {
   visitForm: VisitForm

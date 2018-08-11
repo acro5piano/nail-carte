@@ -1,6 +1,6 @@
 import { flow, observable, computed, decorate, action } from 'mobx'
 import { orderBy } from 'lodash'
-import BaseStore from './BaseStore'
+import BaseStore from 'sarte/stores/BaseStore'
 import Customer from 'sarte/entities/Customer'
 import Visit from 'sarte/entities/Visit'
 import VisitPhoto from 'sarte/entities/VisitPhoto'

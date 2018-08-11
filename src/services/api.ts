@@ -3,9 +3,9 @@ import Visit from 'sarte/entities/Visit'
 import VisitPhoto from 'sarte/entities/VisitPhoto'
 import User from 'sarte/entities/User'
 import { LoginCredentials } from 'sarte/types'
-import { gql } from './graphqlClient'
-import { POST, GET, UPLOAD } from './xhrClient'
-import * as Query from './graphqlQuery'
+import { gql } from 'sarte/services/graphqlClient'
+import { POST, GET, UPLOAD } from 'sarte/services/xhrClient'
+import * as Query from 'sarte/services/graphqlQuery'
 
 export const CustomerApi = {
   list: () => gql(Query.getCustomers).then(res => res.data.customers.map(c => new Customer(c))),

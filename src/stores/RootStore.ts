@@ -1,6 +1,6 @@
-import CustomerStore from './CustomerStore'
-import UiStore from './UiStore'
-import AuthStore from './AuthStore'
+import CustomerStore from 'sarte/stores/CustomerStore'
+import UiStore from 'sarte/stores/UiStore'
+import AuthStore from 'sarte/stores/AuthStore'
 
 interface RootStoreArgs {
   customerStore?: CustomerStore

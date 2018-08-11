@@ -1,5 +1,5 @@
 import { observable, decorate, action } from 'mobx'
-import BaseStore from './BaseStore'
+import BaseStore from 'sarte/stores/BaseStore'
 
 export default class UiStore extends BaseStore {
   isSidebarOpened = false

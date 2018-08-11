@@ -8,9 +8,9 @@ import AppHeader from 'sarte/components/AppHeader'
 // import Grid from '@material-ui/core/Grid'
 import CustomerStore from 'sarte/stores/CustomerStore'
 import FloatingActionButton from 'sarte/components/MaterialUi/Button/FloatingActionButton'
-import Visit from './Detail/Visit'
-import Basic from './Detail/Basic'
-import Contact from './Detail/Contact'
+import Visit from 'sarte/components/Customer/Detail/Visit'
+import Basic from 'sarte/components/Customer/Detail/Basic'
+import Contact from 'sarte/components/Customer/Detail/Contact'
 import { History } from 'sarte/types'
 
 interface CustomerProps {

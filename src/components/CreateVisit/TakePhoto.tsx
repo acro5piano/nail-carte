@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import GridListTile from '@material-ui/core/GridListTile'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import VisitPhoto from 'sarte/entities/VisitPhoto'
-import { InputContainer, Caption } from './Presentational'
+import { InputContainer, Caption } from 'sarte/components/CreateVisit/Presentational'
 
 const StyledFileInput = styled.input`
   border: solid 1px #ccc;
