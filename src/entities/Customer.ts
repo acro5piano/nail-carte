@@ -55,7 +55,7 @@ export default class Customer {
     if (this.visits.length === 0) {
       return null
     }
-    const lastVisit = _.takeRight(this.visits)[0]
+    const lastVisit = this.visits.sort((x, y) => Number(y ? y.startAt : 0) - Number(x.startAt))[0]
     if (!lastVisit) {
       return null
     }
@@ -63,14 +63,10 @@ export default class Customer {
   }
 
   public get lastVisitAt(): string {
-    if (this.visits.length === 0) {
+    if (!this.lastVisit) {
       return '来店履歴なし'
     }
-    const lastVisit = _.takeRight(this.visits)[0]
-    if (!lastVisit) {
-      return '来店履歴なし'
-    }
-    return String(moment().diff(lastVisit.startAt, 'days') + '日前')
+    return `${moment().diff(this.lastVisit.startAt, 'days')}日前`
   }
 
   public get birthdayForHuman() {
