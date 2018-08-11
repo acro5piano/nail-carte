@@ -63,3 +63,4 @@ dist/*
 !dist/_redirects
 tags
 db.json
+src/config.ts

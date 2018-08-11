@@ -70,6 +70,7 @@ class Menu extends React.Component<Props, State> {
 
             return (
               <InputContainer>
+                {data.menus.length === 0 && <div>まだメニューがありません。</div>}
                 {data.menus.map(menu => (
                   <MenuOption
                     key={menu.id}

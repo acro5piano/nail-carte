@@ -27,7 +27,7 @@ class Components extends React.Component<Props, State> {
   onChange = (event: any) =>
     this.props.onChange(this.props.visitForm.newInstance({ [event.target.name]: event.target.value }))
 
-  openBrandModal = () => this.setState({ brandSelecting: true })
+  openBrandModal = (e: any) => this.setState({ brandSelecting: true })
 
   closeBrandModal = () => this.setState({ brandSelecting: false })
 
@@ -45,6 +45,7 @@ class Components extends React.Component<Props, State> {
         <Caption>商材を選択しましょう。</Caption>
         <InputContainer>
           <BlockInput
+            inputProps={{ disabled: true }}
             fullWidth
             onClick={this.openBrandModal}
             name="base"

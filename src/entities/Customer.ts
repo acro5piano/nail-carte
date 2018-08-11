@@ -2,6 +2,7 @@ import Visit, { VisitArgs } from 'sarte/entities/Visit'
 import moment = require('moment')
 import { CustomerForm } from 'sarte/forms/CustomerForm'
 import _ from 'lodash'
+import { rfc822 } from 'sarte/utils'
 
 function hasPropertyAndIncludes(value: any, query: string): boolean {
   if (!value) {
@@ -13,7 +14,7 @@ function hasPropertyAndIncludes(value: any, query: string): boolean {
 interface CustomerArgs {
   id?: string
   name?: string
-  birthday?: number
+  birthday?: string
   address?: string
   zip?: number
   phoneNumber?: string
@@ -42,7 +43,7 @@ export default class Customer {
     this.address = args.address
     this.occupation = args.occupation
     this.phoneNumber = args.phoneNumber
-    this.birthday = moment(args.birthday)
+    this.birthday = rfc822(args.birthday || '')
     this.visits = (args.visits || []).map(v => new Visit(v))
   }
 
