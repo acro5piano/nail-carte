@@ -3,25 +3,13 @@ import { Provider } from 'mobx-react'
 import { configure } from 'mobx'
 import RootStore from 'sarte/stores/RootStore'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
+import { MuiThemeProvider } from '@material-ui/core/styles'
 import AppSidebar from 'sarte/components/AppSidebar/AppSidebar'
 import Routes, { LOGIN_PATH } from 'sarte/Routes'
 import { BrowserRouter as Router } from 'react-router-dom'
-import { client } from './services/graphqlClient'
+import { client } from 'sarte/services/graphqlClient'
 import { ApolloProvider } from 'react-apollo'
-
-const theme = createMuiTheme({
-  palette: {
-    type: 'light',
-    primary: {
-      main: '#EB5757',
-      contrastText: '#fff',
-    },
-    secondary: {
-      main: '#FFAF05',
-    },
-  },
-})
+import theme from './theme'
 
 configure({ enforceActions: true })
 
@@ -50,16 +38,14 @@ export default class AppContainer extends React.Component<{}> {
       <React.Fragment>
         <CssBaseline />
         <MuiThemeProvider theme={theme}>
-          <ApolloProvider client={client}>
-            <Provider {...this.rootStore} rootStore={this.rootStore}>
-              <Router>
-                <div>
-                  <Routes />
-                  <AppSidebar />
-                </div>
-              </Router>
-            </Provider>
-          </ApolloProvider>
+          <Provider {...this.rootStore} rootStore={this.rootStore}>
+            <Router>
+              <ApolloProvider client={client}>
+                <Routes />
+                <AppSidebar />
+              </ApolloProvider>
+            </Router>
+          </Provider>
         </MuiThemeProvider>
       </React.Fragment>
     )

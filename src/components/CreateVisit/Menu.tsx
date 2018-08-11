@@ -6,16 +6,9 @@ import MenuEntity from 'sarte/entities/Menu'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Flex from 'sarte/components/utils/Flex'
+import FlatOption from 'sarte/components/utils/FlatOption'
 import { InputContainer, Caption } from 'sarte/components/CreateVisit/Presentational'
 import { getMenus, createMenu } from 'sarte/services/graphqlQuery'
-
-const Option = styled.div`
-  padding: 12px;
-  border: solid 1px #ccc;
-  border-radius: 3px;
-  margin-top: 12px;
-  background: ${(props: { selected: boolean }) => (props.selected ? '#ccc' : '#fff')};
-`
 
 interface MenuOptionProps {
   menu: MenuEntity
@@ -26,9 +19,9 @@ interface MenuOptionProps {
 const MenuOption = ({ menu, onClick, selected }: MenuOptionProps) => {
   const _onClick = () => onClick(menu.id)
   return (
-    <Option selected={selected} onClick={_onClick}>
+    <FlatOption selected={selected} onClick={_onClick}>
       {menu.name}
-    </Option>
+    </FlatOption>
   )
 }
 
@@ -50,13 +43,8 @@ class Menu extends React.Component<Props, State> {
     newMenu: '',
   }
 
-  onSelect = (menuId: String) => {
-    this.props.onChange(
-      new VisitForm({
-        ...this.props.visitForm,
-        menuId,
-      }),
-    )
+  onSelect = (menuId: string) => {
+    this.props.onChange(this.props.visitForm.newInstance({ menuId }))
   }
 
   onChangeNewMenu = (event: any) => this.setState({ newMenu: event.target.value })

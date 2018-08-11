@@ -11,6 +11,9 @@ export interface VisitArgs {
   price?: number
   startAt: string
   endAt: string
+  base?: string
+  color?: string
+  top?: string
   visitPhotos?: VisitPhoto[]
   menu?: Menu
 }
@@ -22,6 +25,9 @@ export default class Visit {
   price: number
   startAt: moment.Moment
   endAt: moment.Moment
+  base: string
+  color: string
+  top: string
   visitPhotos: VisitPhoto[]
   menuName: string
 
@@ -32,6 +38,9 @@ export default class Visit {
     this.note = args.note
     this.startAt = rfc822(args.startAt)
     this.endAt = rfc822(args.endAt)
+    this.base = args.base || ''
+    this.color = args.color || ''
+    this.top = args.top || ''
     this.visitPhotos = args.visitPhotos ? args.visitPhotos.map(v => new VisitPhoto(v)) : []
     this.menuName = args.menu ? args.menu.name : ''
   }

@@ -14,9 +14,10 @@ import DateInput from 'sarte/components/CreateVisit/DateInput'
 import Price from 'sarte/components/CreateVisit/Price'
 import Note from 'sarte/components/CreateVisit/Note'
 import Menu from 'sarte/components/CreateVisit/Menu'
+import Components from 'sarte/components/CreateVisit/Components/Components'
 import _ from 'lodash'
 
-const steps = ['date', 'photo', 'menu', 'components', 'note', 'price']
+const steps = ['date', 'photo', 'menu', 'components', 'price', 'note']
 
 interface NewVisitProps {
   classes: any
@@ -97,6 +98,10 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
         <Route
           path="/customers/:id/visits/new/menu"
           render={() => <Menu visitForm={visitForm} onChange={this.onChange} />}
+        />
+        <Route
+          path="/customers/:id/visits/new/components"
+          render={() => <Components visitForm={visitForm} onChange={this.onChange} />}
         />
         <Route
           path="/customers/:id/visits/new/price"

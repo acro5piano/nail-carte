@@ -75,3 +75,11 @@ export const createMenu = apolloGql`
     }
   }
 `
+
+export const getBrands = apolloGql`
+  query getBrands {
+    brands {
+      name
+    }
+  }
+`

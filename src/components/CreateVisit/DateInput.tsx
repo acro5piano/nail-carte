@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { VisitForm } from 'sarte/forms/VisitForm'
 import TextField from '@material-ui/core/TextField'
-import BlockInput from 'sarte/components/Presentational/BlockInput'
+import BlockInput from 'sarte/components/utils/BlockInput'
 import { InputContainer, Caption } from 'sarte/components/CreateVisit/Presentational'
 
 interface Props {

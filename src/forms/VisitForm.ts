@@ -6,9 +6,12 @@ export class VisitForm {
   menuId?: string
   price?: number
   note?: string
-  visitOn?: string
-  startAt?: string
-  endAt?: string
+  visitOn: string
+  startAt: string
+  endAt: string
+  base: string
+  color: string
+  top: string
 
   constructor(args: any) {
     this.id = args.id
@@ -23,10 +26,20 @@ export class VisitForm {
         .add(-1, 'hour')
         .format('HH:mm')
     this.endAt = args.endAt || moment().format('HH:mm')
+    this.base = args.base || ''
+    this.color = args.color || ''
+    this.top = args.top || ''
+  }
+
+  newInstance(props: Partial<VisitForm>): VisitForm {
+    return new VisitForm({
+      ...(this as Object),
+      ...props,
+    })
   }
 
   toCreateVisitParams() {
-    const { customerId, menuId, price, note, visitOn, startAt, endAt } = this
+    const { customerId, menuId, price, note, visitOn, startAt, endAt, base, color, top } = this
     return {
       customer: customerId,
       price: Number(price),
@@ -34,6 +47,9 @@ export class VisitForm {
       note,
       startAt: `${visitOn} ${startAt}`,
       endAt: `${visitOn} ${endAt}`,
+      base,
+      color,
+      top,
     }
   }
 }
