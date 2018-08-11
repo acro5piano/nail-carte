@@ -3,6 +3,7 @@ import moment = require('moment')
 import { CustomerForm } from 'sarte/forms/CustomerForm'
 import _ from 'lodash'
 import { rfc822 } from 'sarte/utils'
+import uuid from 'uuid'
 
 function hasPropertyAndIncludes(value: any, query: string): boolean {
   if (!value) {
@@ -26,7 +27,7 @@ interface CustomerArgs {
 }
 
 export default class Customer {
-  id?: string
+  id: string
   name?: string
   email?: string
   address?: string
@@ -39,7 +40,7 @@ export default class Customer {
   createdAt?: moment.Moment
 
   constructor(args: CustomerArgs) {
-    this.id = args.id
+    this.id = args.id || uuid()
     this.name = args.name
     this.email = args.email
     this.address = args.address

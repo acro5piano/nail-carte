@@ -31,6 +31,7 @@
     "recompose": "^0.27.1",
     "styled-components": "^2.4.0",
     "typeface-roboto": "^0.0.54",
+    "uuid": "^3.3.2",
     "validatorjs": "^3.14.2",
     "whatwg-fetch": "^2.0.4"
   },

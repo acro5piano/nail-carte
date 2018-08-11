@@ -33,13 +33,13 @@ export default class CustomerStore extends BaseStore {
     yield this.fetchCustomers()
   })
 
-  public get selectedCustomer() {
+  // TODO: ストアはURLを見てはいけない
+  public get selectedCustomer(): Customer | null {
     const match = location.pathname.match(/customers\/([0-9|a-z]+)/)
-    if (!match) {
+    if (!match || match[1] === 'new') {
       return null
     }
-    const id = match[1]
-    return this.customers.find(c => c.id === id)
+    return this.findCustomerByIdOrFail(match[1])
   }
 
   public uploadPhoto = flow(function*(file) {
@@ -67,6 +67,23 @@ export default class CustomerStore extends BaseStore {
     }
     yield this.fetchCustomers()
   })
+
+  public findCustomerByIdOrFail(id: string): Customer {
+    const customer = this.customers.find(c => c.id === id)
+    if (!customer) {
+      throw new Error('customer not found')
+    }
+    return customer
+  }
+
+  public async uploadAvatar(id, file: any) {
+    const customer = this.findCustomerByIdOrFail(id)
+    const formData = new FormData()
+    formData.append('file', file)
+    const res = await FileApi.upload(formData)
+    await CustomerApi.update(customer.id, { avatarUrl: res.url })
+    await this.fetchCustomers()
+  }
 }
 
 decorate(CustomerStore, {

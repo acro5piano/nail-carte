@@ -13,8 +13,16 @@ import theme from './theme'
 
 configure({ enforceActions: true })
 
+interface AppState {
+  booted: boolean
+}
+
 // TODO: ref or withRouter...?
-export default class AppContainer extends React.Component<{}> {
+export default class AppContainer extends React.Component<{}, AppState> {
+  state = {
+    booted: false,
+  }
+
   rootStore: RootStore = new RootStore()
 
   public async componentWillMount() {
@@ -34,6 +42,10 @@ export default class AppContainer extends React.Component<{}> {
   }
 
   render() {
+    if (!this.state.booted) {
+      return null
+    }
+
     return (
       <React.Fragment>
         <CssBaseline />

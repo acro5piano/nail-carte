@@ -13,41 +13,55 @@ const IconWrap = styled.span`
   margin-right: 8px;
 `
 
+const Hidden = styled.div`
+  display: none;
+`
+
 interface VisitProps {
   customer: Customer
+  onSelectAvatar: (e: any) => void
 }
 
-const VisitComponent = ({ customer }: VisitProps) => (
-  <div>
-    <Grid container spacing={16}>
-      <Grid item xs={4}>
-        <Flex>
-          <CustomerAvatar customer={customer} />
-        </Flex>
+const VisitComponent = ({ customer, onSelectAvatar }: VisitProps) => {
+  let fileInput
+
+  const _onClickAvatar = () => fileInput.click()
+
+  return (
+    <div>
+      <Grid container spacing={16}>
+        <Grid item xs={4}>
+          <Flex>
+            <Hidden>
+              <input type="file" ref={ref => (fileInput = ref)} accept="image/*" multiple onChange={onSelectAvatar} />
+            </Hidden>
+            <CustomerAvatar onClick={_onClickAvatar} customer={customer} />
+          </Flex>
+        </Grid>
+        <Grid item xs={8}>
+          <div>
+            <IconWrap>
+              <BusinessCenterIcon style={{ fontSize: 12 }} />
+            </IconWrap>
+            {customer.occupation}
+          </div>
+          <div>
+            <IconWrap>
+              <CakeIcon style={{ fontSize: 12 }} />
+            </IconWrap>
+            {customer.birthdayForHuman}
+            {customer.birthday && <span> ({customer.age})</span>}
+          </div>
+          <div>
+            <IconWrap>
+              <PlaceIcon style={{ fontSize: 12 }} />
+            </IconWrap>
+            {customer.address}
+          </div>
+        </Grid>
       </Grid>
-      <Grid item xs={8}>
-        <div>
-          <IconWrap>
-            <BusinessCenterIcon style={{ fontSize: 12 }} />
-          </IconWrap>
-          {customer.occupation}
-        </div>
-        <div>
-          <IconWrap>
-            <CakeIcon style={{ fontSize: 12 }} />
-          </IconWrap>
-          {customer.birthdayForHuman}
-          {customer.birthday && <span> ({customer.age})</span>}
-        </div>
-        <div>
-          <IconWrap>
-            <PlaceIcon style={{ fontSize: 12 }} />
-          </IconWrap>
-          {customer.address}
-        </div>
-      </Grid>
-    </Grid>
-  </div>
-)
+    </div>
+  )
+}
 
 export default VisitComponent

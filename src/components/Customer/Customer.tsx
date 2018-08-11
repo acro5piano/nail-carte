@@ -2,7 +2,7 @@ import * as React from 'react'
 import { inject, observer } from 'mobx-react'
 import { compose } from 'recompose'
 import styled from 'styled-components'
-import { Link, withRouter } from 'react-router-dom'
+import { Link, withRouter, match } from 'react-router-dom'
 import { CUSTOMER_LIST_PATH, CREATE_VISIT_PATH, EDIT_CUSTOMER_PATH, getLink } from 'sarte/Routes'
 import AppHeader from 'sarte/components/AppHeader'
 import CustomerStore from 'sarte/stores/CustomerStore'
@@ -24,45 +24,56 @@ const Title = styled.div`
 interface CustomerProps {
   customerStore: CustomerStore
   history: History
+  match: match
 }
 
-const Customer = ({ customerStore, history }: CustomerProps) => {
-  const customer = customerStore.selectedCustomer
-  if (!customer) {
-    return null
-  }
-
-  const toSelectedCustomerEditPath = () => {
+export class Customer extends React.Component<CustomerProps> {
+  toSelectedCustomerEditPath = () => {
+    const { customerStore, history, match } = this.props
+    const customer = customerStore.findCustomerByIdOrFail(match.params.id)
+    if (!customer) {
+      return
+    }
     const path = getLink(EDIT_CUSTOMER_PATH, customer.id)
     history.push(path)
   }
 
-  return (
-    <div>
-      <AppHeader
-        hasBack
-        title={customer.name}
-        backTo={CUSTOMER_LIST_PATH}
-        onSubmit={toSelectedCustomerEditPath}
-        submitTitle="編集"
-      />
-      <Card>
-        <Basic customer={customer} />
-      </Card>
-      <Title>連絡先</Title>
-      <Card>
-        <Contact customer={customer} />
-      </Card>
-      <Title>来店履歴</Title>
-      <Card>
-        {customer.visits.length === 0 && <div>来店履歴なし</div>}
-        {customer.visits.map(visit => <Visit key={visit.id} visit={visit} />)}
-      </Card>
-      <Link to={getLink(CREATE_VISIT_PATH, customer.id, 'date')}>
-        <FloatingActionButton />
-      </Link>
-    </div>
-  )
+  onUploadAvatarImage = (event: any) => {
+    const { customerStore, match } = this.props
+    customerStore.uploadAvatar(match.params.id, event.target.files[0])
+  }
+
+  render() {
+    const { customerStore, match } = this.props
+    const customer = customerStore.findCustomerByIdOrFail(match.params.id)
+
+    return (
+      <div>
+        <AppHeader
+          hasBack
+          title={customer.name}
+          backTo={CUSTOMER_LIST_PATH}
+          onSubmit={this.toSelectedCustomerEditPath}
+          submitTitle="編集"
+        />
+        <Card>
+          <Basic customer={customer} onSelectAvatar={this.onUploadAvatarImage} />
+        </Card>
+        <Title>連絡先</Title>
+        <Card>
+          <Contact customer={customer} />
+        </Card>
+        <Title>来店履歴</Title>
+        <Card>
+          {customer.visits.length === 0 && <div>来店履歴なし</div>}
+          {customer.visits.map(visit => <Visit key={visit.id} visit={visit} />)}
+        </Card>
+        <Link to={getLink(CREATE_VISIT_PATH, customer.id, 'date')}>
+          <FloatingActionButton />
+        </Link>
+      </div>
+    )
+  }
 }
 
 export default compose(
