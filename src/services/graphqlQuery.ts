@@ -58,7 +58,7 @@ export const createVisitPhoto = gql`
 
 export const getMenus = gql`
   query getMenus() {
-    getMenus {
+    menus {
       id
       name
     }
