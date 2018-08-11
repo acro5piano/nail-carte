@@ -13,6 +13,7 @@ export const getCustomers = gql`
       phoneNumber
       zip
       birthday
+      avatarUrl
       visits {
         id
         price

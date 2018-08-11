@@ -1,60 +1,53 @@
 import * as React from 'react'
 import Grid from '@material-ui/core/Grid'
-import { compose } from 'recompose'
-import { withStyles } from '@material-ui/core/styles'
-import Avatar from '@material-ui/core/Avatar'
-import ImageIcon from '@material-ui/icons/Image'
+import styled from 'styled-components'
 import BusinessCenterIcon from '@material-ui/icons/BusinessCenter'
 import PlaceIcon from '@material-ui/icons/Place'
 import CakeIcon from '@material-ui/icons/Cake'
 import Customer from 'sarte/entities/Customer'
+import Flex from 'sarte/components/utils/Flex'
+import CustomerAvatar from 'sarte/components/CustomerAvatar'
+
+const IconWrap = styled.span`
+  font-size: 12px;
+  margin-right: 8px;
+`
 
 interface VisitProps {
-  classes: any
-  match: any
   customer: Customer
 }
 
-const VisitComponent = ({ classes, customer }: VisitProps) => (
-  <div className={classes.basic}>
+const VisitComponent = ({ customer }: VisitProps) => (
+  <div>
     <Grid container spacing={16}>
       <Grid item xs={4}>
-        <div className={classes.photo}>
-          <Avatar className={classes.avatar}><ImageIcon /></Avatar>
-        </div>
+        <Flex>
+          <CustomerAvatar customer={customer} />
+        </Flex>
       </Grid>
       <Grid item xs={8}>
-        <div><BusinessCenterIcon className={classes.basicIcon}/>{customer.occupation}</div>
         <div>
-          <CakeIcon className={classes.basicIcon}/>
+          <IconWrap>
+            <BusinessCenterIcon style={{ fontSize: 12 }} />
+          </IconWrap>
+          {customer.occupation}
+        </div>
+        <div>
+          <IconWrap>
+            <CakeIcon style={{ fontSize: 12 }} />
+          </IconWrap>
           {customer.birthdayForHuman}
           {customer.birthday && <span> ({customer.age})</span>}
         </div>
-        <div><PlaceIcon className={classes.basicIcon}/>{customer.address}</div>
+        <div>
+          <IconWrap>
+            <PlaceIcon style={{ fontSize: 12 }} />
+          </IconWrap>
+          {customer.address}
+        </div>
       </Grid>
     </Grid>
   </div>
 )
 
-const styles = {
-  photo: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  avatar: {
-    width: 80,
-    height: 80,
-  },
-  basic: {
-    padding: 12,
-    backgroundColor: '#fff',
-  },
-  basicIcon: {
-    fontSize: 12,
-    marginRight: 8,
-  },
-}
-
-export default compose(
-  withStyles(styles),
-)<VisitProps>(VisitComponent)
+export default VisitComponent

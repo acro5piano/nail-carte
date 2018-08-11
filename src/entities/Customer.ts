@@ -20,6 +20,7 @@ interface CustomerArgs {
   phoneNumber?: string
   email?: string
   occupation?: string
+  avatarUrl?: string
   visits?: VisitArgs[]
   createdAt?: moment.Moment | string | number
 }
@@ -32,6 +33,7 @@ export default class Customer {
   zip?: number
   occupation?: string
   birthday?: moment.Moment
+  avatarUrl?: string
   phoneNumber?: string
   visits: Visit[]
   createdAt?: moment.Moment
@@ -44,6 +46,7 @@ export default class Customer {
     this.occupation = args.occupation
     this.phoneNumber = args.phoneNumber
     this.birthday = rfc822(args.birthday || '')
+    this.avatarUrl = args.avatarUrl || ''
     this.visits = (args.visits || []).map(v => new Visit(v))
   }
 

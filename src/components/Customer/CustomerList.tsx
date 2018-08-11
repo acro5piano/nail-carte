@@ -9,13 +9,12 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import PersonAddIcon from '@material-ui/icons/PersonAdd'
-import Avatar from '@material-ui/core/Avatar'
-import ImageIcon from '@material-ui/icons/Image'
 import { CREATE_CUSTOMER_PATH, getLink } from 'sarte/Routes'
 import AppHeader from 'sarte/components/AppHeader'
 import { compose } from 'recompose'
 import CustomerStore from 'sarte/stores/CustomerStore'
 import Customer from 'sarte/entities/Customer'
+import CustomerAvatar from 'sarte/components/CustomerAvatar'
 
 const SearchContainer = styled.div`
   padding: 0 12px;
@@ -60,7 +59,6 @@ class CustomerList extends React.Component<CustomersProps, CustomersState> {
   }
 
   render() {
-    // const { customerStore } = this.props
     const { searchInput } = this.state
 
     return (
@@ -76,9 +74,7 @@ class CustomerList extends React.Component<CustomersProps, CustomersState> {
             <div key={customer.id}>
               <Link to={getLink('/customers/:id', customer.id)}>
                 <ListItem>
-                  <Avatar>
-                    <ImageIcon />
-                  </Avatar>
+                  <CustomerAvatar customer={customer} size={50} />
                   <ListItemText primary={customer.name} secondary={customer.lastVisitAt} />
                 </ListItem>
                 <li>

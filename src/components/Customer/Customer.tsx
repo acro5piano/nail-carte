@@ -1,11 +1,10 @@
 import * as React from 'react'
 import { inject, observer } from 'mobx-react'
 import { compose } from 'recompose'
-import { withStyles } from '@material-ui/core/styles'
+import styled from 'styled-components'
 import { Link, withRouter } from 'react-router-dom'
 import { CUSTOMER_LIST_PATH, CREATE_VISIT_PATH, EDIT_CUSTOMER_PATH, getLink } from 'sarte/Routes'
 import AppHeader from 'sarte/components/AppHeader'
-// import Grid from '@material-ui/core/Grid'
 import CustomerStore from 'sarte/stores/CustomerStore'
 import FloatingActionButton from 'sarte/components/MaterialUi/Button/FloatingActionButton'
 import Visit from 'sarte/components/Customer/Detail/Visit'
@@ -13,13 +12,21 @@ import Basic from 'sarte/components/Customer/Detail/Basic'
 import Contact from 'sarte/components/Customer/Detail/Contact'
 import { History } from 'sarte/types'
 
+const Card = styled.div`
+  padding: 12px;
+  background: #fff;
+`
+
+const Title = styled.div`
+  padding: 12px;
+`
+
 interface CustomerProps {
-  classes: any
   customerStore: CustomerStore
   history: History
 }
 
-const Customer = ({ classes, customerStore, history }: CustomerProps) => {
+const Customer = ({ customerStore, history }: CustomerProps) => {
   const customer = customerStore.selectedCustomer
   if (!customer) {
     return null
@@ -31,7 +38,7 @@ const Customer = ({ classes, customerStore, history }: CustomerProps) => {
   }
 
   return (
-    <div className={classes.root}>
+    <div>
       <AppHeader
         hasBack
         title={customer.name}
@@ -39,18 +46,18 @@ const Customer = ({ classes, customerStore, history }: CustomerProps) => {
         onSubmit={toSelectedCustomerEditPath}
         submitTitle="編集"
       />
-      <div className={classes.basic}>
+      <Card>
         <Basic customer={customer} />
-      </div>
-      <h2 className={classes.title}>連絡先</h2>
-      <div className={classes.basic}>
+      </Card>
+      <Title>連絡先</Title>
+      <Card>
         <Contact customer={customer} />
-      </div>
-      <h2 className={classes.title}>来店履歴</h2>
-      <div className={classes.basic}>
+      </Card>
+      <Title>来店履歴</Title>
+      <Card>
         {customer.visits.length === 0 && <div>来店履歴なし</div>}
         {customer.visits.map(visit => <Visit key={visit.id} visit={visit} />)}
-      </div>
+      </Card>
       <Link to={getLink(CREATE_VISIT_PATH, customer.id, 'date')}>
         <FloatingActionButton />
       </Link>
@@ -58,26 +65,8 @@ const Customer = ({ classes, customerStore, history }: CustomerProps) => {
   )
 }
 
-const styles = {
-  root: {
-    // backgroundColor: '#fff',
-  },
-  basic: {
-    padding: 12,
-    backgroundColor: '#fff',
-  },
-  basicIcon: {
-    fontSize: 12,
-    marginRight: 8,
-  },
-  title: {
-    padding: 12,
-  },
-}
-
 export default compose(
   withRouter,
-  withStyles(styles),
   inject('customerStore'),
   observer,
 )<CustomerProps>(Customer)
