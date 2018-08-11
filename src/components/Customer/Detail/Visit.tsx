@@ -14,13 +14,8 @@ const StyledPhoto = styled.img`
   width: 100%;
 `
 
-const Container = styled.div`
-  padding: 12px;
-  background-color: #fff;
-`
-
 const VisitComponent = ({ visit }: VisitProps) => (
-  <Container>
+  <div>
     <Grid container spacing={16}>
       <Grid item xs={4}>
         {visit.visitPhotos.length === 0 ? (
@@ -37,7 +32,7 @@ const VisitComponent = ({ visit }: VisitProps) => (
         <div>{visit.startAtForHuman}</div>
       </Grid>
     </Grid>
-  </Container>
+  </div>
 )
 
 export default VisitComponent
