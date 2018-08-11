@@ -1,5 +1,4 @@
 import { flow, observable, computed, decorate, action } from 'mobx'
-import { orderBy } from 'lodash'
 import BaseStore from 'sarte/stores/BaseStore'
 import Customer from 'sarte/entities/Customer'
 import Visit from 'sarte/entities/Visit'
@@ -21,7 +20,7 @@ export default class CustomerStore extends BaseStore {
   })
 
   public get sortedCustomers() {
-    return orderBy(this.customers, customer => (customer.lastVisit ? Number(customer.lastVisit.startAt) : 0)).reverse()
+    return this.customers.sort(customer => (customer.lastVisit ? Number(customer.lastVisit.startAt) : 0)).reverse()
   }
 
   public createCustomer = flow(function*(this: CustomerStore, customerForm: CustomerForm) {
