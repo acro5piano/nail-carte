@@ -1,4 +1,4 @@
-import Visit from 'sarte/entities/Visit'
+import Visit, { VisitArgs } from 'sarte/entities/Visit'
 import moment = require('moment')
 import { CustomerForm } from 'sarte/forms/CustomerForm'
 import _ from 'lodash'
@@ -19,7 +19,7 @@ interface CustomerArgs {
   phoneNumber?: string
   email?: string
   occupation?: string
-  visits?: Visit[]
+  visits?: VisitArgs[]
   createdAt?: moment.Moment | string | number
 }
 

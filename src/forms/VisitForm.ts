@@ -26,10 +26,11 @@ export class VisitForm {
   }
 
   toCreateVisitParams() {
-    const { customerId, price, note, visitOn, startAt, endAt } = this
+    const { customerId, menuId, price, note, visitOn, startAt, endAt } = this
     return {
       customer: customerId,
       price: Number(price),
+      menu: menuId,
       note,
       startAt: `${visitOn} ${startAt}`,
       endAt: `${visitOn} ${endAt}`,

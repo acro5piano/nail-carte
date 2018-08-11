@@ -17,6 +17,10 @@ export const VisitApi = {
   create: (visit: object) => gql(Query.createVisit, { visit }).then(res => new Visit(res.data.createVisit)),
 }
 
+export const MenuApi = {
+  create: (visit: object) => gql(Query.createVisit, { visit }).then(res => new Visit(res.data.createVisit)),
+}
+
 export const VisitPhotoApi = {
   create: (visitPhoto: object) => gql(Query.createVisitPhoto, { visitPhoto }).then(res => new VisitPhoto(res)),
 }

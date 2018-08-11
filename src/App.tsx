@@ -7,6 +7,8 @@ import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import AppSidebar from 'sarte/components/AppSidebar/AppSidebar'
 import Routes, { LOGIN_PATH } from 'sarte/Routes'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { client } from './services/graphqlClient'
+import { ApolloProvider } from 'react-apollo'
 
 const theme = createMuiTheme({
   palette: {
@@ -48,14 +50,16 @@ export default class AppContainer extends React.Component<{}> {
       <React.Fragment>
         <CssBaseline />
         <MuiThemeProvider theme={theme}>
-          <Provider {...this.rootStore} rootStore={this.rootStore}>
-            <Router>
-              <div>
-                <Routes />
-                <AppSidebar />
-              </div>
-            </Router>
-          </Provider>
+          <ApolloProvider client={client}>
+            <Provider {...this.rootStore} rootStore={this.rootStore}>
+              <Router>
+                <div>
+                  <Routes />
+                  <AppSidebar />
+                </div>
+              </Router>
+            </Provider>
+          </ApolloProvider>
         </MuiThemeProvider>
       </React.Fragment>
     )

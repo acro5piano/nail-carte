@@ -1,3 +1,5 @@
+import apolloGql from 'graphql-tag'
+
 const gql = (literals: TemplateStringsArray): string => literals[0]
 
 export const getCustomers = gql`
@@ -56,9 +58,18 @@ export const createVisitPhoto = gql`
   }
 `
 
-export const getMenus = gql`
-  query getMenus() {
+export const getMenus = apolloGql`
+  query getMenus {
     menus {
+      id
+      name
+    }
+  }
+`
+
+export const createMenu = apolloGql`
+  mutation createMenu($name: String!) {
+    createMenu(name: $name) {
       id
       name
     }

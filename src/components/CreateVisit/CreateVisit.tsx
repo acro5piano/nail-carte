@@ -96,7 +96,7 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
         />
         <Route
           path="/customers/:id/visits/new/menu"
-          render={() => <Menu visitPhotos={visitPhotos} onChange={this.onAddPhoto} />}
+          render={() => <Menu visitForm={visitForm} onChange={this.onChange} />}
         />
         <Route
           path="/customers/:id/visits/new/price"
