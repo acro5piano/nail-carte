@@ -1,33 +1,36 @@
 import * as React from 'react'
 import { inject, observer } from 'mobx-react'
 import { compose } from 'recompose'
-import styled from 'styled-components'
 import { Link, withRouter, match } from 'react-router-dom'
 import { CUSTOMER_LIST_PATH, CREATE_VISIT_PATH, EDIT_CUSTOMER_PATH, getLink } from 'sarte/Routes'
 import AppHeader from 'sarte/components/AppHeader'
 import CustomerStore from 'sarte/stores/CustomerStore'
 import FloatingActionButton from 'sarte/components/MaterialUi/Button/FloatingActionButton'
-import Visit from 'sarte/components/Customer/Detail/Visit'
+import VisitListItem from 'sarte/components/Customer/Detail/VisitListItem'
 import Basic from 'sarte/components/Customer/Detail/Basic'
 import Contact from 'sarte/components/Customer/Detail/Contact'
+import Visit from 'sarte/entities/Visit'
+import VisitDetail from 'sarte/components/Customer/VisitDetail/VisitDetail'
 import { History } from 'sarte/types'
+import Modal from 'sarte/components/Modal'
+import FlatCard from 'sarte/components/utils/FlatCard'
+import FlatTitle from 'sarte/components/utils/FlatTitle'
 
-const Card = styled.div`
-  padding: 12px;
-  background: #fff;
-`
-
-const Title = styled.div`
-  padding: 12px;
-`
-
-interface CustomerProps {
+interface Props {
   customerStore: CustomerStore
   history: History
   match: match
 }
 
-export class Customer extends React.Component<CustomerProps> {
+interface State {
+  selectedVisit: Visit | null
+}
+
+export class Customer extends React.Component<Props, State> {
+  state = {
+    selectedVisit: null,
+  }
+
   toSelectedCustomerEditPath = () => {
     const { customerStore, history, match } = this.props
     const customer = customerStore.findCustomerByIdOrFail(match.params.id)
@@ -43,8 +46,13 @@ export class Customer extends React.Component<CustomerProps> {
     customerStore.uploadAvatar(match.params.id, event.target.files[0])
   }
 
+  selectVisit = (selectedVisit: Visit) => this.setState({ selectedVisit })
+
+  deselectVisit = () => this.setState({ selectedVisit: null })
+
   render() {
     const { customerStore, match } = this.props
+    const { selectedVisit } = this.state
     const customer = customerStore.findCustomerByIdOrFail(match.params.id)
 
     return (
@@ -56,21 +64,29 @@ export class Customer extends React.Component<CustomerProps> {
           onSubmit={this.toSelectedCustomerEditPath}
           submitTitle="編集"
         />
-        <Card>
+        <FlatCard>
           <Basic customer={customer} onSelectAvatar={this.onUploadAvatarImage} />
-        </Card>
-        <Title>連絡先</Title>
-        <Card>
+        </FlatCard>
+        <FlatTitle>連絡先</FlatTitle>
+        <FlatCard>
           <Contact customer={customer} />
-        </Card>
-        <Title>来店履歴</Title>
-        <Card>
+        </FlatCard>
+        <FlatTitle>来店履歴</FlatTitle>
+        <FlatCard>
           {customer.visits.length === 0 && <div>来店履歴なし</div>}
-          {customer.visits.map(visit => <Visit key={visit.id} visit={visit} />)}
-        </Card>
+          {customer.visits.map(visit => <VisitListItem key={visit.id} visit={visit} onClick={this.selectVisit} />)}
+        </FlatCard>
         <Link to={getLink(CREATE_VISIT_PATH, customer.id, 'date')}>
           <FloatingActionButton />
         </Link>
+
+        <Modal
+          title={selectedVisit ? (selectedVisit as Visit).startAtForHuman : ''}
+          open={Boolean(selectedVisit)}
+          onClose={this.deselectVisit}
+        >
+          <VisitDetail visit={selectedVisit} />
+        </Modal>
       </div>
     )
   }
@@ -80,4 +96,4 @@ export default compose(
   withRouter,
   inject('customerStore'),
   observer,
-)<CustomerProps>(Customer)
+)<Props>(Customer)

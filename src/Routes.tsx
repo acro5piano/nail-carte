@@ -13,6 +13,7 @@ export const LOGIN_PATH = '/login'
 export const CUSTOMER_LIST_PATH = '/customers'
 export const CUSTOMER_PATH = '/customers/:id'
 export const CREATE_CUSTOMER_PATH = '/customers/new'
+export const VISIT_PATH = '/visits/:id'
 export const EDIT_CUSTOMER_PATH = '/customers/:id/edit'
 
 export const CREATE_VISIT_PATH = '/customers/:id/visits/new/:step'
@@ -25,15 +26,15 @@ export const getLink = (pathname: string, ...ids: any[]): string =>
 const Routes = props => (
   <div className="appBody">
     <Switch>
-      <Route path={CREATE_VISIT_PATH} component={CreateVisit} />
+      <Route exact path={CREATE_VISIT_PATH} component={CreateVisit} />
 
-      <Route path={CREATE_CUSTOMER_PATH} component={CreateCustomer} />
-      <Route path={EDIT_CUSTOMER_PATH} component={CreateCustomer} />
-      <Route path={CUSTOMER_PATH} component={Customer} />
-      <Route path={CUSTOMER_LIST_PATH} component={CustomerList} />
+      <Route exact path={CREATE_CUSTOMER_PATH} component={CreateCustomer} />
+      <Route exact path={EDIT_CUSTOMER_PATH} component={CreateCustomer} />
+      <Route exact path={CUSTOMER_PATH} component={Customer} />
+      <Route exact path={CUSTOMER_LIST_PATH} component={CustomerList} />
 
-      <Route path={LOGIN_PATH} component={Login} />
-      <Route path={HOME_PATH} component={CustomerList} />
+      <Route exact path={LOGIN_PATH} component={Login} />
+      <Route exact path={HOME_PATH} component={CustomerList} />
     </Switch>
   </div>
 )

@@ -19,6 +19,9 @@ export const getCustomers = gql`
         price
         note
         startAt
+        base
+        color
+        top
         visitPhotos {
           id
           url
