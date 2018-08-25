@@ -1,8 +1,8 @@
 import { observable, decorate, runInAction } from 'mobx'
 import BaseStore from 'sarte/stores/BaseStore'
-import { AuthApi } from 'sarte/services/api'
+import { AuthApi, TeamApi } from 'sarte/services/api'
 import { LoginCredentials } from 'sarte/types'
-import User from 'sarte/entities/User'
+import User, { UpdatableParams } from 'sarte/entities/User'
 
 export const STORAGE_TOKEN = 'token'
 
@@ -40,6 +40,35 @@ export default class AuthStore extends BaseStore {
     } catch (err) {
       throw err
     }
+  }
+
+  async register(credentials: LoginCredentials) {
+    try {
+      const res = await AuthApi.register(credentials)
+      runInAction(() => {
+        this.authenticated = true
+        this.user = new User(res.user)
+      })
+      localStorage.setItem(STORAGE_TOKEN, res.token)
+    } catch (err) {
+      throw err
+    }
+  }
+
+  async updateProfile(args: UpdatableParams) {
+    try {
+      const user = await AuthApi.updateMe(args)
+      runInAction(() => {
+        this.authenticated = true
+        this.user = user
+      })
+    } catch (err) {
+      throw err
+    }
+  }
+
+  async registerTeam(name: string) {
+    await TeamApi.create(name)
   }
 
   logout = () => {

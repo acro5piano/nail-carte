@@ -1,11 +1,12 @@
 import * as React from 'react'
+import { ContextRouter } from 'react-router'
 import { Provider } from 'mobx-react'
 import { configure } from 'mobx'
 import RootStore from 'sarte/stores/RootStore'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import AppSidebar from 'sarte/components/AppSidebar/AppSidebar'
-import Routes, { LOGIN_PATH } from 'sarte/Routes'
+import Routes, { LOGIN_PATH, REGISTER_PATH, INPUT_TEAM_PATH } from 'sarte/Routes'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { client } from 'sarte/services/graphqlClient'
 import { ApolloProvider } from 'react-apollo'
@@ -19,6 +20,8 @@ interface AppState {
 
 // TODO: ref or withRouter...?
 export default class AppContainer extends React.Component<{}, AppState> {
+  router: ContextRouter
+
   state = {
     booted: false,
   }
@@ -30,8 +33,15 @@ export default class AppContainer extends React.Component<{}, AppState> {
     await this.rootStore.boot()
     this.setState({ booted: true })
 
-    if (location.pathname !== LOGIN_PATH && !this.rootStore.authStore.authenticated) {
-      location.href = LOGIN_PATH
+    if (
+      location.pathname !== LOGIN_PATH &&
+      location.pathname !== REGISTER_PATH &&
+      !this.rootStore.authStore.authenticated
+    ) {
+      this.router.history.push(LOGIN_PATH)
+    }
+    if (this.rootStore.authStore.user && !this.rootStore.authStore.user.team) {
+      this.router.history.push(INPUT_TEAM_PATH)
     }
 
     const loading = document.getElementById('loading')
@@ -51,7 +61,7 @@ export default class AppContainer extends React.Component<{}, AppState> {
         <CssBaseline />
         <MuiThemeProvider theme={theme}>
           <Provider {...this.rootStore} rootStore={this.rootStore}>
-            <Router>
+            <Router ref={router => (this.router = router)}>
               <ApolloProvider client={client}>
                 <Routes />
                 <AppSidebar />

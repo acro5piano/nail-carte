@@ -66,6 +66,15 @@ export const createVisitPhoto = gql`
   }
 `
 
+export const registerTeam = gql`
+  mutation registerTeam($name: String!) {
+    registerTeam(name: $name) {
+      id
+      name
+    }
+  }
+`
+
 export const getMenus = apolloGql`
   query getMenus {
     menus {

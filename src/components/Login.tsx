@@ -69,7 +69,6 @@ class Login extends React.Component<LoginProps & StyledComponentProps, LoginStat
               <TextField
                 id="name"
                 label="メールアドレス"
-                className={classes.textField}
                 value={this.state.email}
                 onChange={this.onChangeEmail}
                 margin="normal"
@@ -80,7 +79,6 @@ class Login extends React.Component<LoginProps & StyledComponentProps, LoginStat
               <TextField
                 id="password"
                 label="パスワード"
-                className={classes.textField}
                 value={this.state.password}
                 onChange={this.onChangePassword}
                 type="password"
@@ -128,7 +126,5 @@ const styles = {
     textAlign: 'center' as 'center',
   },
 }
-// display: 'flex',
-// justifyContent: 'center',
 
 export default withStyles(styles)(inject('authStore', 'rootStore')(observer(Login)))

@@ -1,10 +1,10 @@
 import Customer from 'sarte/entities/Customer'
 import Visit from 'sarte/entities/Visit'
 import VisitPhoto from 'sarte/entities/VisitPhoto'
-import User from 'sarte/entities/User'
+import User, { UpdatableParams } from 'sarte/entities/User'
 import { LoginCredentials } from 'sarte/types'
 import { gql } from 'sarte/services/graphqlClient'
-import { POST, GET, UPLOAD } from 'sarte/services/xhrClient'
+import { POST, GET, PUT, UPLOAD } from 'sarte/services/xhrClient'
 import * as Query from 'sarte/services/graphqlQuery'
 
 export const CustomerApi = {
@@ -25,9 +25,15 @@ export const VisitPhotoApi = {
   create: (visitPhoto: object) => gql(Query.createVisitPhoto, { visitPhoto }).then(res => new VisitPhoto(res)),
 }
 
+export const TeamApi = {
+  create: (name: string) => gql(Query.registerTeam, { name }),
+}
+
 export const AuthApi = {
   login: (credentials: LoginCredentials) => POST('/login', credentials),
+  register: (credentials: LoginCredentials) => POST('/register', credentials),
   me: () => GET('/me').then(res => new User(res)),
+  updateMe: (params: UpdatableParams) => PUT('/me', params).then(res => new User(res)),
 }
 
 export const FileApi = {

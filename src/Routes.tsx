@@ -5,11 +5,16 @@ import CreateCustomer from 'sarte/components/Customer/CreateCustomer'
 import Customer from 'sarte/components/Customer/Customer'
 import CreateVisit from 'sarte/components/CreateVisit/CreateVisit'
 import Login from 'sarte/components/Login'
+import Register from 'sarte/components/Register/Register'
+import InputTeam from 'sarte/components/Register/InputTeam'
 
 // import NotFound from 'sarte/components/NotFound'
 
 export const HOME_PATH = '/'
 export const LOGIN_PATH = '/login'
+export const REGISTER_PATH = '/register'
+export const INPUT_TEAM_PATH = '/tutorial/team'
+
 export const CUSTOMER_LIST_PATH = '/customers'
 export const CUSTOMER_PATH = '/customers/:id'
 export const CREATE_CUSTOMER_PATH = '/customers/new'
@@ -34,6 +39,8 @@ const Routes = props => (
       <Route exact path={CUSTOMER_LIST_PATH} component={CustomerList} />
 
       <Route exact path={LOGIN_PATH} component={Login} />
+      <Route exact path={REGISTER_PATH} component={Register} />
+      <Route exact path={INPUT_TEAM_PATH} component={InputTeam} />
       <Route exact path={HOME_PATH} component={CustomerList} />
     </Switch>
   </div>
