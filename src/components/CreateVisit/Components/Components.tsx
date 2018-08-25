@@ -1,8 +1,26 @@
 import * as React from 'react'
+import styled from 'styled-components'
+import TextField from '@material-ui/core/TextField'
+import { TextFieldProps } from '@material-ui/core/TextField/TextField'
+import Flex from 'sarte/components/utils/Flex'
 import { VisitForm } from 'sarte/forms/VisitForm'
 import { InputContainer, Caption } from 'sarte/components/CreateVisit/Presentational'
-import BlockInput from 'sarte/components/utils/BlockInput'
 import SelectBrandDialog from './SelectBrandDialog'
+
+const SectionTitleNoMargin = styled.div`
+  font-weight: bold;
+`
+
+const SectionTitle = styled.div`
+  font-weight: bold;
+  margin-top: 36px;
+`
+
+const StyledTextField = styled(TextField as React.SFC<TextFieldProps>)`
+  && {
+    margin-left: 12px;
+  }
+`
 
 interface Props {
   visitForm: VisitForm
@@ -19,8 +37,8 @@ class Components extends React.Component<Props, State> {
 
   closeBrandModal = () => this.setState({ brandSelecting: false })
 
-  onChangeBrand = (base: string) => {
-    this.props.onChange(this.props.visitForm.newInstance({ base }))
+  onChangeBrand = (name: string) => (value: string) => {
+    this.props.onChange(this.props.visitForm.newInstance({ [name]: value }))
   }
 
   render() {
@@ -30,9 +48,29 @@ class Components extends React.Component<Props, State> {
       <div>
         <Caption>商材を選択しましょう。</Caption>
         <InputContainer>
-          <SelectBrandDialog value={visitForm.base} onChange={this.onChangeBrand} />
-          <BlockInput fullWidth name="color" value={visitForm.color} onChange={this.onChange} label="カラー" />
-          <BlockInput fullWidth name="top" value={visitForm.top} onChange={this.onChange} label="トップ" />
+          <SectionTitleNoMargin>ベース</SectionTitleNoMargin>
+          <Flex>
+            <SelectBrandDialog value={visitForm.baseBrand} onChange={this.onChangeBrand('baseBrand')} />
+            <StyledTextField fullWidth name="baseSku" value={visitForm.baseSku} onChange={this.onChange} label="型番" />
+          </Flex>
+
+          <SectionTitle>カラー</SectionTitle>
+          <Flex>
+            <SelectBrandDialog value={visitForm.colorBrand} onChange={this.onChangeBrand('colorBrand')} />
+            <StyledTextField
+              fullWidth
+              name="colorSku"
+              value={visitForm.colorSku}
+              onChange={this.onChange}
+              label="型番"
+            />
+          </Flex>
+
+          <SectionTitle>トップ</SectionTitle>
+          <Flex>
+            <SelectBrandDialog value={visitForm.topBrand} onChange={this.onChangeBrand('topBrand')} />
+            <StyledTextField fullWidth name="topSku" value={visitForm.topSku} onChange={this.onChange} label="型番" />
+          </Flex>
         </InputContainer>
       </div>
     )

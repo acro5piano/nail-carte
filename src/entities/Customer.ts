@@ -1,7 +1,6 @@
 import Visit, { VisitArgs } from 'sarte/entities/Visit'
 import moment = require('moment')
 import { CustomerForm } from 'sarte/forms/CustomerForm'
-import _ from 'lodash'
 import { rfc822 } from 'sarte/utils'
 import uuid from 'uuid'
 

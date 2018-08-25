@@ -1,11 +1,11 @@
 import * as React from 'react'
+import TextField from '@material-ui/core/TextField'
 import FlatOption from 'sarte/components/utils/FlatOption'
 import Modal from 'sarte/components/Modal'
 import styled from 'styled-components'
 import { getBrands } from 'sarte/services/graphqlQuery'
 import { Query } from 'react-apollo'
 import { InputContainer } from 'sarte/components/CreateVisit/Presentational'
-import BlockInput from 'sarte/components/utils/BlockInput'
 import { InputEvent } from 'sarte/types'
 
 const Container = styled.div`
@@ -45,18 +45,11 @@ export default class SelectBrancDialog extends React.Component<Props, State> {
 
     return (
       <React.Fragment>
-        <BlockInput
-          inputProps={{ disabled: true }}
-          fullWidth
-          onClick={this.open}
-          name="base"
-          value={value}
-          label="ベース"
-        />
+        <TextField inputProps={{ disabled: true }} fullWidth onClick={this.open} value={value} label="ブランドの選択" />
         <Modal title="ブランドの選択" open={open} onClose={this.close}>
           <Container>
             <InputContainer>
-              <BlockInput autoFocus fullWidth name="base" value={value} onChange={this.onInput} label="ベース" />
+              <TextField autoFocus fullWidth value={value} onChange={this.onInput} label="ブランドの選択" />
               <Query query={getBrands}>
                 {({ loading, data }) => {
                   if (loading) {
