@@ -10,6 +10,11 @@ interface VisitProps {
   onClick: (visit: Visit) => void
 }
 
+const Container = styled.div`
+  padding: 12px;
+  border-bottom: solid 1px #eee;
+`
+
 const StyledPhoto = styled.img`
   border-radius: 3px;
   width: 100%;
@@ -19,7 +24,7 @@ const VisitListItem = ({ visit, onClick }: VisitProps) => {
   const _onClick = () => onClick(visit)
 
   return (
-    <div onClick={_onClick}>
+    <Container onClick={_onClick}>
       <Grid container spacing={16}>
         <Grid item xs={4}>
           {visit.visitPhotos.length === 0 ? (
@@ -36,7 +41,7 @@ const VisitListItem = ({ visit, onClick }: VisitProps) => {
           <div>{visit.startAtForHuman}</div>
         </Grid>
       </Grid>
-    </div>
+    </Container>
   )
 }
 
