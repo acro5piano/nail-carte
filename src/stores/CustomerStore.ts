@@ -14,6 +14,7 @@ interface CreateVisitParams {
 
 export default class CustomerStore extends BaseStore {
   public customers: Customer[] = []
+  public currentCustomerId?: string = undefined
 
   public fetchCustomers = flow(function*(this: CustomerStore) {
     this.customers = yield CustomerApi.list()
@@ -32,13 +33,8 @@ export default class CustomerStore extends BaseStore {
     yield this.fetchCustomers()
   })
 
-  // TODO: ストアはURLを見てはいけない
-  public get selectedCustomer(): Customer | null {
-    const match = location.pathname.match(/customers\/([0-9|a-z]+)/)
-    if (!match || match[1] === 'new') {
-      return null
-    }
-    return this.findCustomerByIdOrFail(match[1])
+  public get selectedCustomer(): Customer | undefined {
+    return this.customers.find(c => c.id === this.currentCustomerId)
   }
 
   public uploadPhoto = flow(function*(file) {
@@ -67,7 +63,11 @@ export default class CustomerStore extends BaseStore {
     yield this.fetchCustomers()
   })
 
-  public findCustomerByIdOrFail(id: string): Customer {
+  public setCurrentCustomerId(id: string) {
+    this.currentCustomerId = id
+  }
+
+  public findCustomerByIdOrFail(id?: string): Customer {
     const customer = this.customers.find(c => c.id === id)
     if (!customer) {
       throw new Error('customer not found')
@@ -87,6 +87,8 @@ export default class CustomerStore extends BaseStore {
 
 decorate(CustomerStore, {
   customers: observable,
+  currentCustomerId: observable,
+  setCurrentCustomerId: action,
   fetchCustomers: action,
   sortedCustomers: computed,
   selectedCustomer: computed,

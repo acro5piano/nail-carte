@@ -41,9 +41,10 @@ interface Props {
   title: string
   children: any
   onClose?: () => void
+  rightLabel?: string
 }
 
-export const _Modal = ({ onClose, open, title, children, fullScreen }: Props & InjectedProps) => {
+export const _Modal = ({ onClose, open, title, children, fullScreen, rightLabel }: Props & InjectedProps) => {
   return (
     <Dialog maxWidth="md" open={open} onClose={onClose} fullScreen={fullScreen}>
       <ModalHeader>
@@ -53,6 +54,7 @@ export const _Modal = ({ onClose, open, title, children, fullScreen }: Props & I
           </StyledIconButton>
         )}
         <span>{title}</span>
+        <span>編集</span>
       </ModalHeader>
       <ModalContent>{children}</ModalContent>
     </Dialog>

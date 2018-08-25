@@ -31,13 +31,14 @@ export class Customer extends React.Component<Props, State> {
     selectedVisit: null,
   }
 
+  componentDidMount() {
+    const id = this.props.match.params.id
+    this.props.customerStore.setCurrentCustomerId(id)
+  }
+
   toSelectedCustomerEditPath = () => {
-    const { customerStore, history, match } = this.props
-    const customer = customerStore.findCustomerByIdOrFail(match.params.id)
-    if (!customer) {
-      return
-    }
-    const path = getLink(EDIT_CUSTOMER_PATH, customer.id)
+    const { customerStore, history } = this.props
+    const path = getLink(EDIT_CUSTOMER_PATH, customerStore.currentCustomerId)
     history.push(path)
   }
 
@@ -51,9 +52,13 @@ export class Customer extends React.Component<Props, State> {
   deselectVisit = () => this.setState({ selectedVisit: null })
 
   render() {
-    const { customerStore, match } = this.props
+    const { customerStore } = this.props
     const { selectedVisit } = this.state
-    const customer = customerStore.findCustomerByIdOrFail(match.params.id)
+    const customer = customerStore.selectedCustomer
+
+    if (!customer) {
+      return null
+    }
 
     return (
       <div>
