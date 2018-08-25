@@ -22,11 +22,9 @@ const ModalHeader = withMobileDialog()(styled.div`
   height: 56px;
 `)
 
-// const ModalContent = withMobileDialog()(styled<InjectedProps, 'div'>('div')`
 const ModalContent = withMobileDialog()(styled.div`
   min-height: ${(props: InjectedProps) => (props.fullScreen ? '100vh' : '80vh')};
   min-width: ${props => (props.fullScreen ? '100%' : '800px')};
-  padding-top: ${props => (props.fullScreen ? '56px' : 0)};
   background: #f5f5f5;
 `)
 
