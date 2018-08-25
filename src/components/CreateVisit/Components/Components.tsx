@@ -1,14 +1,16 @@
 import * as React from 'react'
-// import styled from 'styled-components'
-// import Button from '@material-ui/core/Button'
+import styled from 'styled-components'
 import { getBrands } from 'sarte/services/graphqlQuery'
-// import Flex from 'sarte/components/utils/Flex'
 import { Query } from 'react-apollo'
 import { VisitForm } from 'sarte/forms/VisitForm'
 import { InputContainer, Caption } from 'sarte/components/CreateVisit/Presentational'
 import BlockInput from 'sarte/components/utils/BlockInput'
 import FlatOption from 'sarte/components/utils/FlatOption'
 import Modal from 'sarte/components/Modal'
+
+const Container = styled.div`
+  margin-top: 12px;
+`
 
 interface Props {
   visitForm: VisitForm
@@ -57,28 +59,30 @@ class Components extends React.Component<Props, State> {
           <BlockInput fullWidth name="top" value={visitForm.top} onChange={this.onChange} label="トップ" />
         </InputContainer>
         <Modal title="ブランドの選択" open={brandSelecting} onClose={this.closeBrandModal}>
-          <InputContainer>
-            <BlockInput fullWidth name="base" value={visitForm.base} onChange={this.onChange} label="ベース" />
-            <Query query={getBrands}>
-              {({ loading, data }) => {
-                if (loading) {
-                  return <div>loading...</div>
-                }
+          <Container>
+            <InputContainer>
+              <BlockInput fullWidth name="base" value={visitForm.base} onChange={this.onChange} label="ベース" />
+              <Query query={getBrands}>
+                {({ loading, data }) => {
+                  if (loading) {
+                    return <div>loading...</div>
+                  }
 
-                return data.brands.filter(b => b.name.toLowerCase().includes(visitForm.base)).map(brand => {
-                  return (
-                    <FlatOption
-                      key={brand.name}
-                      onClick={this.onChangeBrand(brand.name)}
-                      selected={visitForm.base === brand.name}
-                    >
-                      {brand.name}
-                    </FlatOption>
-                  )
-                })
-              }}
-            </Query>
-          </InputContainer>
+                  return data.brands.filter(b => b.name.toLowerCase().includes(visitForm.base)).map(brand => {
+                    return (
+                      <FlatOption
+                        key={brand.name}
+                        onClick={this.onChangeBrand(brand.name)}
+                        selected={visitForm.base === brand.name}
+                      >
+                        {brand.name}
+                      </FlatOption>
+                    )
+                  })
+                }}
+              </Query>
+            </InputContainer>
+          </Container>
         </Modal>
       </div>
     )
