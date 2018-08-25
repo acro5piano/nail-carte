@@ -11,9 +11,12 @@ export interface VisitArgs {
   price?: number
   startAt: string
   endAt: string
-  base?: string
-  color?: string
-  top?: string
+  baseBrand?: string
+  baseSku?: string
+  colorBrand?: string
+  colorSku?: string
+  topBrand?: string
+  topSku?: string
   visitPhotos?: VisitPhoto[]
   menu?: Menu
 }
@@ -25,9 +28,12 @@ export default class Visit {
   price: number
   startAt: moment.Moment
   endAt: moment.Moment
-  base: string
-  color: string
-  top: string
+  baseBrand: string
+  baseSku: string
+  colorBrand: string
+  colorSku: string
+  topBrand: string
+  topSku: string
   visitPhotos: VisitPhoto[]
   menuName: string
 
@@ -38,9 +44,12 @@ export default class Visit {
     this.note = args.note
     this.startAt = rfc822(args.startAt)
     this.endAt = rfc822(args.endAt)
-    this.base = args.base || ''
-    this.color = args.color || ''
-    this.top = args.top || ''
+    this.baseBrand = args.baseBrand || ''
+    this.baseSku = args.baseSku || ''
+    this.colorBrand = args.colorBrand || ''
+    this.colorSku = args.colorSku || ''
+    this.topBrand = args.topBrand || ''
+    this.topSku = args.topSku || ''
     this.visitPhotos = args.visitPhotos ? args.visitPhotos.map(v => new VisitPhoto(v)) : []
     this.menuName = args.menu ? args.menu.name : ''
   }
@@ -56,5 +65,17 @@ export default class Visit {
   public toForm(): VisitForm {
     const { id, customerId, note, price, startAt, visitPhotos } = this
     return new VisitForm({ id, customerId, note, price, startAt, visitPhotos })
+  }
+
+  public get base(): string {
+    return this.baseBrand + (this.baseSku ? this.baseSku : '')
+  }
+
+  public get color(): string {
+    return this.colorBrand + (this.colorSku ? this.colorSku : '')
+  }
+
+  public get top(): string {
+    return this.topBrand + (this.topSku ? this.topSku : '')
   }
 }
