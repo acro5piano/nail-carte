@@ -44,8 +44,7 @@ class Login extends React.Component<LoginProps & StyledComponentProps, LoginStat
     const { email, password } = this.state
     try {
       await this.props.authStore.login({ email, password })
-      this.props.history.push('/')
-      this.props.rootStore.boot()
+      window.location.href = '/'
     } catch (err) {
       this.setState({ errors: '間違っています' })
       console.error(err)
