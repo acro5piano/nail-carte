@@ -1,37 +1,14 @@
 import * as React from 'react'
-import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
-import Paper from '@material-ui/core/Paper'
 import AppHeader from 'sarte/components/AppHeader'
 import AuthStore from 'sarte/stores/AuthStore'
 import RootStore from 'sarte/stores/RootStore'
-
-const Root = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-const Head = styled.div`
-  margin-top: 40px;
-  text-align: center;
-`
-const Title = styled.div`
-  font-weight: bold;
-  font-size: 16px;
-`
-const StyledPaper = styled(Paper as React.SFC<any>)`
-  margin-top: 30px;
-  padding: 18px;
-`
-const Main = styled.div`
-  width: 480px;
-`
-const Submit = styled.div`
-  margin-top: 40px;
-  text-align: center;
-`
+import { LOGIN_PATH } from 'sarte/Routes'
+import { Root, Head, Title, StyledPaper, Main, Submit } from './styles'
+import { validate } from 'sarte/utils'
 
 export interface Props {
   authStore: AuthStore
@@ -70,6 +47,24 @@ class Login extends React.Component<Props, State> {
     }
   }
 
+  get canSubmit(): boolean {
+    const { email, password, passwordConfirmation } = this.state
+    return (
+      validate(
+        {
+          email,
+          password,
+          passwordConfirmation,
+        },
+        {
+          email: 'required|email',
+          password: 'required',
+          passwordConfirmation: 'required',
+        },
+      ) && password === passwordConfirmation
+    )
+  }
+
   render() {
     return (
       <Root>
@@ -104,7 +99,7 @@ class Login extends React.Component<Props, State> {
             </div>
             <div>
               <TextField
-                id="password"
+                id="passwordConfirmation"
                 label="パスワード (確認)"
                 value={this.state.passwordConfirmation}
                 onChange={this.onChange('passwordConfirmation')}
@@ -114,10 +109,13 @@ class Login extends React.Component<Props, State> {
               />
             </div>
             <Submit>
-              <Button variant="raised" color="primary" onClick={this.submit}>
+              <Button disabled={!this.canSubmit} variant="raised" color="primary" onClick={this.submit}>
                 新規登録
               </Button>
             </Submit>
+            <Head>
+              登録済みのお客様ですか？ <Link to={LOGIN_PATH}>こちら</Link> からログインしましょう。
+            </Head>
           </StyledPaper>
         </Main>
       </Root>

@@ -4,9 +4,9 @@ import CustomerList from 'sarte/components/Customer/CustomerList'
 import CreateCustomer from 'sarte/components/Customer/CreateCustomer'
 import Customer from 'sarte/components/Customer/Customer'
 import CreateVisit from 'sarte/components/CreateVisit/CreateVisit'
-import Login from 'sarte/components/Login'
-import Register from 'sarte/components/Register/Register'
-import InputTeam from 'sarte/components/Register/InputTeam'
+import Login from 'sarte/components/Auth/Login'
+import Register from 'sarte/components/Auth/Register'
+import InputTeam from 'sarte/components/Auth/InputTeam'
 
 // import NotFound from 'sarte/components/NotFound'
 
