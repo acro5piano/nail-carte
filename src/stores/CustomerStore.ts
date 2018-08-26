@@ -63,7 +63,7 @@ export default class CustomerStore extends BaseStore {
     yield this.fetchCustomers()
   })
 
-  public setCurrentCustomerId(id: string) {
+  public setCurrentCustomerId(id?: string) {
     this.currentCustomerId = id
   }
 

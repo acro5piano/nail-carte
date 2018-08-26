@@ -14,6 +14,7 @@ interface NewCustomerProps {
   classes: any
   customerStore: CustomerStore
   history: History
+  match: any
 }
 
 interface NewCustomerState {
@@ -26,9 +27,9 @@ class CreateCustomer extends React.Component<NewCustomerProps, NewCustomerState>
   }
 
   componentDidMount() {
-    const { selectedCustomer } = this.props.customerStore
-    if (selectedCustomer) {
-      this.setState({ customerForm: selectedCustomer.toForm() })
+    const { customerStore, match } = this.props
+    if (customerStore.selectedCustomer && match.params.id !== 'new') {
+      this.setState({ customerForm: customerStore.selectedCustomer.toForm() })
     }
   }
 

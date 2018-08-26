@@ -58,8 +58,8 @@ class Login extends React.Component<Props, State> {
         },
         {
           email: 'required|email',
-          password: 'required',
-          passwordConfirmation: 'required',
+          password: 'required|min:6',
+          passwordConfirmation: 'required|min:6',
         },
       ) && password === passwordConfirmation
     )

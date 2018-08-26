@@ -17,7 +17,7 @@ export const INPUT_TEAM_PATH = '/tutorial/team'
 
 export const CUSTOMER_LIST_PATH = '/customers'
 export const CUSTOMER_PATH = '/customers/:id'
-export const CREATE_CUSTOMER_PATH = '/customers/new'
+export const CREATE_CUSTOMER_PATH = '/customers/new/edit'
 export const VISIT_PATH = '/visits/:id'
 export const EDIT_CUSTOMER_PATH = '/customers/:id/edit'
 
@@ -33,7 +33,6 @@ const Routes = props => (
     <Switch>
       <Route exact path={CREATE_VISIT_PATH} component={CreateVisit} />
 
-      <Route exact path={CREATE_CUSTOMER_PATH} component={CreateCustomer} />
       <Route exact path={EDIT_CUSTOMER_PATH} component={CreateCustomer} />
       <Route exact path={CUSTOMER_PATH} component={Customer} />
       <Route exact path={CUSTOMER_LIST_PATH} component={CustomerList} />

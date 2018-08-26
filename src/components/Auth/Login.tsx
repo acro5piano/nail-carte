@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { validate } from 'sarte/utils'
 import { Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 import TextField from '@material-ui/core/TextField'
@@ -52,6 +53,20 @@ class Login extends React.Component<LoginProps, LoginState> {
     }
   }
 
+  get canSubmit(): boolean {
+    const { email, password } = this.state
+    return validate(
+      {
+        email,
+        password,
+      },
+      {
+        email: 'required|email',
+        password: 'required|min:6',
+      },
+    )
+  }
+
   render() {
     return (
       <Root>
@@ -85,7 +100,7 @@ class Login extends React.Component<LoginProps, LoginState> {
               />
             </div>
             <Submit>
-              <Button variant="raised" color="primary" onClick={this.submit}>
+              <Button disabled={!this.canSubmit} variant="raised" color="primary" onClick={this.submit}>
                 ログイン
               </Button>
             </Submit>
