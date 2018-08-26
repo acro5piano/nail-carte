@@ -63,7 +63,7 @@ class CustomerList extends React.Component<CustomersProps, CustomersState> {
 
     return (
       <div>
-        <AppHeader noMenu title="顧客一覧" />
+        <AppHeader title="顧客一覧" />
 
         <SearchContainer>
           <TextField value={searchInput} fullWidth label="検索" onChange={this.onChangeSearchInput} />

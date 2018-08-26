@@ -1,22 +1,26 @@
 import * as React from 'react'
+import styled from 'styled-components'
 import List from '@material-ui/core/List'
 import { Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
 
+const Container = styled(List as React.SFC)`
+  && {
+    width: 250px;
+    line-height: 46px;
+  }
+`
 interface SideListItemBaseInterface {
   title: string
   path: string
-  onSelect: () => void
 }
 
-const SideListItemBase = ({ classes, title, path, onSelect }) => (
-  <List>
-    <Link to={path} onClick={onSelect} className={classes.link}>
-      <div className={classes.item}>
-        {title}
-      </div>
+const SideListItemBase = ({ classes, title, path }) => (
+  <Container>
+    <Link to={path} className={classes.link}>
+      <div className={classes.item}>{title}</div>
     </Link>
-  </List>
+  </Container>
 )
 
 const itemStyles = theme => ({
