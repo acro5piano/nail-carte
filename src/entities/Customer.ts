@@ -1,6 +1,5 @@
 import Visit, { VisitArgs } from 'sarte/entities/Visit'
 import moment = require('moment')
-import { CustomerForm } from 'sarte/forms/CustomerForm'
 import { rfc822 } from 'sarte/utils'
 import uuid from 'uuid'
 
@@ -77,11 +76,6 @@ export default class Customer {
       return undefined
     }
     return moment().diff(this.birthday, 'year')
-  }
-
-  public toForm(): CustomerForm {
-    const { id, name, email, address, occupation, phoneNumber, birthday } = this
-    return new CustomerForm({ id, name, email, address, occupation, phoneNumber, birthday })
   }
 
   public search(query: string) {

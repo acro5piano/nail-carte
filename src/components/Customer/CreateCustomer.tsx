@@ -29,7 +29,7 @@ class CreateCustomer extends React.Component<NewCustomerProps, NewCustomerState>
   componentDidMount() {
     const { customerStore, match } = this.props
     if (customerStore.selectedCustomer && match.params.id !== 'new') {
-      this.setState({ customerForm: customerStore.selectedCustomer.toForm() })
+      this.setState({ customerForm: CustomerForm.fromEntity(customerStore.selectedCustomer) })
     }
   }
 
@@ -42,7 +42,13 @@ class CreateCustomer extends React.Component<NewCustomerProps, NewCustomerState>
 
     return (
       <div className={classes.root}>
-        <AppHeader hasBack title={this.title} canSubmit={this.validate} onSubmit={this.submit} submitTitle="保存" />
+        <AppHeader
+          hasBack
+          title={this.title}
+          canSubmit={this.validate}
+          onSubmit={this.submit}
+          submitTitle="保存"
+        />
         <div>
           <TextField
             name="name"

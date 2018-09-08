@@ -1,4 +1,5 @@
 import moment = require('moment')
+import Customer from 'sarte/entities/Customer'
 
 export class CustomerForm {
   id?: string
@@ -12,6 +13,19 @@ export class CustomerForm {
 
   constructor(args = {}) {
     Object.assign(this, args)
+  }
+
+  public static fromEntity(entity: Customer): CustomerForm {
+    const { id, name, email, address, occupation, phoneNumber, birthday } = entity
+    return new CustomerForm({
+      id,
+      name,
+      email,
+      address,
+      occupation,
+      birthday,
+      phoneNumber: (phoneNumber || '').replace(/-/g, ''),
+    })
   }
 
   toCreateCustomerParams() {

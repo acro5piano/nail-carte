@@ -83,6 +83,17 @@ export default class CustomerStore extends BaseStore {
     await CustomerApi.update(customer.id, { avatarUrl: res.url })
     await this.fetchCustomers()
   }
+
+  findCurrentCustomerVisitByVisitId(visitId: string): Visit {
+    if (!this.selectedCustomer) {
+      throw new Error('selected customer not found')
+    }
+    const visit = this.selectedCustomer.visits.find(v => v.id === visitId)
+    if (!visit) {
+      throw new Error('no visit found for: ' + visitId)
+    }
+    return visit
+  }
 }
 
 decorate(CustomerStore, {

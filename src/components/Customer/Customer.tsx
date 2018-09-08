@@ -2,7 +2,13 @@ import * as React from 'react'
 import { inject, observer } from 'mobx-react'
 import { compose } from 'recompose'
 import { Link, withRouter, match } from 'react-router-dom'
-import { CUSTOMER_LIST_PATH, CREATE_VISIT_PATH, EDIT_CUSTOMER_PATH, getLink } from 'sarte/Routes'
+import {
+  CUSTOMER_LIST_PATH,
+  CREATE_VISIT_PATH,
+  EDIT_CUSTOMER_PATH,
+  EDIT_VISIT_PATH,
+  getLink,
+} from 'sarte/Routes'
 import AppHeader from 'sarte/components/AppHeader'
 import CustomerStore from 'sarte/stores/CustomerStore'
 import FloatingActionButton from 'sarte/components/MaterialUi/Button/FloatingActionButton'
@@ -51,6 +57,16 @@ export class Customer extends React.Component<Props, State> {
 
   deselectVisit = () => this.setState({ selectedVisit: null })
 
+  toEditVisitPath = () => {
+    const { selectedVisit } = this.state
+    if (!selectedVisit) {
+      return
+    }
+    this.props.history.push(
+      getLink(EDIT_VISIT_PATH, this.props.match.params.id, (selectedVisit as Visit).id, 'date'),
+    )
+  }
+
   render() {
     const { customerStore } = this.props
     const { selectedVisit } = this.state
@@ -79,7 +95,9 @@ export class Customer extends React.Component<Props, State> {
         <FlatTitle>来店履歴</FlatTitle>
         <FlatCard>
           {customer.visits.length === 0 && <div>来店履歴なし</div>}
-          {customer.visits.map(visit => <VisitListItem key={visit.id} visit={visit} onClick={this.selectVisit} />)}
+          {customer.visits.map(visit => (
+            <VisitListItem key={visit.id} visit={visit} onClick={this.selectVisit} />
+          ))}
         </FlatCard>
         <Link to={getLink(CREATE_VISIT_PATH, customer.id, 'date')}>
           <FloatingActionButton />
@@ -89,6 +107,8 @@ export class Customer extends React.Component<Props, State> {
           title={selectedVisit ? (selectedVisit as Visit).startAtForHuman : ''}
           open={Boolean(selectedVisit)}
           onClose={this.deselectVisit}
+          onClickRight={this.toEditVisitPath}
+          rightLabel="編集"
         >
           <VisitDetail visit={selectedVisit} />
         </Modal>

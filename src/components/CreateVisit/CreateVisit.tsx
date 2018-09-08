@@ -39,6 +39,18 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
     loading: false,
   }
 
+  componentDidMount() {
+    const { match } = this.props
+    if (match.visitId !== 'new') {
+      this.props.customerStore.setCurrentCustomerId(match.params.id)
+      this.setState({
+        visitForm: new VisitForm(
+          this.props.customerStore.findCurrentCustomerVisitByVisitId(match.params.visitId),
+        ),
+      })
+    }
+  }
+
   onChange = (visitForm: VisitForm) => this.setState({ visitForm })
 
   private next = () => {
@@ -50,7 +62,9 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
     }
 
     const nextStep = steps[steps.indexOf(step) + 1]
-    history.push(getLink('/customers/:id/visits/new/:step', id, nextStep))
+    history.push(
+      getLink('/customers/:id/visits/:visitId/:step', id, match.params.visitId, nextStep),
+    )
   }
 
   private onAddPhoto = async event => {
@@ -88,27 +102,27 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
       <div>
         <AppHeader hasBack title="来店を追加" onSubmit={this.next} submitTitle={this.submitTitle} />
         <Route
-          path="/customers/:id/visits/new/date"
+          path="/customers/:id/visits/:visitId/date"
           render={() => <DateInput visitForm={visitForm} onChange={this.onChange} />}
         />
         <Route
-          path="/customers/:id/visits/new/photo"
+          path="/customers/:id/visits/:visitId/photo"
           render={() => <TakePhoto visitPhotos={visitPhotos} onChange={this.onAddPhoto} />}
         />
         <Route
-          path="/customers/:id/visits/new/menu"
+          path="/customers/:id/visits/:visitId/menu"
           render={() => <Menu visitForm={visitForm} onChange={this.onChange} />}
         />
         <Route
-          path="/customers/:id/visits/new/components"
+          path="/customers/:id/visits/:visitId/components"
           render={() => <Components visitForm={visitForm} onChange={this.onChange} />}
         />
         <Route
-          path="/customers/:id/visits/new/price"
+          path="/customers/:id/visits/:visitId/price"
           render={() => <Price visitForm={visitForm} onChange={this.onChange} />}
         />
         <Route
-          path="/customers/:id/visits/new/note"
+          path="/customers/:id/visits/:visitId/note"
           render={() => <Note visitForm={visitForm} onChange={this.onChange} />}
         />
       </div>
