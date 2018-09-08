@@ -28,15 +28,7 @@ interface Props {
   match: match
 }
 
-interface State {
-  selectedVisit: Visit | null
-}
-
-export class Customer extends React.Component<Props, State> {
-  state = {
-    selectedVisit: null,
-  }
-
+export class Customer extends React.Component<Props> {
   componentDidMount() {
     const id = this.props.match.params.id
     this.props.customerStore.setCurrentCustomerId(id)
@@ -53,23 +45,22 @@ export class Customer extends React.Component<Props, State> {
     customerStore.uploadAvatar(match.params.id, event.target.files[0])
   }
 
-  selectVisit = (selectedVisit: Visit) => this.setState({ selectedVisit })
+  selectVisit = (visit: Visit) => this.props.customerStore.setCurrentVisitId(visit.id)
 
-  deselectVisit = () => this.setState({ selectedVisit: null })
+  deselectVisit = () => this.props.customerStore.setCurrentVisitId()
 
   toEditVisitPath = () => {
-    const { selectedVisit } = this.state
+    const { selectedVisit } = this.props.customerStore
     if (!selectedVisit) {
       return
     }
     this.props.history.push(
-      getLink(EDIT_VISIT_PATH, this.props.match.params.id, (selectedVisit as Visit).id, 'date'),
+      getLink(EDIT_VISIT_PATH, this.props.match.params.id, selectedVisit.id, 'date'),
     )
   }
 
   render() {
     const { customerStore } = this.props
-    const { selectedVisit } = this.state
     const customer = customerStore.selectedCustomer
 
     if (!customer) {
@@ -103,15 +94,17 @@ export class Customer extends React.Component<Props, State> {
           <FloatingActionButton />
         </Link>
 
-        <Modal
-          title={selectedVisit ? (selectedVisit as Visit).startAtForHuman : ''}
-          open={Boolean(selectedVisit)}
-          onClose={this.deselectVisit}
-          onClickRight={this.toEditVisitPath}
-          rightLabel="編集"
-        >
-          <VisitDetail visit={selectedVisit} />
-        </Modal>
+        {customerStore.selectedVisit && (
+          <Modal
+            title={customerStore.selectedVisit.startAtForHuman}
+            open={Boolean(customerStore.selectedVisit)}
+            onClose={this.deselectVisit}
+            onClickRight={this.toEditVisitPath}
+            rightLabel="編集"
+          >
+            <VisitDetail visit={customerStore.selectedVisit} />
+          </Modal>
+        )}
       </div>
     )
   }

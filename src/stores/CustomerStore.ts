@@ -15,13 +15,16 @@ interface CreateVisitParams {
 export default class CustomerStore extends BaseStore {
   public customers: Customer[] = []
   public currentCustomerId?: string = undefined
+  public currentVisitId?: string = undefined
 
   public fetchCustomers = flow(function*(this: CustomerStore) {
     this.customers = yield CustomerApi.list()
   })
 
   public get sortedCustomers() {
-    return this.customers.sort(customer => (customer.lastVisit ? Number(customer.lastVisit.startAt) : 0)).reverse()
+    return this.customers
+      .sort(customer => (customer.lastVisit ? Number(customer.lastVisit.startAt) : 0))
+      .reverse()
   }
 
   public createCustomer = flow(function*(this: CustomerStore, customerForm: CustomerForm) {
@@ -44,7 +47,10 @@ export default class CustomerStore extends BaseStore {
     return new VisitPhoto(res)
   })
 
-  public createVisit = flow(function*(this: CustomerStore, { visitForm, visitPhotos = [] }: CreateVisitParams) {
+  public createVisit = flow(function*(
+    this: CustomerStore,
+    { visitForm, visitPhotos = [] }: CreateVisitParams,
+  ) {
     if (!this.selectedCustomer) {
       return null
     }
@@ -94,13 +100,27 @@ export default class CustomerStore extends BaseStore {
     }
     return visit
   }
+
+  public setCurrentVisitId(id?: string) {
+    this.currentVisitId = id
+  }
+
+  public get selectedVisit(): Visit | undefined {
+    if (!this.selectedCustomer) {
+      return undefined
+    }
+    return this.selectedCustomer.visits.find(v => v.id === this.currentVisitId)
+  }
 }
 
 decorate(CustomerStore, {
   customers: observable,
   currentCustomerId: observable,
+  currentVisitId: observable,
   setCurrentCustomerId: action,
+  setCurrentVisitId: action,
   fetchCustomers: action,
   sortedCustomers: computed,
   selectedCustomer: computed,
+  selectedVisit: computed,
 })
