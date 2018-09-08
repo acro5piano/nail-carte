@@ -1,14 +1,14 @@
 import * as React from 'react'
 import TextField from '@material-ui/core/TextField'
 import { VisitForm } from 'sarte/forms/VisitForm'
-import { InputContainer, Caption } from 'sarte/components/CreateVisit/Presentational'
+import { InputContainer, Caption } from 'sarte/components/EditVisit/Presentational'
 
 interface Props {
   visitForm: VisitForm
   onChange: (visitForm: VisitForm) => void
 }
 
-class Note extends React.Component<Props> {
+class Price extends React.Component<Props> {
   onChange = (field: string) => (event: any) => {
     this.props.onChange(
       new VisitForm({
@@ -23,15 +23,15 @@ class Note extends React.Component<Props> {
 
     return (
       <div>
-        <Caption>その他の情報を入力しましょう。</Caption>
+        <Caption>金額を入力しましょう。</Caption>
         <InputContainer>
           <TextField
-            name="note"
-            label="メモ(自由入力)"
-            multiline
+            name="price"
+            type="number"
+            label="金額"
             fullWidth
-            defaultValue={visitForm.note}
-            onChange={this.onChange('note')}
+            defaultValue={visitForm.price}
+            onChange={this.onChange('price')}
           />
         </InputContainer>
       </div>
@@ -39,4 +39,4 @@ class Note extends React.Component<Props> {
   }
 }
 
-export default Note
+export default Price

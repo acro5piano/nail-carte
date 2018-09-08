@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField'
 import { TextFieldProps } from '@material-ui/core/TextField/TextField'
 import Flex from 'sarte/components/utils/Flex'
 import { VisitForm } from 'sarte/forms/VisitForm'
-import { InputContainer, Caption } from 'sarte/components/CreateVisit/Presentational'
+import { InputContainer, Caption } from 'sarte/components/EditVisit/Presentational'
 import SelectBrandDialog from './SelectBrandDialog'
 
 const SectionTitleNoMargin = styled.div`

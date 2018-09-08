@@ -5,7 +5,7 @@ import Modal from 'sarte/components/Modal'
 import styled from 'styled-components'
 import { getBrands } from 'sarte/services/graphqlQuery'
 import { Query } from 'react-apollo'
-import { InputContainer } from 'sarte/components/CreateVisit/Presentational'
+import { InputContainer } from 'sarte/components/EditVisit/Presentational'
 import { InputEvent } from 'sarte/types'
 
 const Container = styled.div`

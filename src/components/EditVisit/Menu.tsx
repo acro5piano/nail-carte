@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Flex from 'sarte/components/utils/Flex'
 import FlatOption from 'sarte/components/utils/FlatOption'
-import { InputContainer, Caption } from 'sarte/components/CreateVisit/Presentational'
+import { InputContainer, Caption } from 'sarte/components/EditVisit/Presentational'
 import { getMenus, createMenu } from 'sarte/services/graphqlQuery'
 
 interface MenuOptionProps {
