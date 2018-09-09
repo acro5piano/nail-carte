@@ -44,7 +44,7 @@ export class VisitForm {
     })
   }
 
-  toCreateVisitParams() {
+  toVisitParams() {
     const {
       customerId,
       menuId,

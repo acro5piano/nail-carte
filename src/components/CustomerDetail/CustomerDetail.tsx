@@ -2,13 +2,7 @@ import * as React from 'react'
 import { inject, observer } from 'mobx-react'
 import { compose } from 'recompose'
 import { Link, withRouter, match } from 'react-router-dom'
-import {
-  CUSTOMER_LIST_PATH,
-  CREATE_VISIT_PATH,
-  EDIT_CUSTOMER_PATH,
-  EDIT_VISIT_PATH,
-  getLink,
-} from 'sarte/Routes'
+import { CUSTOMER_LIST_PATH, EDIT_CUSTOMER_PATH, EDIT_VISIT_PATH, getLink } from 'sarte/Routes'
 import AppHeader from 'sarte/components/AppHeader'
 import CustomerStore from 'sarte/stores/CustomerStore'
 import FloatingActionButton from 'sarte/components/MaterialUi/Button/FloatingActionButton'
@@ -90,7 +84,7 @@ export class Customer extends React.Component<Props> {
             <VisitListItem key={visit.id} visit={visit} onClick={this.selectVisit} />
           ))}
         </FlatCard>
-        <Link to={getLink(CREATE_VISIT_PATH, customer.id, 'date')}>
+        <Link to={getLink(EDIT_VISIT_PATH, customer.id, 'new', 'date')}>
           <FloatingActionButton />
         </Link>
 

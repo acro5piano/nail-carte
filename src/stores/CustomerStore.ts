@@ -7,7 +7,7 @@ import { CustomerApi, VisitApi, VisitPhotoApi, FileApi } from 'sarte/services/ap
 import { CustomerForm } from 'sarte/forms/CustomerForm'
 import { VisitForm } from 'sarte/forms/VisitForm'
 
-interface CreateVisitParams {
+interface EditOrCreateVisitParams {
   visitForm: VisitForm
   visitPhotos: VisitPhoto[]
 }
@@ -49,13 +49,13 @@ export default class CustomerStore extends BaseStore {
 
   public createVisit = flow(function*(
     this: CustomerStore,
-    { visitForm, visitPhotos = [] }: CreateVisitParams,
+    { visitForm, visitPhotos = [] }: EditOrCreateVisitParams,
   ) {
     if (!this.selectedCustomer) {
       return null
     }
     visitForm.customerId = this.selectedCustomer.id
-    const { id }: Visit = yield VisitApi.create(visitForm.toCreateVisitParams())
+    const { id }: Visit = yield VisitApi.create(visitForm.toVisitParams())
     if (visitPhotos.length > 0) {
       yield Promise.all(
         visitPhotos.map(async visitPhoto =>

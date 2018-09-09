@@ -32,7 +32,7 @@ interface NewVisitState {
   loading: boolean
 }
 
-class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
+class EditVisit extends React.Component<NewVisitProps, NewVisitState> {
   public state = {
     visitForm: new VisitForm({}),
     visitPhotos: [],
@@ -40,12 +40,12 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
   }
 
   componentDidMount() {
-    const { match } = this.props
-    if (match.visitId !== 'new') {
-      this.props.customerStore.setCurrentCustomerId(match.params.id)
+    const { customerId, visitId } = this.props.match.params
+    if (visitId !== 'new') {
+      this.props.customerStore.setCurrentCustomerId(customerId)
       this.setState({
         visitForm: new VisitForm(
-          this.props.customerStore.findCurrentCustomerVisitByVisitId(match.params.visitId),
+          this.props.customerStore.findCurrentCustomerVisitByVisitId(visitId),
         ),
       })
     }
@@ -55,7 +55,7 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
 
   private next = () => {
     const { history, match } = this.props
-    const { id, step } = match.params
+    const { customerId, visitId, step } = match.params
 
     if (step === _.last(steps)) {
       return this.submit()
@@ -63,7 +63,7 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
 
     const nextStep = steps[steps.indexOf(step) + 1]
     history.push(
-      getLink('/customers/:id/visits/:visitId/:step', id, match.params.visitId, nextStep),
+      getLink('/customers/:customerId/visits/:visitId/:step', customerId, visitId, nextStep),
     )
   }
 
@@ -90,8 +90,9 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
   }
 
   private submit = async () => {
+    const { history, match } = this.props
     await this.props.customerStore.createVisit(this.state)
-    this.props.history.push(getLink(CUSTOMER_PATH, this.props.match.params.id))
+    history.push(getLink(CUSTOMER_PATH, match.params.customerId))
   }
 
   render() {
@@ -102,27 +103,27 @@ class CreateVisit extends React.Component<NewVisitProps, NewVisitState> {
       <div>
         <AppHeader hasBack title="来店を追加" onSubmit={this.next} submitTitle={this.submitTitle} />
         <Route
-          path="/customers/:id/visits/:visitId/date"
+          path="/customers/:customerId/visits/:visitId/date"
           render={() => <DateInput visitForm={visitForm} onChange={this.onChange} />}
         />
         <Route
-          path="/customers/:id/visits/:visitId/photo"
+          path="/customers/:customerId/visits/:visitId/photo"
           render={() => <TakePhoto visitPhotos={visitPhotos} onChange={this.onAddPhoto} />}
         />
         <Route
-          path="/customers/:id/visits/:visitId/menu"
+          path="/customers/:customerId/visits/:visitId/menu"
           render={() => <Menu visitForm={visitForm} onChange={this.onChange} />}
         />
         <Route
-          path="/customers/:id/visits/:visitId/components"
+          path="/customers/:customerId/visits/:visitId/components"
           render={() => <Components visitForm={visitForm} onChange={this.onChange} />}
         />
         <Route
-          path="/customers/:id/visits/:visitId/price"
+          path="/customers/:customerId/visits/:visitId/price"
           render={() => <Price visitForm={visitForm} onChange={this.onChange} />}
         />
         <Route
-          path="/customers/:id/visits/:visitId/note"
+          path="/customers/:customerId/visits/:visitId/note"
           render={() => <Note visitForm={visitForm} onChange={this.onChange} />}
         />
       </div>
@@ -135,7 +136,7 @@ export default compose(
   withRouter,
   inject('customerStore'),
   observer,
-)(CreateVisit)
+)(EditVisit)
 
 // private get validate() {
 //   if (this.state.loading) {

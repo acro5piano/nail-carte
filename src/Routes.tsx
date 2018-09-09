@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import CustomerList from 'sarte/components/CustomerList/CustomerList'
 import CreateCustomer from 'sarte/components/EditCustomer'
 import Customer from 'sarte/components/CustomerDetail/CustomerDetail'
-import CreateVisit from 'sarte/components/EditVisit/EditVisit'
+import EditVisit from 'sarte/components/EditVisit/EditVisit'
 import Login from 'sarte/components/Auth/Login'
 import Register from 'sarte/components/Auth/Register'
 import InputTeam from 'sarte/components/Auth/InputTeam'
@@ -21,8 +21,7 @@ export const CREATE_CUSTOMER_PATH = '/customers/new/edit'
 export const VISIT_PATH = '/visits/:id'
 export const EDIT_CUSTOMER_PATH = '/customers/:id/edit'
 
-export const CREATE_VISIT_PATH = '/customers/:id/visits/new/:step'
-export const EDIT_VISIT_PATH = '/customers/:id/visits/:visitId/:step'
+export const EDIT_VISIT_PATH = '/customers/:customerId/visits/:visitId/:step'
 
 // Get full path to a resource.
 //     e.g.) getLink(1, CREATE_VISIT_PATH) => /customers/1/visits/new
@@ -32,8 +31,7 @@ export const getLink = (pathname: string, ...ids: any[]): string =>
 const Routes = props => (
   <div className="appBody">
     <Switch>
-      <Route exact path={CREATE_VISIT_PATH} component={CreateVisit} />
-      <Route exact path={EDIT_VISIT_PATH} component={CreateVisit} />
+      <Route exact path={EDIT_VISIT_PATH} component={EditVisit} />
 
       <Route exact path={EDIT_CUSTOMER_PATH} component={CreateCustomer} />
       <Route exact path={CUSTOMER_PATH} component={Customer} />
