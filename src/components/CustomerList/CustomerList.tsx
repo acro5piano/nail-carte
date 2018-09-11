@@ -59,17 +59,28 @@ class CustomerList extends React.Component<CustomersProps, CustomersState> {
   }
 
   render() {
+    const { customerStore } = this.props
     const { searchInput } = this.state
 
     return (
       <div>
         <AppHeader title="顧客一覧" />
 
-        <SearchContainer>
-          <TextField value={searchInput} fullWidth label="検索" onChange={this.onChangeSearchInput} />
-        </SearchContainer>
+        {customerStore.customers.length > 3 && (
+          <SearchContainer>
+            <TextField
+              value={searchInput}
+              fullWidth
+              label="検索"
+              onChange={this.onChangeSearchInput}
+            />
+          </SearchContainer>
+        )}
 
         <StyledList>
+          {customerStore.customers.length === 0 && (
+            <div>まだ顧客が登録されていません。右下のボタンから追加しましょう！</div>
+          )}
           {this.filteredCustomers.map(customer => (
             <div key={customer.id}>
               <Link to={getLink('/customers/:id', customer.id)}>
