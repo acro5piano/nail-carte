@@ -58,8 +58,8 @@ class Login extends React.Component<Props, State> {
         },
         {
           email: 'required|email',
-          password: 'required|min:6',
-          passwordConfirmation: 'required|min:6',
+          password: 'required|min:8',
+          passwordConfirmation: 'required|min:8',
         },
       ) && password === passwordConfirmation
     )
@@ -109,7 +109,12 @@ class Login extends React.Component<Props, State> {
               />
             </div>
             <Submit>
-              <Button disabled={!this.canSubmit} variant="raised" color="primary" onClick={this.submit}>
+              <Button
+                disabled={!this.canSubmit}
+                variant="raised"
+                color="primary"
+                onClick={this.submit}
+              >
                 新規登録
               </Button>
             </Submit>
