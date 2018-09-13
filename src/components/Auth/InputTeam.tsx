@@ -56,7 +56,7 @@ class Login extends React.Component<Props, State> {
   render() {
     return (
       <Root>
-        <AppHeader noMenu title="サロン名の登録" />
+        <AppHeader title="サロン名の登録" />
         <Caption>サロン名を登録しましょう。</Caption>
         <StyledPaper>
           <div>

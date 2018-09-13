@@ -89,7 +89,7 @@ class Login extends React.Component<Props, State> {
             <div>
               <TextField
                 id="password"
-                label="パスワード"
+                label="パスワード (8文字以上)"
                 value={this.state.password}
                 onChange={this.onChange('password')}
                 type="password"
