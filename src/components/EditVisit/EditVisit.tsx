@@ -44,7 +44,7 @@ class EditVisit extends React.Component<NewVisitProps, NewVisitState> {
     if (visitId !== 'new') {
       this.props.customerStore.setCurrentCustomerId(customerId)
       this.setState({
-        visitForm: new VisitForm(
+        visitForm: VisitForm.fromEntitiy(
           this.props.customerStore.findCurrentCustomerVisitByVisitId(visitId),
         ),
       })
@@ -63,7 +63,7 @@ class EditVisit extends React.Component<NewVisitProps, NewVisitState> {
 
     const nextStep = steps[steps.indexOf(step) + 1]
     history.push(
-      getLink('/customers/:customerId/visits/:visitId/:step', customerId, visitId, nextStep),
+      getLink('/customers/:customerId/visits/:visitId/edit/:step', customerId, visitId, nextStep),
     )
   }
 
@@ -90,8 +90,11 @@ class EditVisit extends React.Component<NewVisitProps, NewVisitState> {
   }
 
   private submit = async () => {
+    if (this.state.loading || !this.state.visitForm.validate()) {
+      return false
+    }
     const { history, match } = this.props
-    await this.props.customerStore.createVisit(this.state)
+    await this.props.customerStore.updateOrCreateVisit(this.state)
     history.push(getLink(CUSTOMER_PATH, match.params.customerId))
   }
 
@@ -103,27 +106,27 @@ class EditVisit extends React.Component<NewVisitProps, NewVisitState> {
       <div>
         <AppHeader hasBack title="来店を追加" onSubmit={this.next} submitTitle={this.submitTitle} />
         <Route
-          path="/customers/:customerId/visits/:visitId/date"
+          path="/customers/:customerId/visits/:visitId/edit/date"
           render={() => <DateInput visitForm={visitForm} onChange={this.onChange} />}
         />
         <Route
-          path="/customers/:customerId/visits/:visitId/photo"
+          path="/customers/:customerId/visits/:visitId/edit/photo"
           render={() => <TakePhoto visitPhotos={visitPhotos} onChange={this.onAddPhoto} />}
         />
         <Route
-          path="/customers/:customerId/visits/:visitId/menu"
+          path="/customers/:customerId/visits/:visitId/edit/menu"
           render={() => <Menu visitForm={visitForm} onChange={this.onChange} />}
         />
         <Route
-          path="/customers/:customerId/visits/:visitId/components"
+          path="/customers/:customerId/visits/:visitId/edit/components"
           render={() => <Components visitForm={visitForm} onChange={this.onChange} />}
         />
         <Route
-          path="/customers/:customerId/visits/:visitId/price"
+          path="/customers/:customerId/visits/:visitId/edit/price"
           render={() => <Price visitForm={visitForm} onChange={this.onChange} />}
         />
         <Route
-          path="/customers/:customerId/visits/:visitId/note"
+          path="/customers/:customerId/visits/:visitId/edit/note"
           render={() => <Note visitForm={visitForm} onChange={this.onChange} />}
         />
       </div>
@@ -137,25 +140,3 @@ export default compose(
   inject('customerStore'),
   observer,
 )(EditVisit)
-
-// private get validate() {
-//   if (this.state.loading) {
-//     return false
-//   }
-//
-//   const { price, note, startAt, endAt } = this.state.visitForm
-//   return validate(
-//     {
-//       price,
-//       note,
-//       startAt,
-//       endAt,
-//     },
-//     {
-//       price: 'required|numeric|min:500',
-//       note: 'max:200',
-//       startAt: 'date',
-//       endAt: 'date',
-//     },
-//   )
-// }

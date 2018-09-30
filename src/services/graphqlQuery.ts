@@ -19,6 +19,7 @@ export const getCustomers = gql`
         price
         note
         startAt
+        endAt
         baseBrand
         colorBrand
         topBrand
@@ -53,6 +54,14 @@ export const updateCustomer = gql`
 export const createVisit = gql`
   mutation createVisit($visit: VisitInput!) {
     createVisit(visit: $visit) {
+      id
+    }
+  }
+`
+
+export const updateVisit = gql`
+  mutation updateVisit($id: String!, $visit: VisitInput!) {
+    updateVisit(id: $id, visit: $visit) {
       id
     }
   }

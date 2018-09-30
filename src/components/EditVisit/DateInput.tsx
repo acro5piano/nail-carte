@@ -31,7 +31,7 @@ class DateInput extends React.Component<Props> {
             type="date"
             label="来店日"
             fullWidth
-            defaultValue={visitForm.visitOn}
+            value={visitForm.visitOn}
             onChange={this.onChange('visitOn')}
             InputLabelProps={{
               shrink: true,
@@ -42,7 +42,7 @@ class DateInput extends React.Component<Props> {
             name="startAt"
             type="time"
             label="来店時間"
-            defaultValue={visitForm.startAt}
+            value={visitForm.startAt}
             onChange={this.onChange('startAt')}
             InputLabelProps={{
               shrink: true,
@@ -53,7 +53,7 @@ class DateInput extends React.Component<Props> {
             name="endAt"
             type="time"
             label="終了時間"
-            defaultValue={visitForm.endAt}
+            value={visitForm.endAt}
             onChange={this.onChange('endAt')}
             InputLabelProps={{
               shrink: true,

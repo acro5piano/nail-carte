@@ -14,15 +14,20 @@ export const CustomerApi = {
 }
 
 export const VisitApi = {
-  create: (visit: object) => gql(Query.createVisit, { visit }).then(res => new Visit(res.data.createVisit)),
+  create: (visit: object) =>
+    gql(Query.createVisit, { visit }).then(res => new Visit(res.data.createVisit)),
+  update: (id: string, visit: object) =>
+    gql(Query.updateVisit, { id, visit }).then(res => new Visit(res.data.updateVisit)),
 }
 
 export const MenuApi = {
-  create: (visit: object) => gql(Query.createVisit, { visit }).then(res => new Visit(res.data.createVisit)),
+  create: (visit: object) =>
+    gql(Query.createVisit, { visit }).then(res => new Visit(res.data.createVisit)),
 }
 
 export const VisitPhotoApi = {
-  create: (visitPhoto: object) => gql(Query.createVisitPhoto, { visitPhoto }).then(res => new VisitPhoto(res)),
+  create: (visitPhoto: object) =>
+    gql(Query.createVisitPhoto, { visitPhoto }).then(res => new VisitPhoto(res)),
 }
 
 export const TeamApi = {

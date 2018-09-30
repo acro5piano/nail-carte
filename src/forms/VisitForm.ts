@@ -1,7 +1,26 @@
 import moment = require('moment')
+import Visit from 'sarte/entities/Visit'
+// import { validate } from 'sarte/utils'
+
+interface VisitFormArgs {
+  id?: string
+  customerId?: string
+  menuId?: string
+  price?: number
+  note?: string
+  visitOn?: string
+  startAt?: string
+  endAt?: string
+  baseBrand?: string
+  colorBrand?: string
+  topBrand?: string
+  baseSku?: string
+  colorSku?: string
+  topSku?: string
+}
 
 export class VisitForm {
-  id?: string
+  id: string
   customerId?: string
   menuId?: string
   price?: number
@@ -16,8 +35,8 @@ export class VisitForm {
   colorSku: string
   topSku: string
 
-  constructor(args: any) {
-    this.id = args.id
+  constructor(args: VisitFormArgs) {
+    this.id = args.id || 'new'
     this.customerId = args.customerId
     this.menuId = args.menuId
     this.price = Number(args.price || 0)
@@ -37,9 +56,18 @@ export class VisitForm {
     this.topSku = args.topSku || ''
   }
 
-  newInstance(props: Partial<VisitForm>): VisitForm {
+  static fromEntitiy(visit: Visit) {
     return new VisitForm({
-      ...(this as Object),
+      ...visit,
+      visitOn: visit.startAt.format('YYYY-MM-DD'),
+      startAt: visit.startAt.format('HH:mm'),
+      endAt: visit.endAt.format('HH:mm'),
+    } as VisitFormArgs)
+  }
+
+  newInstance(props: Partial<VisitFormArgs>): VisitForm {
+    return new VisitForm({
+      ...(this as VisitFormArgs),
       ...props,
     })
   }
@@ -74,5 +102,25 @@ export class VisitForm {
       colorSku,
       topSku,
     }
+  }
+
+  validate() {
+    return true
+
+    // const { price, note, startAt, endAt } = this
+    // return validate(
+    //   {
+    //     price,
+    //     note,
+    //     startAt,
+    //     endAt,
+    //   },
+    //   {
+    //     price: 'required|numeric|min:500',
+    //     note: 'max:200',
+    //     startAt: 'date',
+    //     endAt: 'date',
+    //   },
+    // )
   }
 }

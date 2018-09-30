@@ -2,7 +2,6 @@ import moment = require('moment')
 import { rfc822 } from 'sarte/utils'
 import VisitPhoto from 'sarte/entities/VisitPhoto'
 import Menu from 'sarte/entities/Menu'
-import { VisitForm } from 'sarte/forms/VisitForm'
 
 export interface VisitArgs {
   id: string
@@ -60,11 +59,6 @@ export default class Visit {
 
   public get startAtForHuman() {
     return this.startAt ? this.startAt.format('YYYY/MM/DD') : ''
-  }
-
-  public toForm(): VisitForm {
-    const { id, customerId, note, price, startAt, visitPhotos } = this
-    return new VisitForm({ id, customerId, note, price, startAt, visitPhotos })
   }
 
   public get base(): string {

@@ -21,7 +21,7 @@ export const CREATE_CUSTOMER_PATH = '/customers/new/edit'
 export const VISIT_PATH = '/visits/:id'
 export const EDIT_CUSTOMER_PATH = '/customers/:id/edit'
 
-export const EDIT_VISIT_PATH = '/customers/:customerId/visits/:visitId/:step'
+export const EDIT_VISIT_PATH = '/customers/:customerId/visits/:visitId/edit/:step'
 
 // Get full path to a resource.
 //     e.g.) getLink(1, CREATE_VISIT_PATH) => /customers/1/visits/new

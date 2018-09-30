@@ -47,15 +47,20 @@ export default class CustomerStore extends BaseStore {
     return new VisitPhoto(res)
   })
 
-  public createVisit = flow(function*(
+  public updateOrCreateVisit = flow(function*(
     this: CustomerStore,
     { visitForm, visitPhotos = [] }: EditOrCreateVisitParams,
   ) {
-    if (!this.selectedCustomer) {
+    if (!this.currentCustomerId) {
       return null
     }
-    visitForm.customerId = this.selectedCustomer.id
-    const { id }: Visit = yield VisitApi.create(visitForm.toVisitParams())
+    visitForm.customerId = this.currentCustomerId
+    let id
+    if (visitForm.id === 'new') {
+      id = (yield VisitApi.create(visitForm.toVisitParams())).id
+    } else {
+      id = (yield VisitApi.update(visitForm.id, visitForm.toVisitParams())).id
+    }
     if (visitPhotos.length > 0) {
       yield Promise.all(
         visitPhotos.map(async visitPhoto =>
