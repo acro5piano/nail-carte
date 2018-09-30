@@ -67,6 +67,14 @@ export const updateVisit = gql`
   }
 `
 
+export const deleteVisit = gql`
+  mutation deleteVisit($id: String!) {
+    deleteVisit(id: $id) {
+      id
+    }
+  }
+`
+
 export const createVisitPhoto = gql`
   mutation createVisitPhoto($visitPhoto: VisitPhotoInput!) {
     createVisitPhoto(visitPhoto: $visitPhoto) {

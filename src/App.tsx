@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Snackbar from 'sarte/components/Snackbar'
 import { ContextRouter } from 'react-router'
 import { Provider } from 'mobx-react'
 import { configure } from 'mobx'
@@ -61,12 +62,15 @@ export default class AppContainer extends React.Component<{}, AppState> {
         <CssBaseline />
         <MuiThemeProvider theme={theme}>
           <Provider {...this.rootStore} rootStore={this.rootStore}>
-            <Router ref={router => (this.router = router)}>
-              <ApolloProvider client={client}>
-                <Routes />
-                <AppSidebar />
-              </ApolloProvider>
-            </Router>
+            <React.Fragment>
+              <Router ref={router => (this.router = router)}>
+                <ApolloProvider client={client}>
+                  <Routes />
+                  <AppSidebar />
+                </ApolloProvider>
+              </Router>
+              <Snackbar uiStore={this.rootStore.uiStore} />
+            </React.Fragment>
           </Provider>
         </MuiThemeProvider>
       </React.Fragment>

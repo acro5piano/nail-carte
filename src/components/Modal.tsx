@@ -8,7 +8,7 @@ import withMobileDialog, { InjectedProps } from '@material-ui/core/withMobileDia
 import theme from 'sarte/theme'
 import Flex from 'sarte/components/utils/Flex'
 
-const ModalHeader = withMobileDialog()(styled.div`
+export const ModalHeader = withMobileDialog()(styled.div`
   background: ${theme.palette.primary.main};
   color: #fff;
   font-size: 18px;
@@ -23,7 +23,7 @@ const ModalHeader = withMobileDialog()(styled.div`
   height: 56px;
 `)
 
-const Title = styled.span`
+export const Title = styled.span`
   font-weight: bold;
   margin-left: 12px;
 `
@@ -40,7 +40,7 @@ const ModalContent = withMobileDialog()(styled.div`
   background: #f5f5f5;
 `)
 
-const StyledIconButton = styled(IconButton as any)`
+export const StyledIconButton = styled(IconButton as any)`
   && {
     margin-left: -12px;
     margin-right: 8px;
@@ -54,6 +54,7 @@ interface Props {
   onClose?: () => void
   onClickRight?: () => void
   rightLabel?: string
+  headerComponent?: any
 }
 
 export const _Modal = ({
@@ -64,24 +65,29 @@ export const _Modal = ({
   fullScreen,
   rightLabel,
   onClickRight,
+  headerComponent = null,
 }: Props & InjectedProps) => {
   return (
     <Dialog maxWidth="md" open={open} onClose={onClose} fullScreen={fullScreen}>
-      <ModalHeader>
-        <Flex>
-          {onClose && (
-            <StyledIconButton color="inherit" onClick={onClose}>
-              <CloseIcon />
-            </StyledIconButton>
+      {headerComponent ? (
+        headerComponent
+      ) : (
+        <ModalHeader>
+          <Flex>
+            {onClose && (
+              <StyledIconButton color="inherit" onClick={onClose}>
+                <CloseIcon />
+              </StyledIconButton>
+            )}
+            <Title>{title}</Title>
+          </Flex>
+          {onClickRight && (
+            <Button onClick={onClickRight} color="inherit">
+              {rightLabel}
+            </Button>
           )}
-          <Title>{title}</Title>
-        </Flex>
-        {onClickRight && (
-          <Button onClick={onClickRight} color="inherit">
-            {rightLabel}
-          </Button>
-        )}
-      </ModalHeader>
+        </ModalHeader>
+      )}
       <ModalContent>{children}</ModalContent>
     </Dialog>
   )

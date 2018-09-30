@@ -116,6 +116,14 @@ export default class CustomerStore extends BaseStore {
     }
     return this.selectedCustomer.visits.find(v => v.id === this.currentVisitId)
   }
+
+  public async deleteCurrentVisit() {
+    if (!this.currentVisitId) {
+      return
+    }
+    await VisitApi.delete(this.currentVisitId)
+    await this.fetchCustomers()
+  }
 }
 
 decorate(CustomerStore, {

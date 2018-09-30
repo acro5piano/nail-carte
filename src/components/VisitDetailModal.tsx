@@ -1,14 +1,50 @@
 import * as React from 'react'
+import EditIcon from '@material-ui/icons/Edit'
+import DeleteIcon from '@material-ui/icons/Delete'
+import IconButton from '@material-ui/core/IconButton'
+import CloseIcon from '@material-ui/icons/Close'
 import Grid from '@material-ui/core/Grid'
 import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile'
 import Visit from 'sarte/entities/Visit'
 import FlatCard from 'sarte/components/utils/FlatCard'
 import FlatTitle from 'sarte/components/utils/FlatTitle'
+import { ModalHeader, StyledIconButton, Title } from 'sarte/components/Modal'
+import Flex from 'sarte/components/utils/Flex'
 
 interface Props {
   visit: Visit | null
 }
+
+interface HeaderProps {
+  onClose: () => void
+  onDelete: () => void
+  onEdit: () => void
+  title: string
+}
+
+// TODO: <Modal コンポーネントはこちらで定義した方が良さそう
+
+export const HeaderComponent = ({ onClose, onDelete, onEdit, title }: HeaderProps) => (
+  <ModalHeader>
+    <Flex>
+      {onClose && (
+        <StyledIconButton color="inherit" onClick={onClose}>
+          <CloseIcon />
+        </StyledIconButton>
+      )}
+      <Title>{title}</Title>
+    </Flex>
+    <div>
+      <IconButton color="inherit" onClick={onDelete}>
+        <DeleteIcon />
+      </IconButton>
+      <IconButton color="inherit" onClick={onEdit}>
+        <EditIcon />
+      </IconButton>
+    </div>
+  </ModalHeader>
+)
 
 const VisitComponent = ({ visit }: Props) => {
   if (!visit) {

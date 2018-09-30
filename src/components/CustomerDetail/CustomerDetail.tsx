@@ -1,4 +1,5 @@
 import * as React from 'react'
+import UiStore from 'sarte/stores/UiStore'
 import { inject, observer } from 'mobx-react'
 import { compose } from 'recompose'
 import { Link, withRouter, match } from 'react-router-dom'
@@ -10,7 +11,7 @@ import VisitListItem from 'sarte/components/CustomerDetail/VisitListItem'
 import Basic from 'sarte/components/CustomerDetail/Basic'
 import Contact from 'sarte/components/CustomerDetail/Contact'
 import Visit from 'sarte/entities/Visit'
-import VisitDetail from 'sarte/components/VisitDetailModal'
+import VisitDetail, { HeaderComponent } from 'sarte/components/VisitDetailModal'
 import { History } from 'sarte/types'
 import Modal from 'sarte/components/Modal'
 import FlatCard from 'sarte/components/utils/FlatCard'
@@ -18,6 +19,7 @@ import FlatTitle from 'sarte/components/utils/FlatTitle'
 
 interface Props {
   customerStore: CustomerStore
+  uiStore: UiStore
   history: History
   match: match
 }
@@ -51,6 +53,14 @@ export class Customer extends React.Component<Props> {
     this.props.history.push(
       getLink(EDIT_VISIT_PATH, this.props.match.params.id, selectedVisit.id, 'date'),
     )
+  }
+
+  deleteVisit = async () => {
+    if (!window.confirm('削除して良いですか?')) {
+      return
+    }
+    await this.props.customerStore.deleteCurrentVisit()
+    this.props.uiStore.showMessage('来店を削除しました。')
   }
 
   render() {
@@ -92,8 +102,14 @@ export class Customer extends React.Component<Props> {
           <Modal
             title={customerStore.selectedVisit.startAtForHuman}
             open={Boolean(customerStore.selectedVisit)}
-            onClose={this.deselectVisit}
-            onClickRight={this.toEditVisitPath}
+            headerComponent={
+              <HeaderComponent
+                title={customerStore.selectedVisit.startAtForHuman}
+                onClose={this.deselectVisit}
+                onDelete={this.deleteVisit}
+                onEdit={this.toEditVisitPath}
+              />
+            }
             rightLabel="編集"
           >
             <VisitDetail visit={customerStore.selectedVisit} />
@@ -106,6 +122,6 @@ export class Customer extends React.Component<Props> {
 
 export default compose(
   withRouter,
-  inject('customerStore'),
+  inject('customerStore', 'uiStore'),
   observer,
 )<Props>(Customer)

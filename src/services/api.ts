@@ -18,6 +18,7 @@ export const VisitApi = {
     gql(Query.createVisit, { visit }).then(res => new Visit(res.data.createVisit)),
   update: (id: string, visit: object) =>
     gql(Query.updateVisit, { id, visit }).then(res => new Visit(res.data.updateVisit)),
+  delete: (id: string) => gql(Query.deleteVisit, { id }),
 }
 
 export const MenuApi = {
